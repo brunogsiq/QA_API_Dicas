@@ -1,0 +1,777 @@
+{
+	"info": {
+		"_postman_id": "47b5e338-1ef6-483b-8609-183be256af69",
+		"name": "1.1 - Academy - Postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Exercícios",
+			"item": [
+				{
+					"name": "01 - Get all books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "729bab20-f349-4fb2-9004-563fd11453a3"
+							}
+						}
+					],
+					"id": "b8399139-cb90-4ffd-9456-463f7eebdebd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://library-api.postmanlabs.com/books"
+					},
+					"response": []
+				},
+				{
+					"name": "02 - Get books Fiction - Com 1  Parâmetro de consulta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "58a611a7-115b-4f50-af92-aa99457a6dbb"
+							}
+						}
+					],
+					"id": "4820de47-fa24-4dd5-8c02-0ca04b62860b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://library-api.postmanlabs.com/books?genre=fiction",
+							"protocol": "https",
+							"host": [
+								"library-api",
+								"postmanlabs",
+								"com"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "genre",
+									"value": "fiction"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02.1 - Get books Fiction - Com 2  Parâmetros de consulta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "d4dbfde4-e3e0-43a3-92d3-a8e51840571f"
+							}
+						}
+					],
+					"id": "36ab4a00-cf96-424d-bbb9-793beda99843",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://library-api.postmanlabs.com/books?genre=fiction&checkedOut=false",
+							"protocol": "https",
+							"host": [
+								"library-api",
+								"postmanlabs",
+								"com"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "genre",
+									"value": "fiction"
+								},
+								{
+									"key": "checkedOut",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02.2 - Get books Fiction - Com 3  Parâmetros de consulta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "6c53c61c-a36c-4006-990d-8cf21e862c3c"
+							}
+						}
+					],
+					"id": "921a6448-27b6-4726-b607-ebc0a5c513dc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://library-api.postmanlabs.com/books?genre=fiction&checkedOut=false&isPermanentCollection=false",
+							"protocol": "https",
+							"host": [
+								"library-api",
+								"postmanlabs",
+								"com"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "genre",
+									"value": "fiction"
+								},
+								{
+									"key": "checkedOut",
+									"value": "false"
+								},
+								{
+									"key": "isPermanentCollection",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02.3 - Get books Fiction - Com 3  Parâmetros de consulta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "74e9fd7c-ae2f-41f5-a469-2f11a66bbaa7"
+							}
+						}
+					],
+					"id": "49e2d1cf-689f-43ed-b6cd-d999c990119b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://library-api.postmanlabs.com/books?genre=fiction&checkedOut=false&isPermanentCollection=true",
+							"protocol": "https",
+							"host": [
+								"library-api",
+								"postmanlabs",
+								"com"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "genre",
+									"value": "fiction"
+								},
+								{
+									"key": "checkedOut",
+									"value": "false"
+								},
+								{
+									"key": "isPermanentCollection",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03 - Get books Non Fiction - Com 1  Parâmetro de consulta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "540847a9-4787-4352-ac13-2cb8738ef22b"
+							}
+						}
+					],
+					"id": "5f34e814-4b82-4f4c-8fec-b6d681a56510",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://library-api.postmanlabs.com/books?genre=non-fiction",
+							"protocol": "https",
+							"host": [
+								"library-api",
+								"postmanlabs",
+								"com"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "genre",
+									"value": "non-fiction"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03.1 - Get books Non Fiction - Com 2  Parâmetros de consulta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "116f1b46-3911-4f07-b9bc-6bf78e149b30"
+							}
+						}
+					],
+					"id": "f6eb095c-cfa6-4a54-9832-0898d3ba1f5e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://library-api.postmanlabs.com/books?genre=non-fiction&checkedOut=false",
+							"protocol": "https",
+							"host": [
+								"library-api",
+								"postmanlabs",
+								"com"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "genre",
+									"value": "non-fiction"
+								},
+								{
+									"key": "checkedOut",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03.2 - Get books Non Fiction - Com 3  Parâmetros de consulta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "5f740d12-cd91-476f-a13c-26f990d5e473"
+							}
+						}
+					],
+					"id": "d9810986-dc26-4054-9499-8ab5be5bfd51",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://library-api.postmanlabs.com/books?genre=non-fiction&checkedOut=false&isPermanentCollection=false",
+							"protocol": "https",
+							"host": [
+								"library-api",
+								"postmanlabs",
+								"com"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "genre",
+									"value": "non-fiction"
+								},
+								{
+									"key": "checkedOut",
+									"value": "false"
+								},
+								{
+									"key": "isPermanentCollection",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03.3 - Get books Non Fiction - Com 3  Parâmetros de consulta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "cc3ca01e-8115-4117-a790-dfd88e9986d1"
+							}
+						}
+					],
+					"id": "01116843-5de0-4c42-b596-429e1c72a04c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://library-api.postmanlabs.com/books?genre=non-fiction&checkedOut=false&isPermanentCollection=true",
+							"protocol": "https",
+							"host": [
+								"library-api",
+								"postmanlabs",
+								"com"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "genre",
+									"value": "non-fiction"
+								},
+								{
+									"key": "checkedOut",
+									"value": "false"
+								},
+								{
+									"key": "isPermanentCollection",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04 - Get  book by title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "73385e72-92e6-410d-8540-cb68158067d4"
+							}
+						}
+					],
+					"id": "d9841d49-7b0b-4d29-b921-977e7e0d15cb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://library-api.postmanlabs.com/books?search=ficciones",
+							"protocol": "https",
+							"host": [
+								"library-api",
+								"postmanlabs",
+								"com"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "ficciones"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04.1 - Get  book by Author",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "ecf16e68-95e7-4ebb-8a7d-fe33d1169346"
+							}
+						}
+					],
+					"id": "900fe55b-afe4-47e7-94a9-6102e03cac54",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://library-api.postmanlabs.com/books?search=Harper Lee",
+							"protocol": "https",
+							"host": [
+								"library-api",
+								"postmanlabs",
+								"com"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Harper Lee"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04.2 - Get  book by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "e7dced5f-3a40-47d9-af7d-8f4c906abd2f"
+							}
+						}
+					],
+					"id": "78f5cf4f-091d-4f61-a5ef-104286fd9e1f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://library-api.postmanlabs.com/books/:id",
+							"protocol": "https",
+							"host": [
+								"library-api",
+								"postmanlabs",
+								"com"
+							],
+							"path": [
+								"books",
+								":id"
+							],
+							"variable": [
+								{
+									"id": "c0c05a52-49c3-4098-9c9f-ec257b22b1a4",
+									"key": "id",
+									"value": "29cd820f-82f9-4b45-a7f4-0924111b5b89"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "05 - ADD Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "f4d25142-16c3-4ce3-8b67-1d4b59e64a22"
+							}
+						}
+					],
+					"id": "70bf0f59-18c4-4796-b0f0-f249a8c6236f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Quem reviveu o Omar morto?\",\r\n    \"author\": \"Bruno Siqueira\",\r\n    \"genre\": \"Humor\",\r\n    \"yearPublished\": 2023\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://library-api.postmanlabs.com/books"
+					},
+					"response": []
+				},
+				{
+					"name": "05.1 - Get specific books by author",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "f73f55d5-d026-4bff-8fe3-f5cec6fb2aac"
+							}
+						}
+					],
+					"id": "1c2abc20-2149-4960-a6d9-25dfc7884fb6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://library-api.postmanlabs.com/books?search=Bruno Siqueira",
+							"protocol": "https",
+							"host": [
+								"library-api",
+								"postmanlabs",
+								"com"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Bruno Siqueira"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "05.2 - Get specific books by title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "70a7a8fd-284c-4a4a-851b-4ac19752b07a"
+							}
+						}
+					],
+					"id": "806dc412-ef92-49ba-9d87-07aafa2e2eca",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://library-api.postmanlabs.com/books?search=Quem",
+							"protocol": "https",
+							"host": [
+								"library-api",
+								"postmanlabs",
+								"com"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Quem"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "06 - Delete Book by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "2aee2dca-6a7d-4ca7-9970-aed46414f7de"
+							}
+						}
+					],
+					"id": "f94478c5-4b4a-4c92-8188-9aea349c0cd4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"0b959af5-39d7-456c-9269-58eadc741723\",\r\n    \"title\": \"Quem matou o Mar Morto?\",\r\n    \"author\": \"Bruno Siqueira\",\r\n    \"genre\": \"Humor\",\r\n    \"yearPublished\": 2023\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://library-api.postmanlabs.com/books"
+					},
+					"response": []
+				}
+			],
+			"id": "ce7b7c4e-7360-476a-85ef-b00df3e2b284"
+		},
+		{
+			"name": "Exemplos",
+			"item": [
+				{
+					"name": "Exemplo: Realizando primeira requisição (API do )",
+					"id": "e790aab7-7322-4ca0-8c35-6f25d36097fc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://api.github.com/users/brunogsiq"
+					},
+					"response": []
+				},
+				{
+					"name": "Exemplo de Requsição com parâmetro de consulta",
+					"id": "fbecba86-eaad-44af-8720-3920ca88a4f5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://www.google.com/search?q=postman",
+							"protocol": "https",
+							"host": [
+								"www",
+								"google",
+								"com"
+							],
+							"path": [
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "postman"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "b6acdaed-7f7f-474f-b05e-3e0b44194f0d"
+		}
+	]
+}
