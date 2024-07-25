@@ -1,57 +1,47 @@
 {
 	"info": {
-		"_postman_id": "47b5e338-1ef6-483b-8609-183be256af69",
-		"name": "1.1 - Academy - Postman",
+		"_postman_id": "a0003f4d-d00e-4f2d-96d2-b7678f2ee824",
+		"name": "1.2 - Intro to Writing Tests",
+		"description": "# About this collection\n\nPostman's powerful scripting feature helps you to write a range of API tests in JavaScript, including integration, regression, and contract tests.\n\n## Using the collection\n\n**Step 1:** Send the sample requests and view the response and test results.\n\n**Step 2:** Replace the sample request URLs with your desired API endpoints.\n\n**Step 3:** Customize the tests in the \"Tests\" tab if needed. Don't forget to save your changes.\n\n## Quick tips for writing tests\n\n- Organize your test scenarios by grouping your requests in [collections](https://www.getpostman.com/docs/v6/postman/collections/intro_to_collections) and [folders](https://www.getpostman.com/docs/v6/postman/collections/managing_collections#adding-folders), and naming them descriptively\n- Document your API’s requirements using [markdown in the descriptions](https://www.getpostman.com/docs/v6/postman/collections/using_markdown_for_descriptions)\n- Use [variables](https://www.getpostman.com/docs/v6/postman/environments_and_globals/variables) to simulate more sophisticated user flows\n- Common tests that will be run after every request can be added to collection-level tests or folder-level tests\n    \n\n## Resources\n\n[Test scripts](https://www.getpostman.com/docs/v6/postman/scripts/test_scripts)\n\n[Test examples](https://www.getpostman.com/docs/v6/postman/scripts/test_examples)\n\n[Quick reference guide](https://community.getpostman.com/t/the-postman-cheatsheet-quick-reference-guide/1054)\n\n[Examples and guides](https://github.com/DannyDainton/All-Things-Postman)\n\n[Writing tests in Postman](http://blog.getpostman.com/2017/10/25/writing-tests-in-postman/)\n\n[API testing tips from a Postman professional](http://blog.getpostman.com/2017/07/28/api-testing-tips-from-a-postman-professional/)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Exercícios",
+			"name": "Basic test syntax",
 			"item": [
 				{
-					"name": "01 - Get all books",
+					"name": "pm.test",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
+									"// use the `pm.*` API to write your test",
+									"// the `pm.test()` method accepts 2 parameters",
+									"// the first parameter is the name of your test (be descriptive)",
+									"// the second parameter is a function whereby if any assertions within your function fail, then the test will fail",
+									"",
+									"pm.test(\"Name of the first test\", function () {",
+									"    // make an assertion",
+									"    // if your assertion throws an error, this test will fail",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Name of the second test\", function () {",
+									"    // make as many assertions as you'd like as part of this test",
+									"    // if any assertion throws an error, this test will fail",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.be.json;",
+									"});",
+									""
 								],
 								"type": "text/javascript",
-								"id": "729bab20-f349-4fb2-9004-563fd11453a3"
+								"id": "46160ba3-85fb-4d84-b292-5ee529c8c37f"
 							}
 						}
 					],
-					"id": "b8399139-cb90-4ffd-9456-463f7eebdebd",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": "https://library-api.postmanlabs.com/books"
-					},
-					"response": []
-				},
-				{
-					"name": "02 - Get books Fiction - Com 1  Parâmetro de consulta",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"id": "58a611a7-115b-4f50-af92-aa99457a6dbb"
-							}
-						}
-					],
-					"id": "4820de47-fa24-4dd5-8c02-0ca04b62860b",
+					"id": "479cfa16-e6bf-4f67-8110-c09af34b39e0",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -59,43 +49,128 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://library-api.postmanlabs.com/books?genre=fiction",
+							"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
 							"protocol": "https",
 							"host": [
-								"library-api",
-								"postmanlabs",
+								"postman-echo",
 								"com"
 							],
 							"path": [
-								"books"
+								"get"
 							],
 							"query": [
 								{
-									"key": "genre",
-									"value": "fiction"
+									"key": "foo1",
+									"value": "bar1"
+								},
+								{
+									"key": "foo2",
+									"value": "bar2"
 								}
 							]
-						}
+						},
+						"description": "This request demonstrates how to work with the `pm.\\\\\\*` API. Send the request to view the results of the sample tests in the \"Test Results\" tab in the response viewer.\n\n### Working with the `pm.\\\\\\*` API\n\nUse the `pm.\\\\\\*` API to write your test under the **Tests** tab in Postman. The `pm.test()` method accepts two parameters -\n\nThe first parameter is the name of the test, so it's important to give your test a descriptive name to provide more information in case the test fails.\n\nThe second parameter is a function whereby if any assertions within your function fail, then the test will fail.\n\n```\npm.test(\"Name of the second test\", function () {\n    // make as many assertions as you'd like as part of this test\n    // if any assertion throws an error, this test will fail\n    pm.response.to.have.status(200);\n    pm.response.to.be.ok;\n    pm.response.to.be.json;\n});\n\n```"
 					},
-					"response": []
+					"response": [
+						{
+							"id": "03d54c8a-f837-44de-b91c-52e8cba2b75a",
+							"name": "Status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"get"
+									],
+									"query": [
+										{
+											"key": "foo1",
+											"value": "bar1"
+										},
+										{
+											"key": "foo2",
+											"value": "bar2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:21:20 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1cd-LkUKVugbVYQuMcTU7OTzmp77cMo\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "348"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"args\": {\n        \"foo1\": \"bar1\",\n        \"foo2\": \"bar2\"\n    },\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"cookie\": \"sails.sid=s%3AK8csWt5VZ3Oalv85HiBtffDcrSOJ-RiP.V14RjjJqkOv8%2BLXuHRmZ9l50G8S6eU16yLU%2F3N%2F0dKU\",\n        \"postman-token\": \"c6b9bca5-7369-4da8-a539-6c906d1133f2\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"url\": \"https://postman-echo.com/get?foo1=bar1&foo2=bar2\"\n}"
+						}
+					]
 				},
 				{
-					"name": "02.1 - Get books Fiction - Com 2  Parâmetros de consulta",
+					"name": "pm.expect and pm.response",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
+									"// Note the difference in the test failure message under the **Test Results** tab when using pm.response vs. pm.expect",
+									"pm.test(\"Status code is 200 - pm.response\", function () {",
+									"    pm.response.to.have.status(201); // written to fail",
+									"});",
+									"",
+									"pm.test(\"Status code is 200 - pm.expect\", function () {",
+									"    pm.expect(pm.response.code).to.equal(201); //written to fail",
+									"});",
+									"",
+									"// Using a 2nd optional parameter with the pm.expect function to create a custom error message ",
+									"pm.test(\"Using a custom error message\", function () {",
+									"    pm.expect(false, 'nooo why fail??').to.be.ok;",
+									"});",
+									""
 								],
 								"type": "text/javascript",
-								"id": "d4dbfde4-e3e0-43a3-92d3-a8e51840571f"
+								"id": "18d7a643-b43b-434f-9a94-a36589603f5a"
 							}
 						}
 					],
-					"id": "36ab4a00-cf96-424d-bbb9-793beda99843",
+					"id": "a7921037-6102-4f49-a95f-ca843b6767ae",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -103,47 +178,147 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://library-api.postmanlabs.com/books?genre=fiction&checkedOut=false",
+							"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
 							"protocol": "https",
 							"host": [
-								"library-api",
-								"postmanlabs",
+								"postman-echo",
 								"com"
 							],
 							"path": [
-								"books"
+								"get"
 							],
 							"query": [
 								{
-									"key": "genre",
-									"value": "fiction"
+									"key": "foo1",
+									"value": "bar1"
 								},
 								{
-									"key": "checkedOut",
-									"value": "false"
+									"key": "foo2",
+									"value": "bar2"
 								}
 							]
-						}
+						},
+						"description": "This request demonstrates how to make assertions with `pm.response()` or `pm.expect()` within the second parameter of the `pm.test()` function.\n\nSend the request to view the results of the sample tests in the \"Test Results\" tab in the response viewer.\n\n### Working with the `pm.expect()` and `pm.response()` functions\n\nThe `pm.expect()` generic assertion function relies on [Chai.js](https://www.chaijs.com/), a BDD / TDD assertion library for node.\n\n```\npm.test(\"Environment to be production\", function () {\n  pm.expect(pm.environment.get(\"env\")).to.equal(\"production\");\n});\n\n```\n\nYou can also use a second optional parameter with the `pm.expect()` function to create a custom error message.\n\n```\npm.test(\"Using a custom error message\", function () {\n    pm.expect(false, 'nooo why fail??').to.be.ok;\n});\n\n```\n\nThe `pm.response()` method uses `pm.expect()` under the hood.\n\nUsing `pm.response()` as your base assertion allows you to receive more specific error messages when debugging. Here are some [`pm.response()` methods](https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox_api_reference#response-assertion-api-in-test-scripts). Review the error messages under the **Test Results** tab to see the difference."
 					},
-					"response": []
+					"response": [
+						{
+							"id": "e0653f36-3762-407f-be18-8bd5b4c53025",
+							"name": "Status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"get"
+									],
+									"query": [
+										{
+											"key": "foo1",
+											"value": "bar1"
+										},
+										{
+											"key": "foo2",
+											"value": "bar2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:21:20 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1cd-LkUKVugbVYQuMcTU7OTzmp77cMo\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "348"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"args\": {\n        \"foo1\": \"bar1\",\n        \"foo2\": \"bar2\"\n    },\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"cookie\": \"sails.sid=s%3AK8csWt5VZ3Oalv85HiBtffDcrSOJ-RiP.V14RjjJqkOv8%2BLXuHRmZ9l50G8S6eU16yLU%2F3N%2F0dKU\",\n        \"postman-token\": \"c6b9bca5-7369-4da8-a539-6c906d1133f2\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"url\": \"https://postman-echo.com/get?foo1=bar1&foo2=bar2\"\n}"
+						}
+					]
+				}
+			],
+			"id": "d99d2f6b-df1f-4666-bea0-5874dafb0671",
+			"description": "This folder helps you understand how to work with the [Postman Sandbox](https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox), a JavaScript execution environment that is accessible during pre-request scripts and test scripts.\n\nWhatever code you write under the pre-request and test tabs is executed in this sandbox.\n\nAny code that you write under the \"Tests\" tab, in the Postman app will execute after your request.\n\nConsequently, you have access to the `pm.response` object to make assertions against the actual response -- this is what we call a Postman test.\n\nReview the example tests under the \"Tests\" tab.\n\n> **Quick tips for syntax** \n  \n\n- Give each test a descriptive name. When the test fails, this will provide context to the error.\n- Use `pm.response()` as your base assertion where possible to provide more descriptive error messages.\n- Use the optional 2nd parameter in `pm.expect()` to create custom error messages.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						],
+						"id": "0ca863de-f65c-462a-967f-ec9109d79d81"
+					}
 				},
 				{
-					"name": "02.2 - Get books Fiction - Com 3  Parâmetros de consulta",
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						],
+						"id": "5dc374e4-3818-40aa-850a-2d2ed30eeeef"
+					}
+				}
+			]
+		},
+		{
+			"name": "API tests",
+			"item": [
+				{
+					"name": "Status",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
 								],
 								"type": "text/javascript",
-								"id": "6c53c61c-a36c-4006-990d-8cf21e862c3c"
+								"id": "d434b60a-d677-458e-83c3-8ed8feba3d2e"
 							}
 						}
 					],
-					"id": "921a6448-27b6-4726-b607-ebc0a5c513dc",
+					"id": "d582be8d-914e-42ea-8b07-3de298dd78ca",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -151,433 +326,304 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://library-api.postmanlabs.com/books?genre=fiction&checkedOut=false&isPermanentCollection=false",
+							"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
 							"protocol": "https",
 							"host": [
-								"library-api",
-								"postmanlabs",
+								"postman-echo",
 								"com"
 							],
 							"path": [
-								"books"
+								"get"
 							],
 							"query": [
 								{
-									"key": "genre",
-									"value": "fiction"
+									"key": "foo1",
+									"value": "bar1"
 								},
 								{
-									"key": "checkedOut",
-									"value": "false"
-								},
-								{
-									"key": "isPermanentCollection",
-									"value": "false"
+									"key": "foo2",
+									"value": "bar2"
 								}
 							]
-						}
+						},
+						"description": "This test is to validate the response status code. This Snippet is also available on the right sidebar under `Status code: Code in 200`."
 					},
-					"response": []
+					"response": [
+						{
+							"id": "98c75532-4061-4223-ab52-f650e6cef44e",
+							"name": "Status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"get"
+									],
+									"query": [
+										{
+											"key": "foo1",
+											"value": "bar1"
+										},
+										{
+											"key": "foo2",
+											"value": "bar2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:21:20 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1cd-LkUKVugbVYQuMcTU7OTzmp77cMo\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "348"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"args\": {\n        \"foo1\": \"bar1\",\n        \"foo2\": \"bar2\"\n    },\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"cookie\": \"sails.sid=s%3AK8csWt5VZ3Oalv85HiBtffDcrSOJ-RiP.V14RjjJqkOv8%2BLXuHRmZ9l50G8S6eU16yLU%2F3N%2F0dKU\",\n        \"postman-token\": \"c6b9bca5-7369-4da8-a539-6c906d1133f2\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"url\": \"https://postman-echo.com/get?foo1=bar1&foo2=bar2\"\n}"
+						}
+					]
 				},
 				{
-					"name": "02.3 - Get books Fiction - Com 3  Parâmetros de consulta",
+					"name": "Performance",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "74e9fd7c-ae2f-41f5-a469-2f11a66bbaa7"
+								"id": "4bc11509-8fb5-4898-b3bc-37c848b0dedb"
 							}
 						}
 					],
-					"id": "49e2d1cf-689f-43ed-b6cd-d999c990119b",
+					"id": "5e5aa2d2-86da-4ec3-9d51-ae2611084b0b",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
+						"method": "PUT",
 						"header": [],
-						"url": {
-							"raw": "https://library-api.postmanlabs.com/books?genre=fiction&checkedOut=false&isPermanentCollection=true",
-							"protocol": "https",
-							"host": [
-								"library-api",
-								"postmanlabs",
-								"com"
-							],
-							"path": [
-								"books"
-							],
-							"query": [
-								{
-									"key": "genre",
-									"value": "fiction"
-								},
-								{
-									"key": "checkedOut",
-									"value": "false"
-								},
-								{
-									"key": "isPermanentCollection",
-									"value": "true"
-								}
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": "This is expected to be sent back as part of response body."
+						},
+						"url": "https://postman-echo.com/put",
+						"description": "This test is to validate the response time. This Snippet is also available on the right sidebar under `Response time is less than 200ms`."
 					},
-					"response": []
+					"response": [
+						{
+							"id": "07163912-8a91-4d5d-be37-db3b586e9834",
+							"name": "Performance",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "This is expected to be sent back as part of response body."
+								},
+								"url": "https://postman-echo.com/put"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:21:34 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"235-EkrhuBWZKrBKKgRg6q6rJ7DOZ/o\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "set-cookie",
+									"value": "sails.sid=s%3AUuE9kqyAFxbvBvvH8aX3WEBLXiNgjK7-.ErzxoeVFY7HfTK%2BPjoOs%2BzaP3yU8%2BcM59adz0oo9LlA; Path=/; HttpOnly"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "414"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"args\": {},\n    \"data\": \"This is expected to be sent back as part of response body.\",\n    \"files\": {},\n    \"form\": {},\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"content-length\": \"58\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"content-type\": \"text/plain\",\n        \"cookie\": \"sails.sid=s%3AK8csWt5VZ3Oalv85HiBtffDcrSOJ-RiP.V14RjjJqkOv8%2BLXuHRmZ9l50G8S6eU16yLU%2F3N%2F0dKU\",\n        \"postman-token\": \"cc394095-6587-4079-bcba-3705b175115d\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"json\": null,\n    \"url\": \"https://postman-echo.com/put\"\n}"
+						}
+					]
 				},
 				{
-					"name": "03 - Get books Non Fiction - Com 1  Parâmetro de consulta",
+					"name": "Data type",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Content-Type is JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"})"
 								],
 								"type": "text/javascript",
-								"id": "540847a9-4787-4352-ac13-2cb8738ef22b"
+								"id": "ee2ff0d1-29f4-4fb9-b18d-acfd59a9fc76"
 							}
 						}
 					],
-					"id": "5f34e814-4b82-4f4c-8fec-b6d681a56510",
+					"id": "909eef83-7674-4f9d-b3fb-ef7d97be2951",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
+						"method": "PATCH",
 						"header": [],
-						"url": {
-							"raw": "https://library-api.postmanlabs.com/books?genre=non-fiction",
-							"protocol": "https",
-							"host": [
-								"library-api",
-								"postmanlabs",
-								"com"
-							],
-							"path": [
-								"books"
-							],
-							"query": [
-								{
-									"key": "genre",
-									"value": "non-fiction"
-								}
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": "This is expected to be sent back as part of response body."
+						},
+						"url": "https://postman-echo.com/patch",
+						"description": "This test is to validate the content type of the returned content. This SNIPPET is also available on the right sidebar under `Response headers: Content-Type header check`."
 					},
-					"response": []
-				},
-				{
-					"name": "03.1 - Get books Non Fiction - Com 2  Parâmetros de consulta",
-					"event": [
+					"response": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"id": "116f1b46-3911-4f07-b9bc-6bf78e149b30"
-							}
-						}
-					],
-					"id": "f6eb095c-cfa6-4a54-9832-0898d3ba1f5e",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://library-api.postmanlabs.com/books?genre=non-fiction&checkedOut=false",
-							"protocol": "https",
-							"host": [
-								"library-api",
-								"postmanlabs",
-								"com"
-							],
-							"path": [
-								"books"
-							],
-							"query": [
+							"id": "9047189c-d152-4f46-9965-65f7c8ad17bc",
+							"name": "Data type",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "This is expected to be sent back as part of response body."
+								},
+								"url": "https://postman-echo.com/patch"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
 								{
-									"key": "genre",
-									"value": "non-fiction"
+									"key": "Content-Encoding",
+									"value": "gzip"
 								},
 								{
-									"key": "checkedOut",
-									"value": "false"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "03.2 - Get books Non Fiction - Com 3  Parâmetros de consulta",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"id": "5f740d12-cd91-476f-a13c-26f990d5e473"
-							}
-						}
-					],
-					"id": "d9810986-dc26-4054-9499-8ab5be5bfd51",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://library-api.postmanlabs.com/books?genre=non-fiction&checkedOut=false&isPermanentCollection=false",
-							"protocol": "https",
-							"host": [
-								"library-api",
-								"postmanlabs",
-								"com"
-							],
-							"path": [
-								"books"
-							],
-							"query": [
-								{
-									"key": "genre",
-									"value": "non-fiction"
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
 								},
 								{
-									"key": "checkedOut",
-									"value": "false"
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:21:46 GMT"
 								},
 								{
-									"key": "isPermanentCollection",
-									"value": "false"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "03.3 - Get books Non Fiction - Com 3  Parâmetros de consulta",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"id": "cc3ca01e-8115-4117-a790-dfd88e9986d1"
-							}
-						}
-					],
-					"id": "01116843-5de0-4c42-b596-429e1c72a04c",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://library-api.postmanlabs.com/books?genre=non-fiction&checkedOut=false&isPermanentCollection=true",
-							"protocol": "https",
-							"host": [
-								"library-api",
-								"postmanlabs",
-								"com"
-							],
-							"path": [
-								"books"
-							],
-							"query": [
-								{
-									"key": "genre",
-									"value": "non-fiction"
+									"key": "ETag",
+									"value": "W/\"237-50TomUYGT9/V9ahCSqZGYpnnS48\""
 								},
 								{
-									"key": "checkedOut",
-									"value": "false"
+									"key": "Server",
+									"value": "nginx"
 								},
 								{
-									"key": "isPermanentCollection",
-									"value": "true"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "04 - Get  book by title",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"id": "73385e72-92e6-410d-8540-cb68158067d4"
-							}
-						}
-					],
-					"id": "d9841d49-7b0b-4d29-b921-977e7e0d15cb",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://library-api.postmanlabs.com/books?search=ficciones",
-							"protocol": "https",
-							"host": [
-								"library-api",
-								"postmanlabs",
-								"com"
-							],
-							"path": [
-								"books"
-							],
-							"query": [
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
 								{
-									"key": "search",
-									"value": "ficciones"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "04.1 - Get  book by Author",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"id": "ecf16e68-95e7-4ebb-8a7d-fe33d1169346"
-							}
-						}
-					],
-					"id": "900fe55b-afe4-47e7-94a9-6102e03cac54",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://library-api.postmanlabs.com/books?search=Harper Lee",
-							"protocol": "https",
-							"host": [
-								"library-api",
-								"postmanlabs",
-								"com"
-							],
-							"path": [
-								"books"
-							],
-							"query": [
+									"key": "Content-Length",
+									"value": "410"
+								},
 								{
-									"key": "search",
-									"value": "Harper Lee"
+									"key": "Connection",
+									"value": "keep-alive"
 								}
-							]
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"args\": {},\n    \"data\": \"This is expected to be sent back as part of response body.\",\n    \"files\": {},\n    \"form\": {},\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"content-length\": \"58\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"content-type\": \"text/plain\",\n        \"cookie\": \"sails.sid=s%3AUuE9kqyAFxbvBvvH8aX3WEBLXiNgjK7-.ErzxoeVFY7HfTK%2BPjoOs%2BzaP3yU8%2BcM59adz0oo9LlA\",\n        \"postman-token\": \"ebd30dd5-0044-4665-ae5c-cb31118f1119\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"json\": null,\n    \"url\": \"https://postman-echo.com/patch\"\n}"
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "04.2 - Get  book by ID",
+					"name": "Functional",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
+									"pm.test(\"Returns 7 char alphanumeric id\", function () {",
+									"    let jsonData = pm.response.json();",
+									"    pm.expect(jsonData.form.someHash).to.match(/^[a-z0-9]{7}$/);",
+									"});",
+									"",
+									"pm.test(\"Returns 15 char alhpanumeric id\", function () {",
+									"    let jsonData = pm.response.json();",
+									"    pm.expect(jsonData.form.secondHash).to.match(/^[a-z0-9]{15}$/);",
+									"});",
+									""
 								],
 								"type": "text/javascript",
-								"id": "e7dced5f-3a40-47d9-af7d-8f4c906abd2f"
+								"id": "1f017e7f-16db-4a88-931c-e95d20e5f082"
 							}
 						}
 					],
-					"id": "78f5cf4f-091d-4f61-a5ef-104286fd9e1f",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://library-api.postmanlabs.com/books/:id",
-							"protocol": "https",
-							"host": [
-								"library-api",
-								"postmanlabs",
-								"com"
-							],
-							"path": [
-								"books",
-								":id"
-							],
-							"variable": [
-								{
-									"id": "c0c05a52-49c3-4098-9c9f-ec257b22b1a4",
-									"key": "id",
-									"value": "29cd820f-82f9-4b45-a7f4-0924111b5b89"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "05 - ADD Book",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 201\", function () {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"id": "f4d25142-16c3-4ce3-8b67-1d4b59e64a22"
-							}
-						}
-					],
-					"id": "70bf0f59-18c4-4796-b0f0-f249a8c6236f",
+					"id": "bdcbb661-7247-4291-aa77-817db6ff9e10",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -585,123 +631,131 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Quem reviveu o Omar morto?\",\r\n    \"author\": \"Bruno Siqueira\",\r\n    \"genre\": \"Humor\",\r\n    \"yearPublished\": 2023\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "someHash",
+									"value": "7654321",
+									"type": "text"
+								},
+								{
+									"key": "secondHash",
+									"value": "987654321asdfgh",
+									"type": "text"
 								}
-							}
+							]
 						},
-						"url": "https://library-api.postmanlabs.com/books"
+						"url": "https://postman-echo.com/post",
+						"description": "This test is written to validate the server performed a function as expected."
 					},
-					"response": []
-				},
-				{
-					"name": "05.1 - Get specific books by author",
-					"event": [
+					"response": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"id": "f73f55d5-d026-4bff-8fe3-f5cec6fb2aac"
-							}
-						}
-					],
-					"id": "1c2abc20-2149-4960-a6d9-25dfc7884fb6",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://library-api.postmanlabs.com/books?search=Bruno Siqueira",
-							"protocol": "https",
-							"host": [
-								"library-api",
-								"postmanlabs",
-								"com"
-							],
-							"path": [
-								"books"
-							],
-							"query": [
+							"id": "ea43144a-fc73-4b39-ab0a-b8933da55fa7",
+							"name": "Functional",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "someHash",
+											"value": "7654321",
+											"type": "text"
+										},
+										{
+											"key": "secondHash",
+											"value": "987654321asdfgh",
+											"type": "text"
+										}
+									]
+								},
+								"url": "https://postman-echo.com/post"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
 								{
-									"key": "search",
-									"value": "Bruno Siqueira"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "05.2 - Get specific books by title",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"id": "70a7a8fd-284c-4a4a-851b-4ac19752b07a"
-							}
-						}
-					],
-					"id": "806dc412-ef92-49ba-9d87-07aafa2e2eca",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://library-api.postmanlabs.com/books?search=Quem",
-							"protocol": "https",
-							"host": [
-								"library-api",
-								"postmanlabs",
-								"com"
-							],
-							"path": [
-								"books"
-							],
-							"query": [
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
 								{
-									"key": "search",
-									"value": "Quem"
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:22:08 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"277-9d2jX3MwxfNYN4a9mHbeHYeuEMA\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "set-cookie",
+									"value": "sails.sid=s%3AG3Skk-KwKzhuN9bCFLG38XDvX_n76FY7.SnEQNLnssVB0vIWq0%2Bqn%2FoZhMdvJqAp6Toc8YMDlMhw; Path=/; HttpOnly"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "408"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
 								}
-							]
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"args\": {},\n    \"data\": \"\",\n    \"files\": {},\n    \"form\": {\n        \"someHash\": \"7654321\",\n        \"secondHash\": \"987654321asdfgh\"\n    },\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"content-length\": \"43\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"content-type\": \"application/x-www-form-urlencoded\",\n        \"cookie\": \"sails.sid=s%3AUuE9kqyAFxbvBvvH8aX3WEBLXiNgjK7-.ErzxoeVFY7HfTK%2BPjoOs%2BzaP3yU8%2BcM59adz0oo9LlA\",\n        \"postman-token\": \"e6a118ae-af47-4fb6-ac35-3cf2bcbafd00\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"json\": {\n        \"someHash\": \"7654321\",\n        \"secondHash\": \"987654321asdfgh\"\n    },\n    \"url\": \"https://postman-echo.com/post\"\n}"
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "06 - Delete Book by ID",
+					"name": "Functional2",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 201\", function () {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});"
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonResponse = pm.response.json();",
+									"",
+									"pm.test(\"Response should be a parsable JSON\", function() {",
+									"    pm.expect(jsonResponse).to.be.ok;",
+									"});",
+									"",
+									"pm.test(\"Response body should be an object\", function() {",
+									"    pm.expect(jsonResponse).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"Response body should be in the correct format\", function() {",
+									"    pm.expect(jsonResponse.args).to.be.a('object');",
+									"    pm.expect(jsonResponse.data).to.be.a('string');",
+									"    pm.expect(jsonResponse.files).to.be.a('object');",
+									"    pm.expect(jsonResponse.form).to.be.a('object');",
+									"    pm.expect(jsonResponse.headers).to.be.a('object');",
+									"});",
+									"",
+									""
 								],
 								"type": "text/javascript",
-								"id": "2aee2dca-6a7d-4ca7-9970-aed46414f7de"
+								"id": "fd277daa-8f39-413d-8721-5ea4acd9cc5f"
 							}
 						}
 					],
-					"id": "f94478c5-4b4a-4c92-8188-9aea349c0cd4",
+					"id": "3abecd3c-1fe7-4ccf-9b76-a8219465d014",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -710,39 +764,99 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"0b959af5-39d7-456c-9269-58eadc741723\",\r\n    \"title\": \"Quem matou o Mar Morto?\",\r\n    \"author\": \"Bruno Siqueira\",\r\n    \"genre\": \"Humor\",\r\n    \"yearPublished\": 2023\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "This is expected to be sent back as part of response body."
 						},
-						"url": "https://library-api.postmanlabs.com/books"
+						"url": "https://postman-echo.com/delete",
+						"description": "This test is written to demonstrate how to bundle several assertions within a single test and several tests within a try-catch code block."
 					},
-					"response": []
-				}
-			],
-			"id": "ce7b7c4e-7360-476a-85ef-b00df3e2b284"
-		},
-		{
-			"name": "Exemplos",
-			"item": [
-				{
-					"name": "Exemplo: Realizando primeira requisição (API do )",
-					"id": "e790aab7-7322-4ca0-8c35-6f25d36097fc",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": "https://api.github.com/users/brunogsiq"
-					},
-					"response": []
+					"response": [
+						{
+							"id": "4f7a6c41-33b2-4c36-946a-b5dfaa2adb25",
+							"name": "Functional2",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "This is expected to be sent back as part of response body."
+								},
+								"url": "https://postman-echo.com/delete"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:22:22 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"236-unqr/LuiPP07B85WHuciASf+YdA\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "set-cookie",
+									"value": "sails.sid=s%3Aa9JaDxhKoLl3zyptDL3Vbo-kXgiIoqOY.o566AhO0IGGXbdop127kZi0Xq9bHd0q3RjrHgs2G9c4; Path=/; HttpOnly"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "415"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"args\": {},\n    \"data\": \"This is expected to be sent back as part of response body.\",\n    \"files\": {},\n    \"form\": {},\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"content-length\": \"58\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"content-type\": \"text/plain\",\n        \"cookie\": \"sails.sid=s%3AG3Skk-KwKzhuN9bCFLG38XDvX_n76FY7.SnEQNLnssVB0vIWq0%2Bqn%2FoZhMdvJqAp6Toc8YMDlMhw\",\n        \"postman-token\": \"a26a6cbb-abb4-4e8b-8a1e-4ba63450afcb\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"json\": null,\n    \"url\": \"https://postman-echo.com/delete\"\n}"
+						}
+					]
 				},
 				{
-					"name": "Exemplo de Requsição com parâmetro de consulta",
-					"id": "fbecba86-eaad-44af-8720-3920ca88a4f5",
+					"name": "JSON schema v4 validation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var schema = {",
+									"  \"items\": {",
+									"    \"type\": \"boolean\"",
+									"  }",
+									"};",
+									"",
+									"var data1 = [true, false];",
+									"var data2 = [true, 123];",
+									"",
+									"pm.test('Schema is valid', function() {",
+									"  pm.expect(tv4.validate(data1, schema)).to.be.true;",
+									"//   pm.expect(tv4.validate(data2, schema)).to.be.true; // this statement would not be true",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "8e3b5605-94a4-4ebd-8a39-57f919f633da"
+							}
+						}
+					],
+					"id": "3b4f6dd7-91c7-4dd8-9b58-3758f4f3abb8",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -750,28 +864,270 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://www.google.com/search?q=postman",
+							"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
 							"protocol": "https",
 							"host": [
-								"www",
-								"google",
+								"postman-echo",
 								"com"
 							],
 							"path": [
-								"search"
+								"get"
 							],
 							"query": [
 								{
-									"key": "q",
-									"value": "postman"
+									"key": "foo1",
+									"value": "bar1"
+								},
+								{
+									"key": "foo2",
+									"value": "bar2"
 								}
 							]
-						}
+						},
+						"description": "This test is written to validate that response payloads returned from the server are well-formed. It uses the [Tiny Validator for JSON Schema v4](http://geraintluff.github.io/tv4/).\n\nThe Postman sandbox offers a built-in tv4 validator to simplify your assertions. Use [JSON-schema](http://json-schema.org/) [draft v4](http://json-schema.org/latest/json-schema-core.html) to validate simple values and complex objects using a rich [validation vocabulary](http://json-schema.org/latest/json-schema-validation.html) ([examples](http://json-schema.org/examples.html))."
 					},
-					"response": []
+					"response": [
+						{
+							"id": "75431280-89df-4d55-9ae4-6af8f2330643",
+							"name": "JSON schema v4",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"get"
+									],
+									"query": [
+										{
+											"key": "foo1",
+											"value": "bar1"
+										},
+										{
+											"key": "foo2",
+											"value": "bar2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:26:56 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c7-KZYP4szBTzxKQXHzZuUzeRc6eu8\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "set-cookie",
+									"value": "sails.sid=s%3Azdvp_jvbvOB5mzzWKmS_7y6miNWal_a6.J5pGiESESIJ0CZLwvG9rF5Vsk4deBwxJhwo9E9JS4o8; Path=/; HttpOnly"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "342"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"args\": {\n        \"foo1\": \"bar1\",\n        \"foo2\": \"bar2\"\n    },\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"cookie\": \"sails.sid=s%3AwJjqwuZdKqKOiQ9FVnzMr8QoFaPFxpfD.ldt8sflpZLQkRbE1yyJtcIZIuirLfn4yFsVxtvFolWY\",\n        \"postman-token\": \"9dd498fe-4233-4512-a506-974f85cab10d\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"url\": \"https://postman-echo.com/get?foo1=bar1&foo2=bar2\"\n}"
+						}
+					]
+				},
+				{
+					"name": "SQL injection security check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Does not return password\", function () {",
+									"    let jsonData = pm.response.json();",
+									"    pm.expect(jsonData.form.customerName).to.not.include(\"examplePassword\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "d4cda384-d3ef-4f29-906b-ec38fed21c8c"
+							}
+						}
+					],
+					"id": "66df8210-a4c3-4501-9005-e0c999f568fa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "customerName",
+									"value": "' or '1'='1",
+									"description": " String query = \"SELECT account_balance FROM user_data WHERE user_name = \"\n   + request.getParameter(\"customerName\");",
+									"type": "text"
+								},
+								{
+									"key": "anotherAttack",
+									"value": "' or 1=1; drop table myTable; --",
+									"description": "Probably best not to do this one in production, or at all, except for demonstration purposes",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": "https://postman-echo.com/post",
+						"description": "This test checks if it is possible to inject malicious strings as a request parameter. If your server is not handling user input properly, these strings can be interpreted by your server as SQL commands that result in leaking sensitive information or general mayhem."
+					},
+					"response": [
+						{
+							"id": "27b100d3-690e-4719-b748-368a62c6fc79",
+							"name": "SQL injection security check",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "customerName",
+											"value": "' or '1'='1",
+											"description": " String query = \"SELECT account_balance FROM user_data WHERE user_name = \"\n   + request.getParameter(\"customerName\");",
+											"type": "text"
+										},
+										{
+											"key": "anotherAttack",
+											"value": "' or 1=1; drop table myTable; --",
+											"description": "Probably best not to do this one in production, or at all, except for demonstration purposes",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": "https://postman-echo.com/post"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:54:34 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"249-6aeADdjaahUu4RmO474pv4LUCJk\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "set-cookie",
+									"value": "sails.sid=s%3AqIFh_GxNGvPg8xIoXG3SXa3q2FttuGK_.CEzJcRVX9GQwHnXPKthJmnkwV90OP23VXhuGizFFuXE; Path=/; HttpOnly"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "403"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"args\": {},\n    \"data\": \"\",\n    \"files\": {},\n    \"form\": {\n        \"customerName\": \"' or '1'='1\"\n    },\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"content-length\": \"38\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"content-type\": \"application/x-www-form-urlencoded\",\n        \"cookie\": \"sails.sid=s%3A7tFj5KB_lujWMK1xoroPV_xSKkRDxR1W.qUauhME8lGY%2FnBlCT4iVRCs0badee7%2Fmen9XorL%2FJ4s\",\n        \"postman-token\": \"031152dc-59c7-4529-8f8a-29faf9f41afe\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"json\": {\n        \"customerName\": \"' or '1'='1\"\n    },\n    \"url\": \"https://postman-echo.com/post\"\n}"
+						}
+					]
 				}
 			],
-			"id": "b6acdaed-7f7f-474f-b05e-3e0b44194f0d"
+			"id": "8e15ee35-7e39-4abc-aa3a-a23e5906c0a4",
+			"description": "This folder contains examples of testing a single HTTP API request.\n\nIn the Postman app, under the \"Tests\" tab for each request, notice the test(s) written to validate specific assertions. Some of these tests are available as a \"Snippet\" on the right sidebar.\n\nSend each request to see the results under the \"Test Results\" tab in the response viewer.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						],
+						"id": "f03ac258-246a-4fe8-8d5b-2065067d6c7e"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						],
+						"id": "145690f2-0341-4039-bf25-cbb46ca363dd"
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				],
+				"id": "6509ba47-1ff1-47a7-bebd-6f46fc053011"
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				],
+				"id": "6f64d11d-1bae-430d-b307-d24d8bbcb3d0"
+			}
 		}
 	]
 }
