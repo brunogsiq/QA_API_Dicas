@@ -1,0 +1,417 @@
+{
+	"info": {
+		"_postman_id": "a078e98b-00f3-4e41-b4f1-6436d8f01352",
+		"name": "3.0 - Academy - Pessoni",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1 - Api_Exemplo-micoservicos",
+			"item": [
+				{
+					"name": "Local",
+					"item": [
+						{
+							"name": "CT 1 - Status Code 200 - Validação da URL",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"id": "7341def8-1b49-4e7a-a2d1-9fba9ff92447"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "b1505de1-2427-4f2d-bbf8-a49c93ade151"
+									}
+								}
+							],
+							"id": "e9f8d643-5610-4d64-88a1-95181c013179",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{Local}}"
+							},
+							"response": []
+						}
+					],
+					"id": "608f0b1a-3806-470b-9cad-823888653bac"
+				},
+				{
+					"name": "/cliente",
+					"item": [
+						{
+							"name": "CT 2 - Status Code 201",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "37f63ea7-0413-43b9-84a1-bc33b722f251"
+									}
+								}
+							],
+							"id": "c8c0e078-ba4b-4f9e-bddf-2be54d0cc461",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n    \"nome\": \"Logan - Wolverine\",\r\n    \"idade\": 135,\r\n    \"id\": \"0001\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{Loca}}"
+							},
+							"response": []
+						},
+						{
+							"name": "CT 2.2 - Status Code 405 - Age",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 405\", function () {\r",
+											"    pm.response.to.have.status(405);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "2ed3d7fa-8399-48b3-aeaa-b9478a684b33"
+									}
+								}
+							],
+							"id": "86228f53-6e41-43c0-8053-bfc5e44df3a1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nome\": \"Logan - Wolverine\",\r\n    \"idade\": 333333333333,\r\n    \"id\": \"0001\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{Local}}"
+							},
+							"response": []
+						},
+						{
+							"name": "CT 2.3 - Status Code 405 - ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 405\", function () {\r",
+											"    pm.response.to.have.status(405);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "ebac95f7-7bc9-4412-af38-f0c3ee163481"
+									}
+								}
+							],
+							"id": "18af39e8-2617-4b4f-b96b-9b399559cb06",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nome\": \"Logan - Wolverine\",\r\n    \"idade\": 135,\r\n    \"id\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{Local}}"
+							},
+							"response": []
+						},
+						{
+							"name": "CT 3 - Status Code 405 - Validação de registros - Zero",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "2ed7365e-b04f-4667-978d-9af7111827ae"
+									}
+								}
+							],
+							"id": "8eb9afd8-46f5-4532-88f5-3c1a381d2e43",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n    \"nome\": \"Logan - Wolverine\",\r\n    \"idade\": 135,\r\n    \"id\": \"0001\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{Local}}"
+							},
+							"response": []
+						},
+						{
+							"name": "CT 4 - Status Code 400",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "de67e473-5e03-4ea0-ba3c-2b01f11eeffa"
+									}
+								}
+							],
+							"id": "e9df4626-1951-47a7-b8cf-279d3438a9ec",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nome\": \"Thor de Asgard - Thor Deus do Trovão\",\r\n    \"idade\": 11111111111235,\r\n    \"id\": \"000221321354156465\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/cliente"
+							},
+							"response": []
+						},
+						{
+							"name": "CT 4 - Insere novo Cliente",
+							"id": "f9edab7d-9795-4058-b31d-f3a7abf2d89e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nome\": \"Thor de Asgard - Thor Deus do Trovão\",\r\n    \"idade\": 235,\r\n    \"id\": 2533485,\r\n    \"risco\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/cliente"
+							},
+							"response": []
+						},
+						{
+							"name": "CT 5 - Status Code 200",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "fb54e7ce-09f8-4a55-999c-57287d4c3746"
+									}
+								}
+							],
+							"id": "14420dcb-4909-4f17-83f2-234b51127466",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nome\": \"Bruce Banner - Hulk\",\r\n    \"idade\": 40,\r\n    \"id\": \"0004\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{Local}}"
+							},
+							"response": []
+						}
+					],
+					"id": "e0e2b3f0-8a6c-4eab-ae9a-85b10a0bfdd1"
+				},
+				{
+					"name": "/cliente/id",
+					"item": [
+						{
+							"name": "CT 6 - Status Code 201",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "4565d9dd-f7fa-43e4-a170-3cedfdce0f76"
+									}
+								}
+							],
+							"id": "ebd5595f-00b2-40e5-a3f8-945b394d0cd0",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nome\": \"Thor de Asgard - Thor Deus do Trovão\",\r\n    \"idade\": 235,\r\n    \"id\": 2533485,\r\n    \"risco\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/cliente/01"
+							},
+							"response": []
+						},
+						{
+							"name": "CT 6.1 - Status Code 404",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8f375d81-af4b-47a2-8f8f-fcaa18660ae8",
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"id": "18270390-4441-47c7-aa2b-e7b2b546bcb5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nome\": \"Bruno Siqueira\",\r\n    \"idade\": 35,\r\n    \"id\": 01,\r\n    \"risco\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{Localhost}}/cliente/1000"
+							},
+							"response": []
+						},
+						{
+							"name": "CT 6.1 - Status Code 405",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 405\", function () {\r",
+											"    pm.response.to.have.status(405);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"id": "3628ecd3-e24f-496d-93b0-b65928fb4371"
+									}
+								}
+							],
+							"id": "008c98c5-412e-40de-a240-eb0a7ba37f96",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nome\": \"Thor de Asgard - Thor Deus do Trovão\",\r\n    \"idade\": 235,\r\n    \"id\": 2533485,\r\n    \"risco\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/cliente/"
+							},
+							"response": []
+						}
+					],
+					"id": "fd2e4056-d5e4-4ebd-9ded-d751c8503cdb"
+				}
+			],
+			"id": "201fe9bb-e808-4315-9eb6-4224fa01d4aa"
+		}
+	]
+}
