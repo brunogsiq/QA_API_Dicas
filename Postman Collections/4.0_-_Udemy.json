@@ -1,0 +1,628 @@
+{
+	"info": {
+		"_postman_id": "97f9220a-916a-43bd-885d-353021dd7a37",
+		"name": "4.0 - Udemy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API + Projetos",
+			"item": [
+				{
+					"name": "1 - Validar acesso com sucesso.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var teste = 0;\r",
+									"var complemento = 0;\r",
+									"\r",
+									"pm.test(`${++teste}.${++complemento} - Validar acesso com sucesso.`, function ()\r",
+									"{\r",
+									"    pm.response.to.have.status(200);\r",
+									"    console.log(`${teste}.${complemento} - Resultado:    \\nAcesso realizado com sucesso.`);\r",
+									"\r",
+									"    pm.environment.set(\"teste\", teste);\r",
+									"    pm.environment.set(\"complemento\", complemento);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "0da31a1f-d14e-4133-a215-32b03c860ac7"
+							}
+						}
+					],
+					"id": "2becf275-fff9-4e12-a2ee-5953b98fc31d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl_DocPostman}}/get"
+					},
+					"response": []
+				},
+				{
+					"name": "2.1 - Validar criação de usuário com sucesso.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
+									"pm.variables.set(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+									"\r",
+									"var randomFirstName = pm.variables.get(\"name\");\r",
+									"var randomEmail = pm.variables.get(\"email\");\r",
+									"\r",
+									"console.log(\"Pre-ReqUest: \" + randomFirstName, \"male\", randomEmail, \"active\");\r",
+									"\r",
+									"pm.variables.set(\"name\", randomFirstName);\r",
+									"pm.variables.set(\"email\", randomEmail);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"id": "c0077f23-a4ed-44cf-8cc9-5df125934921"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var teste = parseInt(pm.environment.get(\"teste\"));\r",
+									"pm.environment.set(\"complemento\", 0)\r",
+									"var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+									"\r",
+									"pm.test(`${++teste}.${++complemento} - Validar criação de usuário.`, function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"    var responseJson = pm.response.json();\r",
+									"\r",
+									"    if (responseJson.data && responseJson.data.id) {\r",
+									"        var id_CreateUser = responseJson.data.id;\r",
+									"        pm.environment.set(\"id_CreateUser\", id_CreateUser);\r",
+									"        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID: ${id_CreateUser} armazenado com sucesso.`);\r",
+									"    } else {\r",
+									"        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID: não encontrado.`);\r",
+									"    }\r",
+									"\r",
+									"    // Atualizar complemento na variável de ambiente\r",
+									"    pm.environment.set(\"complemento\", complemento);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "d0e6dd64-eea4-4132-964c-314c4f1ead71"
+							}
+						}
+					],
+					"id": "1486a65a-1c55-4576-bad4-d022d63e150f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"gender\": \"male\",\r\n    \"email\": \"{{email}}\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}"
+					},
+					"response": []
+				},
+				{
+					"name": "2.2 - Validar busca por usuário com sucesso.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.get(\"name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
+									"pm.variables.get(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+									"\r",
+									"var randomFirstName = pm.variables.get(\"name\");\r",
+									"var randomEmail = pm.variables.get(\"email\");"
+								],
+								"type": "text/javascript",
+								"id": "9497b51e-be6e-4360-9973-4f377d281eb6"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var teste = parseInt(pm.environment.get(\"teste\"));\r",
+									"var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+									"var id_CreateUser = parseInt(pm.environment.get(\"id_CreateUser\"))\r",
+									"\r",
+									"pm.test(`${++teste}.${++complemento} - Validar busca por usuário.`, function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"    var responseJson = pm.response.json();\r",
+									"\r",
+									"    if (responseJson.data && responseJson.data.id) {\r",
+									"        var id_CreateUser = responseJson.data.id;\r",
+									"        pm.environment.set(\"id_CreateUser\", id_CreateUser);\r",
+									"        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID: ${id_CreateUser} encontrado com sucesso.`);\r",
+									"    } else {\r",
+									"        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID: não encontrado.`);\r",
+									"    }\r",
+									"\r",
+									"    // Atualizar complemento na variável de ambiente\r",
+									"    pm.environment.set(\"complemento\", complemento);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "dc2f9574-8cc6-42eb-a74b-b4437fee2158"
+							}
+						}
+					],
+					"id": "eaa49b10-60f9-4198-b63c-283468761c8a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : \"{{id_CreateUser}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}"
+					},
+					"response": []
+				},
+				{
+					"name": "2.3 - Validar atualização de usuário com sucesso.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
+									"pm.variables.set(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+									"\r",
+									"var randomFirstName = pm.variables.get(\"name\");\r",
+									"var randomEmail = pm.variables.get(\"email\");\r",
+									"\r",
+									"pm.variables.set(\"name\", randomFirstName);\r",
+									"pm.variables.set(\"email\", randomEmail);"
+								],
+								"type": "text/javascript",
+								"id": "9e504b1e-3225-4c8f-b832-a4e894cb2e3e"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var teste = parseInt(pm.environment.get(\"teste\"));\r",
+									"var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+									"var id_CreateUser = parseInt(pm.environment.get(\"id_CreateUser\"));\r",
+									"\r",
+									"pm.test(`${++teste}.${++complemento} - Validar atualização de usuário.`, function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"    var responseJson = pm.response.json();\r",
+									"\r",
+									"    if (responseJson.data && responseJson.data.id) {\r",
+									"        var id_CreateUser = responseJson.data.id;\r",
+									"        pm.environment.set(\"id_CreateUser\", id_CreateUser);\r",
+									"        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID: ${id_CreateUser} atualizado com sucesso.`);\r",
+									"    } else {\r",
+									"        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID: não encontrado.`);\r",
+									"    }\r",
+									"\r",
+									"    // Atualizar complemento na variável de ambiente\r",
+									"    pm.environment.set(\"complemento\", complemento);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "0cf65afe-1d2c-4c49-991c-5e0ce17d7045"
+							}
+						}
+					],
+					"id": "6e598857-0c6d-4aad-8123-d0a9cee23892",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"gender\": \"female\",\r\n    \"email\": \"{{email}}\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}"
+					},
+					"response": []
+				},
+				{
+					"name": "2.4 - Validar atualização parcial de usuário com sucesso.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+									"\r",
+									"var randomFirstName = pm.variables.get(\"name\");\r",
+									"var randomEmail = pm.variables.get(\"email\");\r",
+									"\r",
+									"pm.variables.set(\"name\", randomFirstName);\r",
+									"pm.variables.set(\"email\", randomEmail);"
+								],
+								"type": "text/javascript",
+								"id": "9d25878a-32d0-45b2-a78f-969d2cc0340e"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var teste = parseInt(pm.environment.get(\"teste\"));\r",
+									"var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+									"var id_CreateUser = parseInt(pm.environment.get(\"id_CreateUser\"));\r",
+									"\r",
+									"pm.test(`${++teste}.${++complemento} - Validar atualização parcial der usuário.`, function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"    var responseJson = pm.response.json();\r",
+									"\r",
+									"    if (responseJson.data && responseJson.data.id) {\r",
+									"        var id_CreateUser = responseJson.data.id;\r",
+									"        pm.environment.set(\"id_CreateUser\", id_CreateUser);\r",
+									"        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID: ${id_CreateUser} atualização de propriedade com sucesso.`);\r",
+									"    } else {\r",
+									"        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID: não encontrado.`);\r",
+									"    }\r",
+									"\r",
+									"    // Atualizar complemento na variável de ambiente\r",
+									"    pm.environment.set(\"complemento\", complemento);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "b679d75c-2671-4308-9182-979a7400ddf9"
+							}
+						}
+					],
+					"id": "cc386e84-9909-4b93-8720-31f9b16210da",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"gender\": \"female\",\r\n    \"email\": \"{{email}}\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}"
+					},
+					"response": []
+				},
+				{
+					"name": "2.5 - Validar deleção de usuário com sucesso.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var id_CreateUser = parseInt(pm.environment.get(\"id_CreateUser\"));"
+								],
+								"type": "text/javascript",
+								"id": "fa5cc156-f5e7-47a8-a020-28bbc93ecb78"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var teste = parseInt(pm.environment.get(\"teste\"));\r",
+									"var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+									"\r",
+									"\r",
+									"pm.test(`${++teste}.${++complemento} - Validar deleção de usuário.`, function () {\r",
+									"\r",
+									"    var responseJson = pm.response.json();\r",
+									"\r",
+									"    // Verificar se o campo data é null, indicando que a deleção foi bem-sucedida\r",
+									"    if (responseJson.data === null) {\r",
+									"        pm.response.to.have.status(200);\r",
+									"        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID deletado com sucesso.`);\r",
+									"    } else {\r",
+									"        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID não encontrado ou não deletado.`);\r",
+									"    }\r",
+									"\r",
+									"    // Atualizar complemento na variável de ambiente\r",
+									"    pm.environment.set(\"complemento\", complemento);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "908e0559-6779-4254-bd92-73a11427bc41"
+							}
+						}
+					],
+					"id": "a4c82cb2-762e-4486-bfd3-3318f0559163",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}"
+					},
+					"response": []
+				},
+				{
+					"name": "2.6 - Validar busca por usuário deletado.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var teste = parseInt(pm.environment.get(\"teste\"));\r",
+									"var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+									"var id_CreateUser = parseInt(pm.environment.get(\"id_CreateUser\"))\r",
+									"\r",
+									"pm.test(`${++teste}.${++complemento} - Validar busca por usuário.`, function () {\r",
+									"    var id_CreateUser = pm.environment.get(\"id_CreateUser\");\r",
+									"\r",
+									"    pm.sendRequest({\r",
+									"        url: `https://gorest.co.in/public-api/users/${id_CreateUser}`, \r",
+									"        method: 'GET'\r",
+									"    }, function (err, response) {\r",
+									"        if (err) {\r",
+									"            console.log(`${teste}.${complemento} - Erro ao buscar o ID: ${err}`);\r",
+									"            pm.expect.fail(`Erro ao buscar o ID: ${err}`);\r",
+									"            return;\r",
+									"        }\r",
+									"\r",
+									"        var responseJson = response.json();\r",
+									"\r",
+									"        // Verifica se o status da resposta é 404 e se contém a mensagem esperada\r",
+									"        if (responseJson.data.message === \"Resource not found\") {\r",
+									"            console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID não encontrado após deletar.`);\r",
+									"        } else {\r",
+									"            console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID ainda encontrado ou resposta inesperada.`);\r",
+									"            pm.expect.fail(`ID encontrado ou resposta inesperada. Código: ${response.code}, Mensagem: ${JSON.stringify(responseJson)}`);\r",
+									"        }\r",
+									"    });\r",
+									"\r",
+									"    // Atualizar complemento na variável de ambiente\r",
+									"    pm.environment.set(\"complemento\", complemento);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "5e47a827-4e06-453e-93f8-c2099332aa59"
+							}
+						}
+					],
+					"id": "155930a7-0fe1-4e1d-9bf6-d407e62b8ac8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : \"{{id_CreateUser}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}"
+					},
+					"response": []
+				}
+			],
+			"id": "6a124acb-6994-4c74-af70-89dfa2159cc4",
+			"auth": {
+				"type": "bearer",
+				"bearer": {
+					"token": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921"
+				}
+			}
+		},
+		{
+			"name": "API + Projetos 2",
+			"item": [
+				{
+					"name": "1 - Cadastra",
+					"id": "d6c571bc-4d41-4296-aad7-6860d207dad0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Bruno Siqueira\",\r\n    \"gender\": \"male\",\r\n    \"email\": \"bgs@gmailcom\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}"
+					},
+					"response": []
+				},
+				{
+					"name": "2 - Busca",
+					"id": "595f59e8-d39b-430f-8910-655e63d4887f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Bruno Siqueira\",\r\n    \"gender\": \"male\",\r\n    \"email\": \"bgs@gmailcom\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}?/=7141631",
+							"host": [
+								"{{baseUrl_GoRest}}"
+							],
+							"path": [
+								"{{endpoint_GoRest_Users}}"
+							],
+							"query": [
+								{
+									"key": "/",
+									"value": "7141631"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Posts",
+					"id": "c1b6871b-022b-4866-87d1-fb564ab7b9b0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Posts}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Comments",
+					"id": "9abee61e-4bd8-4058-a50e-166eaa1a0233",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Comments}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Comments",
+					"id": "389fe75f-3dbe-40a1-9fb9-a0eeb84d81bb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Comments}}"
+					},
+					"response": []
+				}
+			],
+			"id": "76007217-ad4a-4a54-b58a-e03cee9c084f",
+			"auth": {
+				"type": "bearer",
+				"bearer": {
+					"token": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921"
+				}
+			}
+		}
+	]
+}
