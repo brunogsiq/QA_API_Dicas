@@ -1,0 +1,3335 @@
+{
+  "info": {
+    "_postman_id": "6259fd80-bc91-43e2-9729-f5098e988e14",
+    "name": "8 - Banco Master",
+    "description": "O que é projeto do KYC? Know you Costumer - Conheça seu cliente. Os bancos ficaram a dependência de informações do banco central. Ao logo do tempo os bancos foram acumulando informações de cada cliente. E o banco central mudou as regras para isso.\n\n* Consulta o nome nas listas internacionais terroristas\n    Interpool\nMídia negativa - Exemplo.: Apareceu no escândalo da lava jato.\n\nPara quem opera criptomoeda, as operadoras estão exigindo que os clientes passem pelo sistema de KYC\n\nO que é o projeto? Vamos fazer um projeto novo, unir três sistemas em um só.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "37217607",
+    "_collection_link": "https://go.postman.co/collection/37217607-6259fd80-bc91-43e2-9729-f5098e988e14?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "KYC",
+      "item": [
+        {
+          "name": "BackLog_KYC",
+          "item": [],
+          "description": "Nesta Pasta/Seção são todos os endpoint/requests listados a serem trabalhados para testes e verificações."
+        },
+        {
+          "name": "Feitos_KYC",
+          "item": [
+            {
+              "name": "API Autenticacao",
+              "item": [
+                {
+                  "name": "atualizar-token",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "console.log();\r",
+                          "console.log(\"============Inicio de (atualizar-token)============\");\r",
+                          "console.log();\r",
+                          "\r",
+                          "var jsonData = pm.response.json();\r",
+                          "\r",
+                          "pm.test(\"O tempo de resposta é menor que 300ms\", function () {\r",
+                          "\tpm.expect(pm.response.responseTime).to.be.below(300);\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Status Code POST - 200\", function () {\r",
+                          "\tpm.expect(pm.response.code).to.be.oneOf([200]);\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Status - OK Sucesso\", function () {\r",
+                          "\tpm.response.to.have.status(\"OK\");\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Corpo do response, está correto em (Json)\", function () {\r",
+                          "\tvar jsonData = pm.response.json();\r",
+                          "\tpm.response.to.have.body(jsonData);\r",
+                          "\tconsole.log(\"Corpo do response, response: \", pm.response);\r",
+                          "\tconsole.log();\r",
+                          "\tconsole.log(\"Corpo do response, jsonData: \", jsonData);\r",
+                          "\tconsole.log();\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Presença de Content-Type\", function () {\r",
+                          "\tpm.response.to.have.header(\"Content-Type\");\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Presença do parametro (usuario)\", function () {\r",
+                          "\tvar jsonData = pm.response.json();\r",
+                          "    pm.expect(jsonData).to.have.property('usuario');\r",
+                          "\t// console.info(\"usuario: \", jsonData.usuario);\r",
+                          "\tconsole.log(\"usuario: \", jsonData.usuario);\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Presença do parametro (accessToken)\", function () {\r",
+                          "\tvar jsonData = pm.response.json();\r",
+                          "    pm.expect(jsonData).to.have.property('accessToken');\r",
+                          "\tpm.environment.set(\"token\", jsonData.accessToken)\r",
+                          "\t// console.info(\"token: \", jsonData.accessToken);\r",
+                          "\tconsole.log(\"token: \", jsonData.accessToken);\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Presença do parametro (refreshToken)\", function () {\r",
+                          "\tvar jsonData = pm.response.json();\r",
+                          "    pm.expect(jsonData).to.have.property('refreshToken');\r",
+                          "\tpm.environment.set(\"refreshToken\", jsonData.refreshToken)\r",
+                          "\t// console.info(\"refreshToken: \", jsonData.refreshToken);\r",
+                          "\tconsole.log(\"refreshToken: \", jsonData.refreshToken);\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Presença do parametro (dataCriacao)\", function () {\r",
+                          "\tvar jsonData = pm.response.json();\r",
+                          "    pm.expect(jsonData).to.have.property('dataCriacao');\r",
+                          "\t// console.info(\"dataCriacao: \", jsonData.dataCriacao);\r",
+                          "\tconsole.log(\"dataCriacao: \", jsonData.dataCriacao);\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Presença do parametro (dataExpiracao)\", function () {\r",
+                          "\tvar jsonData = pm.response.json();\r",
+                          "    pm.expect(jsonData).to.have.property('dataExpiracao');\r",
+                          "\t// console.info(\"dataExpiracao: \", jsonData.dataExpiracao);\r",
+                          "\tconsole.log(\"dataExpiracao: \", jsonData.dataExpiracao);\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Presença do parametro (resetarSenha)\", function () {\r",
+                          "\tvar jsonData = pm.response.json();\r",
+                          "    pm.expect(jsonData).to.have.property('resetarSenha');\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Presença do parametro (mfaAtivo)\", function () {\r",
+                          "\tvar jsonData = pm.response.json();\r",
+                          "    pm.expect(jsonData).to.have.property('mfaAtivo');\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Presença do parametro (guidValidadorToken)\", function () {\r",
+                          "\tvar jsonData = pm.response.json();\r",
+                          "    pm.expect(jsonData).to.have.property('guidValidadorToken');\r",
+                          "\t// console.info(\"guidValidadorToken: \", jsonData.guidValidadorToken);\r",
+                          "\tconsole.log(\"guidValidadorToken: \", jsonData.guidValidadorToken);\r",
+                          "});\r",
+                          "\r",
+                          "\r",
+                          "console.log();\r",
+                          "console.log(\"============FIM de (atualizar-token)============\");\r",
+                          "console.log();\r",
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "accept",
+                        "value": "text/plain"
+                      },
+                      {
+                        "key": "api",
+                        "value": "API-PLATAFORMA-KYC"
+                      },
+                      {
+                        "key": "clienteId",
+                        "value": "9TORIRyfmiGwEMS22ino/0g5zXuHACXniSKWeg6rLofQ1teFW6SNz2IZuF3o7n+P"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"refreshToken\": \"{{refreshToken}}\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "https://dev-api-autenticacao.bancomaster.com.br/plataforma-autenticacao/v1/autenticacao/atualizar-token",
+                      "protocol": "https",
+                      "host": [
+                        "dev-api-autenticacao",
+                        "bancomaster",
+                        "com",
+                        "br"
+                      ],
+                      "path": [
+                        "plataforma-autenticacao",
+                        "v1",
+                        "autenticacao",
+                        "atualizar-token"
+                      ]
+                    },
+                    "description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://dev-api-autenticacao.bancomaster.com.br/plataforma-autenticacao/v1/autenticacao/atualizar-token' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'api: API-PLATAFORMA-KYC' \\\r\n  -H 'clienteId: 9TORIRyfmiGwEMS22ino/0g5zXuHACXniSKWeg6rLofQ1teFW6SNz2IZuF3o7n+P' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"refreshToken\": \"ecjjIzqOhXJDFNN5m3yBKFIeBwJon4GEzkrthe3E1rVDb6k+1zfQHMJXzTWxJbZR4pTfUaP13Fpn05CfCniyHg==\"\r\n}'"
+                  },
+                  "response": []
+                }
+              ],
+              "description": "Esta pasta trata da API que autoriza o login de algum usuário já cadastrado no BD Master, autenticação deste login, obtenção de Token permissivo ao uso destes microsserviços.  \n  \nAtenção.:\n\nPara obtenção da autenticação, é necessário seguir um determinado Step-by-Step.  \n  \n(Precisa terminar a descrição e passo a passo)."
+            },
+            {
+              "name": "Configuracoes_PLD_Master",
+              "item": [
+                {
+                  "name": "Tipos_de_Riscos",
+                  "item": [
+                    {
+                      "name": "Filtro",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "exec": [
+                              "console.log();\r",
+                              "console.log(`============Inicio de (Filtros/GET-ALL)============`);\r",
+                              "console.log();\r",
+                              "\r",
+                              "\r",
+                              "pm.test(`Teste de Propriedades`, function() {\r",
+                              "    var jsonData = pm.response.json();\r",
+                              "    console.log(`jsonData`, jsonData);\r",
+                              "\r",
+                              "    // 1. Obter a quantidade de propriedades\r",
+                              "    let numPropriedades = Object.keys(jsonData).length;\r",
+                              "    pm.test(`Quantidade de propriedades no response.: (${numPropriedades})`, function() {\r",
+                              "        pm.expect(numPropriedades).to.be.above(0); // Verifica se há pelo menos uma propriedade\r",
+                              "\t\tpm.environment.set(`Filtros_QTD_Ob`, numPropriedades);\r",
+                              "        console.log(`Número de propriedades: ${numPropriedades}`);\r",
+                              "    });\r",
+                              "\r",
+                              "    // 2. Obter o nome de cada propriedade\r",
+                              "    let nomesPropriedades = Object.keys(jsonData);\r",
+                              "    let posicoesPropriedades = nomesPropriedades.map((nome, index) => `${index}:${nome}`).join(' | ');\r",
+                              "    pm.test(`Posições e Títulos das propriedades no response.: (${posicoesPropriedades})`, function() {\r",
+                              "        pm.expect(nomesPropriedades).to.be.an('array').that.is.not.empty;\r",
+                              "        console.log(`Posicoes Propriedades:`, posicoesPropriedades);\r",
+                              "    });\r",
+                              "\r",
+                              "\t\r",
+                              "\r",
+                              "    // 3. Obter os valores do parâmetro `risco` dentro de `niveisRisco`\r",
+                              "    let niveisRisco = jsonData.niveisRisco.map(nivel => nivel.risco);\r",
+                              "    pm.test(`Valores do parâmetro 'risco' dentro de 'niveisRisco'`, function() {\r",
+                              "        pm.expect(niveisRisco).to.be.an('array').that.is.not.empty;\r",
+                              "\t\tpm.environment.set(`NivelRisco_Vlr_Ob`,  niveisRisco.join(','));\r",
+                              "\t\tconsole.log(`Valores de 'risco':`, niveisRisco);\r",
+                              "    });\r",
+                              "\r",
+                              "    // 4. Testes dinâmicos para os demais parâmetros\r",
+                              "    nomesPropriedades.forEach(nome => {\r",
+                              "        if (nome !== 'niveisRisco') {\r",
+                              "            let valores = jsonData[nome];\r",
+                              "            pm.test(`Valores do parâmetro '${nome}'`, function() {\r",
+                              "                pm.expect(valores).to.exist; // Verifica se o parâmetro existe\r",
+                              "                console.log(`Valores de '${nome}':`, valores);\r",
+                              "    \t\t\tpm.environment.set(`Filtros_${nome}_Valores`,  valores);\r",
+                              "            });\r",
+                              "        }\r",
+                              "    });\r",
+                              "});\r",
+                              "\r",
+                              "\r",
+                              "\r",
+                              "\r",
+                              "\r",
+                              "/* pm.test(`Teste de Propriedades`,function() {\r",
+                              "\tvar jsonData = pm.response.json();\r",
+                              "\tvar objects = jsonData.length;\r",
+                              "\tconsole.log(`jsonData`, jsonData);\r",
+                              "\r",
+                              "\t// 1. Obter a quantidade de propriedades\r",
+                              "\tlet numPropriedades = Object.keys(jsonData).length;\r",
+                              "\tpm.test(`Quantidade de propriedades no response.: (${numPropriedades})`, function() {\r",
+                              "\t    pm.expect(numPropriedades).to.be.above(0); // Verifica se há pelo menos uma propriedade\r",
+                              "\t    console.log(`Número de propriedades: ${numPropriedades}`);\r",
+                              "\t});\r",
+                              "\r",
+                              "\t// 2. Obter o nome de cada propriedade\r",
+                              "\tlet nomesPropriedades = Object.keys(jsonData);\r",
+                              "\t\t// let nomesPropriedadesSeparados = nomesPropriedades.join(' - ');\r",
+                              "\tlet posicoesPropriedades = nomesPropriedades.map((nome, index) => `${index}:${nome}`).join(' | ');\r",
+                              "\tpm.test(`Posições e Títulos das propriedades no response.: (${posicoesPropriedades})`, function() {\r",
+                              "\t    pm.expect(nomesPropriedades).to.be.an('array').that.is.not.empty;\r",
+                              "\t    console.log(`Títulos das propriedades:`, nomesPropriedadesSeparados);\r",
+                              "\t    console.log(`Posicoes Propriedades:`, posicoesPropriedades);\r",
+                              "\t});\r",
+                              "\r",
+                              "\t// 3. Obter os valores do parâmetro `risco` dentro de `niveisRisco`\r",
+                              "\tlet niveisRisco = jsonData.niveisRisco.map(nivel => nivel.risco);\r",
+                              "\tpm.test(`Valores do parâmetro 'risco' dentro de 'niveisRisco'`, function() {\r",
+                              "\t    pm.expect(niveisRisco).to.be.an('array').that.is.not.empty;\r",
+                              "\t    console.log(`Valores de 'risco':`, niveisRisco);\r",
+                              "\t});\r",
+                              "}); */\r",
+                              "\r",
+                              "\r",
+                              "\r",
+                              "\r",
+                              "\r",
+                              "\r",
+                              "/* var objects = jsonData.niveisRisco;\r",
+                              "var objectCount = objects.length;\r",
+                              "var objectIds = objects.map(obj => obj.id);\r",
+                              "\r",
+                              "pm.test(`O tempo de resposta é menor que 300ms`, function () {\r",
+                              "\tpm.expect(pm.response.responseTime).to.be.below(300);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Status Code GET/POST - 200`, function () {\r",
+                              "\tpm.expect(pm.response.code).to.be.oneOf([200]);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Status - OK Sucesso`, function () {\r",
+                              "\tpm.response.to.have.status(`OK`);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Espera de (Json) na resposta`, function () {\r",
+                              "\tpm.expect(jsonData).to.exist;\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Presença de Content-Type`, function () {\r",
+                              "\tpm.response.to.have.header(`Content-Type`);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Contagem de Objetos principais registrados.: ${objectCount}`, function () {\r",
+                              "\tpm.expect(objectCount);\r",
+                              "    pm.environment.set(`Filtros_QTD_Ob`, objectCount);\r",
+                              "    pm.environment.set(`Filtros_IDs_Ob`, objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(`Filtros_IDs_Ob`, objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(`Filtros_QTD_Ob`, objectCount);\r",
+                              "    pm.variables.set(`Filtros_IDs_Ob`, objectIds.join(','));\r",
+                              "    pm.variables.set(`Filtros_QTD_Ob`, objectCount);\r",
+                              "\r",
+                              "\tconsole.log(`Quantidade de Objetos Principais:`, objectCount);\r",
+                              "\tconsole.log(`IDs dos Objetos Principais:`, objectIds);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Obtenção dos respectivos IDs de cada Objeto`, function () {\r",
+                              "    // var objectCount = jsonData.length;\r",
+                              "\t// var objectIds = jsonData.map(obj => obj.id);\r",
+                              "\tpm.expect(objectCount);\r",
+                              "    pm.environment.set(`Filtros_QTD_Ob`, objectCount);\r",
+                              "    pm.environment.set(`Filtros_IDs_Ob`, objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(`Filtros_IDs_Ob`, objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(`Filtros_QTD_Ob`, objectCount);\r",
+                              "    pm.variables.set(`Filtros_IDs_Ob`, objectIds.join(','));\r",
+                              "    pm.variables.set(`Filtros_QTD_Ob`, objectCount);\r",
+                              "\r",
+                              "\tconsole.log(`Quantidade de Objetos Principais:`, objectCount);\r",
+                              "\tconsole.log(`IDs dos Objetos Principais:`, objectIds);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Validação das propriedades (id/risco/MêsAt/Aprov/datAt/UserAt) `, () => {\r",
+                              "    pm.expect(objectCount).to.be.above(0);\r",
+                              "});\r",
+                              "\r",
+                              "if (objectCount > 0) {\r",
+                              "\tlet obj = objects[0];\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'id'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('id');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'risco'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('risco');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'dataAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'usuarioAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "\t}); */\r",
+                              "\r",
+                              "\t/* \tpm.test(`Verificação da propriedade 'qtMesesAtualizacao'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtAprovadoresComite'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "\t}); */\r",
+                              "\t\r",
+                              "// };\r",
+                              "    \r",
+                              "\r",
+                              "\r",
+                              "/* var objectPrpty = jsonData.map(obj => obj);\r",
+                              "jsonData.forEach((obj, index) => {\r",
+                              "\tpm.test(`Verificação da propriedade 'id'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('id');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'risco'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('risco');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtMesesAtualizacao'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtAprovadoresComite'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'dataAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'usuarioAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "\t});\r",
+                              "});\r",
+                              "\r",
+                              "\r",
+                              "// Percorra cada objeto na matriz de resposta\r",
+                              "/* jsonData.forEach((obj, index) => {\r",
+                              "    // Teste a presença de cada propriedade necessária\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'id'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('id');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'risco'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('risco');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'qtMesesAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'qtAprovadoresComite'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'dataAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'usuarioAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "    });\r",
+                              "}); */\r",
+                              "\r",
+                              "\r",
+                              "console.log();\r",
+                              "console.log(`============Fim de (Filtros/GET-ALL)============`);\r",
+                              "console.log();\r",
+                              "\r",
+                              ""
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        },
+                        {
+                          "listen": "prerequest",
+                          "script": {
+                            "exec": [
+                              "console.log();\r",
+                              "console.log(\"============Inicio de (filtro/GET)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              "if (randomNumber) {\r",
+                              "\t// Função para gerar um número randômico entre 0 e 8\r",
+                              "\tfunction getRandomNumber() {\r",
+                              "\t    return Math.floor(Math.random() * 8) + 1;\r",
+                              "\t}\r",
+                              "\t\r",
+                              "\tlet randomNumber = getRandomNumber();\r",
+                              "\tpm.environment.set(\"NumeroRandomico\", randomNumber);\r",
+                              "\tpm.collectionVariables.set(\"NumeroRandomico\", randomNumber);\r",
+                              "\tpm.variables.set(\"NumeroRandomico\", randomNumber);\r",
+                              "\tconsole.log();\r",
+                              "\tconsole.log(\"NumeroRandomico: \" + randomNumber);\r",
+                              "\tconsole.log();\r",
+                              "}\r",
+                              "\r",
+                              "\r",
+                              "\r",
+                              "\r",
+                              "// Função para obter ID aleatório a partir de uma variável de ambiente\r",
+                              "function getRandomId(envVariable, outputVariable) {\r",
+                              "    let ids = pm.environment.get(envVariable);\r",
+                              "    \r",
+                              "    if (ids) {\r",
+                              "        let idsArray = ids.split(',');\r",
+                              "        let randomIndex = Math.floor(Math.random() * idsArray.length);\r",
+                              "        let randomId = idsArray[randomIndex].trim();\r",
+                              "\r",
+                              "        pm.environment.set(outputVariable, randomId);\r",
+                              "        pm.collectionVariables.set(outputVariable, randomId);\r",
+                              "        pm.variables.set(outputVariable, randomId);\r",
+                              "\r",
+                              "        console.log(`IDs disponíveis em ${envVariable}:`, idsArray);\r",
+                              "        console.log(`ID escolhido aleatoriamente para ${outputVariable}:`, randomId);\r",
+                              "    } else {\r",
+                              "        console.log(`A variável '${envVariable}' não está definida ou está vazia.`);\r",
+                              "    }\r",
+                              "}\r",
+                              "\r",
+                              "\r",
+                              "// Obter ID randomico \"HotelMarkup_IDs_Ob\" para usar em HotelMarkup\r",
+                              "getRandomId(\"HotelMarkup_IDs_Ob\", \"HotelMarkup_ID_Randon\");\r",
+                              "\r",
+                              "// Obter ID randomico \"IntegrationService_IDs_Ob\" para usar em IntegrationService\r",
+                              "getRandomId(\"IntegrationService_IDs_Ob\", \"IntegrationService_ID_Randon\");\r",
+                              "\r",
+                              "// Obter ID randomico \"Market_IDs_Ob\" para usar em Market\r",
+                              "getRandomId(\"Market_IDs_Ob\", \"Market_ID_Randon\");\r",
+                              "\r",
+                              "\r",
+                              "\r",
+                              "// Função para gerar uma data aleatória entre duas datas\r",
+                              "function getRandomDate(start, end) {\r",
+                              "    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));\r",
+                              "}\r",
+                              "\r",
+                              "// Definir o intervalo de datas para geração\r",
+                              "let startRange = new Date(2024, 0, 1);\r",
+                              "let endRange = new Date(2024, 11, 31);\r",
+                              "let startDate = getRandomDate(startRange, endRange);\r",
+                              "let endDate = getRandomDate(startDate, endRange);\r",
+                              "\r",
+                              "// Formatar as datas em YYYY-MM-DD\r",
+                              "let formatDate = (date) => {\r",
+                              "    let d = new Date(date);\r",
+                              "    let month = '' + (d.getMonth() + 1);\r",
+                              "    let day = '' + d.getDate();\r",
+                              "    let year = d.getFullYear();\r",
+                              "\r",
+                              "    if (month.length < 2) month = '0' + month;\r",
+                              "    if (day.length < 2) day = '0' + day;\r",
+                              "\r",
+                              "    return [year, month, day].join('/');\r",
+                              "};\r",
+                              "\r",
+                              "pm.variables.set(\"StartDate\", formatDate(startDate));\r",
+                              "pm.variables.set(\"EndDate\", formatDate(endDate));\r",
+                              "pm.environment.set(\"StartDate\", formatDate(startDate));\r",
+                              "pm.environment.set(\"EndDate\", formatDate(endDate));\r",
+                              "\r",
+                              "console.log(\"StartDate:\", formatDate(startDate));\r",
+                              "console.log(\"EndDate:\", formatDate(endDate));\r",
+                              "\r",
+                              "\r",
+                              "\r",
+                              "\t// Obter ID randomico \"Market_IDs_Ob\" para usar em Market\r",
+                              "\tlet ids = pm.environment.get(\"Market_IDs_Ob\");\r",
+                              "\r",
+                              "\tif (ids) {\r",
+                              "\t\t    let idsArray = ids.split(',');\r",
+                              "\t\t    let randomIndex = Math.floor(Math.random() * idsArray.length);\r",
+                              "\t\t    let randomId = idsArray[randomIndex].trim();\r",
+                              "\t\r",
+                              "\t\t    pm.environment.set(\"Market_ID_Randon\", randomId);\r",
+                              "\t\t    // pm.collectionVariables.set(\"Market_ID_Randon\", randomId);\r",
+                              "\t\r",
+                              "\t\t    console.log(\"IDs disponíveis:\", idsArray);\r",
+                              "\t\t    console.log(\"ID escolhido aleatoriamente:\", randomId);\r",
+                              "\t\t} else {\r",
+                              "\t\t    console.log(\"A variável 'Market_IDs_Ob' não está definida ou está vazia.\");\r",
+                              "\t\t}\r",
+                              "\r",
+                              ""
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        }
+                      ],
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "accept",
+                            "value": "text/plain"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\r\n\t\"numero\": {{NumeroRandomico}}\r\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{dev_baseUrl}}/kyc/v1/Filtro/dados",
+                          "host": [
+                            "{{dev_baseUrl}}"
+                          ],
+                          "path": [
+                            "kyc",
+                            "v1",
+                            "Filtro",
+                            "dados"
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "MunicipioFronteira-GETALL",
+                      "event": [
+                        {
+                          "listen": "prerequest",
+                          "script": {
+                            "exec": [
+                              ""
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        },
+                        {
+                          "listen": "test",
+                          "script": {
+                            "exec": [
+                              "console.log();\r",
+                              "console.log(\"============Inicio de (MunicipioFronteira/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              "var jsonData = pm.response.json();\r",
+                              "var objects = jsonData.dados;\r",
+                              "var objectCount = objects.length;\r",
+                              "var objectIds = objects.map(obj => obj.id);\r",
+                              "var objectufs = objects.map(obj => obj.uf);\r",
+                              "\r",
+                              "console.log(\"UFs dos Objetos Principais:\", objectufs);\r",
+                              "\r",
+                              "pm.test(\"O tempo de resposta é menor que 300ms\", function () {\r",
+                              "\tpm.expect(pm.response.responseTime).to.be.below(300);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status Code GET/POST - 200\", function () {\r",
+                              "\tpm.expect(pm.response.code).to.be.oneOf([200]);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status - OK Sucesso\", function () {\r",
+                              "\tpm.response.to.have.status(\"OK\");\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Espera de (Json) na resposta\", function () {\r",
+                              "\tpm.expect(jsonData).to.exist;\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Presença de Content-Type\", function () {\r",
+                              "\tpm.response.to.have.header(\"Content-Type\");\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Contagem de Objetos principais registrados.: ${objectCount}`, function () {\r",
+                              "\tpm.expect(objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.variables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.variables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "\tconsole.log(\"Quantidade de Objetos Principais:\", objectCount);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Obtenção dos respectivos IDs de cada Objeto`, function () {\r",
+                              "    // var objectCount = jsonData.length;\r",
+                              "\t// var objectIds = jsonData.map(obj => obj.id);\r",
+                              "\tpm.expect(objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.variables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.variables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "\tconsole.log(\"IDs dos Objetos Principais:\", objectIds);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Validação das propriedades (id/risco/MêsAt/Aprov/datAt/UserAt) \", () => {\r",
+                              "    pm.expect(objectCount).to.be.above(0);\r",
+                              "});\r",
+                              "\r",
+                              "if (objectCount > 0) {\r",
+                              "\tlet obj = objects[0];\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'id'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('id');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'risco'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('risco');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'dataAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'usuarioAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\t/* \tpm.test(`Verificação da propriedade 'qtMesesAtualizacao'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtAprovadoresComite'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "\t}); */\r",
+                              "\t\r",
+                              "};\r",
+                              "    \r",
+                              "\r",
+                              "\r",
+                              "/* var objectPrpty = jsonData.map(obj => obj);\r",
+                              "jsonData.forEach((obj, index) => {\r",
+                              "\tpm.test(`Verificação da propriedade 'id'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('id');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'risco'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('risco');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtMesesAtualizacao'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtAprovadoresComite'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'dataAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'usuarioAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "\t});\r",
+                              "});\r",
+                              "\r",
+                              "\r",
+                              "// Percorra cada objeto na matriz de resposta\r",
+                              "/* jsonData.forEach((obj, index) => {\r",
+                              "    // Teste a presença de cada propriedade necessária\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'id'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('id');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'risco'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('risco');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'qtMesesAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'qtAprovadoresComite'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'dataAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'usuarioAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "    });\r",
+                              "}); */\r",
+                              "\r",
+                              "\r",
+                              "console.log();\r",
+                              "console.log(\"============Fim de (MunicipioFronteira/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              ""
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        }
+                      ],
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true,
+                        "strictSSL": true,
+                        "followOriginalHttpMethod": true,
+                        "followAuthorizationHeader": true,
+                        "removeRefererHeaderOnRedirect": true,
+                        "insecureHTTPParser": false,
+                        "disableCookies": true,
+                        "tlsPreferServerCiphers": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "noauth"
+                        },
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "accept",
+                            "value": "text/plain"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\r\n\t\"name\":{{$randomFirstName}},\r\n\t\"email\": {{$randomEmail}},\r\n\t\"endereço\": {{$randomStreetName}}\r\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{dev_baseUrl}}/kyc/v1/MunicipioFronteira/filtromunicipios",
+                          "host": [
+                            "{{dev_baseUrl}}"
+                          ],
+                          "path": [
+                            "kyc",
+                            "v1",
+                            "MunicipioFronteira",
+                            "filtromunicipios"
+                          ],
+                          "query": [
+                            {
+                              "key": "Nome",
+                              "value": "Senador Guiomard",
+                              "description": "string\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "Uf",
+                              "value": "SC",
+                              "description": "String",
+                              "disabled": true
+                            },
+                            {
+                              "key": "CodigoIbge",
+                              "value": "4200101",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "NivelRisco",
+                              "value": "2",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "ItensPagina",
+                              "value": "600",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "PaginaAtual",
+                              "value": "1",
+                              "description": "Integers",
+                              "disabled": true
+                            }
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "MunicipioFronteira-GETALL Copy",
+                      "event": [
+                        {
+                          "listen": "prerequest",
+                          "script": {
+                            "exec": [
+                              ""
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        },
+                        {
+                          "listen": "test",
+                          "script": {
+                            "exec": [
+                              "console.log();\r",
+                              "console.log(\"============Inicio de (MunicipioFronteira/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              "var jsonData = pm.response.json();\r",
+                              "var objects = jsonData.dados;\r",
+                              "var objectCount = objects.length;\r",
+                              "var objectIds = objects.map(obj => obj.id);\r",
+                              "var objectufs = objects.map(obj => obj.uf);\r",
+                              "\r",
+                              "console.log(\"UFs dos Objetos Principais:\", objectufs);\r",
+                              "\r",
+                              "pm.test(\"O tempo de resposta é menor que 300ms\", function () {\r",
+                              "\tpm.expect(pm.response.responseTime).to.be.below(300);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status Code GET/POST - 200\", function () {\r",
+                              "\tpm.expect(pm.response.code).to.be.oneOf([200]);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status - OK Sucesso\", function () {\r",
+                              "\tpm.response.to.have.status(\"OK\");\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Espera de (Json) na resposta\", function () {\r",
+                              "\tpm.expect(jsonData).to.exist;\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Presença de Content-Type\", function () {\r",
+                              "\tpm.response.to.have.header(\"Content-Type\");\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Contagem de Objetos principais registrados.: ${objectCount}`, function () {\r",
+                              "\tpm.expect(objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.variables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.variables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "\tconsole.log(\"Quantidade de Objetos Principais:\", objectCount);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Obtenção dos respectivos IDs de cada Objeto`, function () {\r",
+                              "    // var objectCount = jsonData.length;\r",
+                              "\t// var objectIds = jsonData.map(obj => obj.id);\r",
+                              "\tpm.expect(objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.variables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.variables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "\tconsole.log(\"IDs dos Objetos Principais:\", objectIds);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Validação das propriedades (id/risco/MêsAt/Aprov/datAt/UserAt) \", () => {\r",
+                              "    pm.expect(objectCount).to.be.above(0);\r",
+                              "});\r",
+                              "\r",
+                              "if (objectCount > 0) {\r",
+                              "\tlet obj = objects[0];\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'id'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('id');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'risco'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('risco');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'dataAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'usuarioAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\t/* \tpm.test(`Verificação da propriedade 'qtMesesAtualizacao'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtAprovadoresComite'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "\t}); */\r",
+                              "\t\r",
+                              "};\r",
+                              "    \r",
+                              "\r",
+                              "\r",
+                              "/* var objectPrpty = jsonData.map(obj => obj);\r",
+                              "jsonData.forEach((obj, index) => {\r",
+                              "\tpm.test(`Verificação da propriedade 'id'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('id');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'risco'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('risco');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtMesesAtualizacao'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtAprovadoresComite'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'dataAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'usuarioAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "\t});\r",
+                              "});\r",
+                              "\r",
+                              "\r",
+                              "// Percorra cada objeto na matriz de resposta\r",
+                              "/* jsonData.forEach((obj, index) => {\r",
+                              "    // Teste a presença de cada propriedade necessária\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'id'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('id');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'risco'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('risco');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'qtMesesAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'qtAprovadoresComite'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'dataAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'usuarioAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "    });\r",
+                              "}); */\r",
+                              "\r",
+                              "\r",
+                              "console.log();\r",
+                              "console.log(\"============Fim de (MunicipioFronteira/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              ""
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        }
+                      ],
+                      "protocolProfileBehavior": {
+                        "strictSSL": true,
+                        "followOriginalHttpMethod": true,
+                        "followAuthorizationHeader": true,
+                        "removeRefererHeaderOnRedirect": true,
+                        "insecureHTTPParser": false,
+                        "disableCookies": true,
+                        "tlsPreferServerCiphers": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "accept",
+                            "value": "text/plain"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{dev_baseUrl}}/kyc/v1/MunicipioFronteira/filtromunicipios",
+                          "host": [
+                            "{{dev_baseUrl}}"
+                          ],
+                          "path": [
+                            "kyc",
+                            "v1",
+                            "MunicipioFronteira",
+                            "filtromunicipios"
+                          ],
+                          "query": [
+                            {
+                              "key": "Nome",
+                              "value": "Senador Guiomard",
+                              "description": "string\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "Uf",
+                              "value": "SC",
+                              "description": "String",
+                              "disabled": true
+                            },
+                            {
+                              "key": "CodigoIbge",
+                              "value": "4200101",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "NivelRisco",
+                              "value": "2",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "ItensPagina",
+                              "value": "600",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "PaginaAtual",
+                              "value": "1",
+                              "description": "Integers",
+                              "disabled": true
+                            }
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "MunicipioFronteira-GETALL Copy 2",
+                      "event": [
+                        {
+                          "listen": "prerequest",
+                          "script": {
+                            "exec": [
+                              "var fakername = pm.variables.get('$randomFirstName')\r",
+                              "\r",
+                              "\r",
+                              "pm.environment.set('name', fakername)\r",
+                              "pm.variables.set('name', fakername)\r",
+                              "pm.collectionVariables.set('name', fakername)"
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        },
+                        {
+                          "listen": "test",
+                          "script": {
+                            "exec": [
+                              "console.log();\r",
+                              "console.log(\"============Inicio de (MunicipioFronteira/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              "var jsonData = pm.response.json();\r",
+                              "var objects = jsonData.dados;\r",
+                              "var objectCount = objects.length;\r",
+                              "var objectIds = objects.map(obj => obj.id);\r",
+                              "var objectufs = objects.map(obj => obj.uf);\r",
+                              "\r",
+                              "console.log(\"UFs dos Objetos Principais:\", objectufs);\r",
+                              "\r",
+                              "pm.test(\"O tempo de resposta é menor que 300ms\", function () {\r",
+                              "\tpm.expect(pm.response.responseTime).to.be.below(300);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status Code GET/POST - 200\", function () {\r",
+                              "\tpm.expect(pm.response.code).to.be.oneOf([200]);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status - OK Sucesso\", function () {\r",
+                              "\tpm.response.to.have.status(\"OK\");\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Espera de (Json) na resposta\", function () {\r",
+                              "\tpm.expect(jsonData).to.exist;\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Presença de Content-Type\", function () {\r",
+                              "\tpm.response.to.have.header(\"Content-Type\");\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Contagem de Objetos principais registrados.: ${objectCount}`, function () {\r",
+                              "\tpm.expect(objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.variables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.variables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "\tconsole.log(\"Quantidade de Objetos Principais:\", objectCount);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Obtenção dos respectivos IDs de cada Objeto`, function () {\r",
+                              "    // var objectCount = jsonData.length;\r",
+                              "\t// var objectIds = jsonData.map(obj => obj.id);\r",
+                              "\tpm.expect(objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.variables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.variables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "\tconsole.log(\"IDs dos Objetos Principais:\", objectIds);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Validação das propriedades (id/risco/MêsAt/Aprov/datAt/UserAt) \", () => {\r",
+                              "    pm.expect(objectCount).to.be.above(0);\r",
+                              "});\r",
+                              "\r",
+                              "if (objectCount > 0) {\r",
+                              "\tlet obj = objects[0];\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'id'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('id');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'risco'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('risco');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'dataAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'usuarioAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\t/* \tpm.test(`Verificação da propriedade 'qtMesesAtualizacao'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtAprovadoresComite'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "\t}); */\r",
+                              "\t\r",
+                              "};\r",
+                              "    \r",
+                              "\r",
+                              "\r",
+                              "/* var objectPrpty = jsonData.map(obj => obj);\r",
+                              "jsonData.forEach((obj, index) => {\r",
+                              "\tpm.test(`Verificação da propriedade 'id'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('id');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'risco'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('risco');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtMesesAtualizacao'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtAprovadoresComite'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'dataAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'usuarioAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "\t});\r",
+                              "});\r",
+                              "\r",
+                              "\r",
+                              "// Percorra cada objeto na matriz de resposta\r",
+                              "/* jsonData.forEach((obj, index) => {\r",
+                              "    // Teste a presença de cada propriedade necessária\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'id'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('id');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'risco'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('risco');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'qtMesesAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'qtAprovadoresComite'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'dataAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'usuarioAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "    });\r",
+                              "}); */\r",
+                              "\r",
+                              "\r",
+                              "console.log();\r",
+                              "console.log(\"============Fim de (MunicipioFronteira/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              ""
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        }
+                      ],
+                      "protocolProfileBehavior": {
+                        "strictSSL": true,
+                        "followOriginalHttpMethod": true,
+                        "followAuthorizationHeader": true,
+                        "removeRefererHeaderOnRedirect": true,
+                        "insecureHTTPParser": false,
+                        "disableCookies": true,
+                        "tlsPreferServerCiphers": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "accept",
+                            "value": "text/plain"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{dev_baseUrl}}/kyc/v1/MunicipioFronteira/filtromunicipios",
+                          "host": [
+                            "{{dev_baseUrl}}"
+                          ],
+                          "path": [
+                            "kyc",
+                            "v1",
+                            "MunicipioFronteira",
+                            "filtromunicipios"
+                          ],
+                          "query": [
+                            {
+                              "key": "Nome",
+                              "value": "Senador Guiomard",
+                              "description": "string\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "Uf",
+                              "value": "SC",
+                              "description": "String",
+                              "disabled": true
+                            },
+                            {
+                              "key": "CodigoIbge",
+                              "value": "4200101",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "NivelRisco",
+                              "value": "2",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "ItensPagina",
+                              "value": "600",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "PaginaAtual",
+                              "value": "1",
+                              "description": "Integers",
+                              "disabled": true
+                            }
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "MunicipioFronteira-GETALL Copy 3",
+                      "event": [
+                        {
+                          "listen": "prerequest",
+                          "script": {
+                            "exec": [
+                              "var fakername = pm.variables.get('$randomFirstName')\r",
+                              "\r",
+                              "\r",
+                              "pm.environment.set('name', fakername)\r",
+                              "pm.variables.set('name', fakername)\r",
+                              "pm.collectionVariables.set('name', fakername)"
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        },
+                        {
+                          "listen": "test",
+                          "script": {
+                            "exec": [
+                              "console.log();\r",
+                              "console.log(\"============Inicio de (MunicipioFronteira/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              "var jsonData = pm.response.json();\r",
+                              "var objects = jsonData.dados;\r",
+                              "var objectCount = objects.length;\r",
+                              "var objectIds = objects.map(obj => obj.id);\r",
+                              "var objectufs = objects.map(obj => obj.uf);\r",
+                              "\r",
+                              "console.log(\"UFs dos Objetos Principais:\", objectufs);\r",
+                              "\r",
+                              "pm.test(\"O tempo de resposta é menor que 300ms\", function () {\r",
+                              "\tpm.expect(pm.response.responseTime).to.be.below(300);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status Code GET/POST - 200\", function () {\r",
+                              "\tpm.expect(pm.response.code).to.be.oneOf([200]);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status - OK Sucesso\", function () {\r",
+                              "\tpm.response.to.have.status(\"OK\");\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Espera de (Json) na resposta\", function () {\r",
+                              "\tpm.expect(jsonData).to.exist;\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Presença de Content-Type\", function () {\r",
+                              "\tpm.response.to.have.header(\"Content-Type\");\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Contagem de Objetos principais registrados.: ${objectCount}`, function () {\r",
+                              "\tpm.expect(objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.variables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.variables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "\tconsole.log(\"Quantidade de Objetos Principais:\", objectCount);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Obtenção dos respectivos IDs de cada Objeto`, function () {\r",
+                              "    // var objectCount = jsonData.length;\r",
+                              "\t// var objectIds = jsonData.map(obj => obj.id);\r",
+                              "\tpm.expect(objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.variables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.variables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "\tconsole.log(\"IDs dos Objetos Principais:\", objectIds);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Validação das propriedades (id/risco/MêsAt/Aprov/datAt/UserAt) \", () => {\r",
+                              "    pm.expect(objectCount).to.be.above(0);\r",
+                              "});\r",
+                              "\r",
+                              "if (objectCount > 0) {\r",
+                              "\tlet obj = objects[0];\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'id'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('id');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'risco'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('risco');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'dataAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'usuarioAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\t/* \tpm.test(`Verificação da propriedade 'qtMesesAtualizacao'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtAprovadoresComite'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "\t}); */\r",
+                              "\t\r",
+                              "};\r",
+                              "    \r",
+                              "\r",
+                              "\r",
+                              "/* var objectPrpty = jsonData.map(obj => obj);\r",
+                              "jsonData.forEach((obj, index) => {\r",
+                              "\tpm.test(`Verificação da propriedade 'id'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('id');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'risco'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('risco');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtMesesAtualizacao'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtAprovadoresComite'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'dataAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'usuarioAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "\t});\r",
+                              "});\r",
+                              "\r",
+                              "\r",
+                              "// Percorra cada objeto na matriz de resposta\r",
+                              "/* jsonData.forEach((obj, index) => {\r",
+                              "    // Teste a presença de cada propriedade necessária\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'id'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('id');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'risco'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('risco');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'qtMesesAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'qtAprovadoresComite'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'dataAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'usuarioAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "    });\r",
+                              "}); */\r",
+                              "\r",
+                              "\r",
+                              "console.log();\r",
+                              "console.log(\"============Fim de (MunicipioFronteira/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              ""
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        }
+                      ],
+                      "protocolProfileBehavior": {
+                        "strictSSL": true,
+                        "followOriginalHttpMethod": true,
+                        "followAuthorizationHeader": true,
+                        "removeRefererHeaderOnRedirect": true,
+                        "insecureHTTPParser": false,
+                        "disableCookies": true,
+                        "tlsPreferServerCiphers": true
+                      },
+                      "request": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "accept",
+                            "value": "text/plain"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{dev_baseUrl}}/kyc/v1/MunicipioFronteira/filtromunicipios",
+                          "host": [
+                            "{{dev_baseUrl}}"
+                          ],
+                          "path": [
+                            "kyc",
+                            "v1",
+                            "MunicipioFronteira",
+                            "filtromunicipios"
+                          ],
+                          "query": [
+                            {
+                              "key": "Nome",
+                              "value": "Senador Guiomard",
+                              "description": "string\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "Uf",
+                              "value": "SC",
+                              "description": "String",
+                              "disabled": true
+                            },
+                            {
+                              "key": "CodigoIbge",
+                              "value": "4200101",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "NivelRisco",
+                              "value": "2",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "ItensPagina",
+                              "value": "600",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "PaginaAtual",
+                              "value": "1",
+                              "description": "Integers",
+                              "disabled": true
+                            }
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "MunicipioFronteira-GETALL Copy 4",
+                      "event": [
+                        {
+                          "listen": "prerequest",
+                          "script": {
+                            "exec": [
+                              "var fakername = pm.variables.get('$randomFirstName')\r",
+                              "\r",
+                              "\r",
+                              "pm.environment.set('name', fakername)\r",
+                              "pm.variables.set('name', fakername)\r",
+                              "pm.collectionVariables.set('name', fakername)"
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        },
+                        {
+                          "listen": "test",
+                          "script": {
+                            "exec": [
+                              "console.log();\r",
+                              "console.log(\"============Inicio de (MunicipioFronteira/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              "var jsonData = pm.response.json();\r",
+                              "var objects = jsonData.dados;\r",
+                              "var objectCount = objects.length;\r",
+                              "var objectIds = objects.map(obj => obj.id);\r",
+                              "var objectufs = objects.map(obj => obj.uf);\r",
+                              "\r",
+                              "console.log(\"UFs dos Objetos Principais:\", objectufs);\r",
+                              "\r",
+                              "pm.test(\"O tempo de resposta é menor que 300ms\", function () {\r",
+                              "\tpm.expect(pm.response.responseTime).to.be.below(300);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status Code GET/POST - 200\", function () {\r",
+                              "\tpm.expect(pm.response.code).to.be.oneOf([200]);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status - OK Sucesso\", function () {\r",
+                              "\tpm.response.to.have.status(\"OK\");\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Espera de (Json) na resposta\", function () {\r",
+                              "\tpm.expect(jsonData).to.exist;\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Presença de Content-Type\", function () {\r",
+                              "\tpm.response.to.have.header(\"Content-Type\");\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Contagem de Objetos principais registrados.: ${objectCount}`, function () {\r",
+                              "\tpm.expect(objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.variables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.variables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "\tconsole.log(\"Quantidade de Objetos Principais:\", objectCount);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Obtenção dos respectivos IDs de cada Objeto`, function () {\r",
+                              "    // var objectCount = jsonData.length;\r",
+                              "\t// var objectIds = jsonData.map(obj => obj.id);\r",
+                              "\tpm.expect(objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.variables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.variables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "\tconsole.log(\"IDs dos Objetos Principais:\", objectIds);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Validação das propriedades (id/risco/MêsAt/Aprov/datAt/UserAt) \", () => {\r",
+                              "    pm.expect(objectCount).to.be.above(0);\r",
+                              "});\r",
+                              "\r",
+                              "if (objectCount > 0) {\r",
+                              "\tlet obj = objects[0];\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'id'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('id');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'risco'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('risco');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'dataAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'usuarioAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\t/* \tpm.test(`Verificação da propriedade 'qtMesesAtualizacao'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtAprovadoresComite'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "\t}); */\r",
+                              "\t\r",
+                              "};\r",
+                              "    \r",
+                              "\r",
+                              "\r",
+                              "/* var objectPrpty = jsonData.map(obj => obj);\r",
+                              "jsonData.forEach((obj, index) => {\r",
+                              "\tpm.test(`Verificação da propriedade 'id'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('id');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'risco'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('risco');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtMesesAtualizacao'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtAprovadoresComite'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'dataAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'usuarioAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "\t});\r",
+                              "});\r",
+                              "\r",
+                              "\r",
+                              "// Percorra cada objeto na matriz de resposta\r",
+                              "/* jsonData.forEach((obj, index) => {\r",
+                              "    // Teste a presença de cada propriedade necessária\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'id'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('id');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'risco'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('risco');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'qtMesesAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'qtAprovadoresComite'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'dataAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'usuarioAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "    });\r",
+                              "}); */\r",
+                              "\r",
+                              "\r",
+                              "console.log();\r",
+                              "console.log(\"============Fim de (MunicipioFronteira/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              ""
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        }
+                      ],
+                      "protocolProfileBehavior": {
+                        "strictSSL": true,
+                        "followOriginalHttpMethod": true,
+                        "followAuthorizationHeader": true,
+                        "removeRefererHeaderOnRedirect": true,
+                        "insecureHTTPParser": false,
+                        "disableCookies": true,
+                        "tlsPreferServerCiphers": true
+                      },
+                      "request": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "accept",
+                            "value": "text/plain"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{dev_baseUrl}}/kyc/v1/MunicipioFronteira/filtromunicipios",
+                          "host": [
+                            "{{dev_baseUrl}}"
+                          ],
+                          "path": [
+                            "kyc",
+                            "v1",
+                            "MunicipioFronteira",
+                            "filtromunicipios"
+                          ],
+                          "query": [
+                            {
+                              "key": "Nome",
+                              "value": "Senador Guiomard",
+                              "description": "string\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "Uf",
+                              "value": "SC",
+                              "description": "String",
+                              "disabled": true
+                            },
+                            {
+                              "key": "CodigoIbge",
+                              "value": "4200101",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "NivelRisco",
+                              "value": "2",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "ItensPagina",
+                              "value": "600",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "PaginaAtual",
+                              "value": "1",
+                              "description": "Integers",
+                              "disabled": true
+                            }
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "MunicipioFronteira-GET-Filter",
+                      "event": [
+                        {
+                          "listen": "prerequest",
+                          "script": {
+                            "exec": [
+                              "console.log();\r",
+                              "console.log(\"============Inicio de (MunicipioFronteira/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              "\r",
+                              "// Função para obter ID aleatório a partir de uma variável de ambiente\r",
+                              "function getRandomId(envVariable, outputVariable) {\r",
+                              "    let ids = pm.environment.get(envVariable);\r",
+                              "    \r",
+                              "    if (ids) {\r",
+                              "        let idsArray = ids.split(',');\r",
+                              "        let randomIndex = Math.floor(Math.random() * idsArray.length);\r",
+                              "        let randomId = idsArray[randomIndex].trim();\r",
+                              "\r",
+                              "        pm.environment.set(outputVariable, randomId);\r",
+                              "        // pm.collectionVariables.set(outputVariable, randomId);\r",
+                              "        // pm.variables.set(outputVariable, randomId);\r",
+                              "\r",
+                              "        console.log(`IDs disponíveis em ${envVariable}:`, idsArray);\r",
+                              "        console.log(`ID escolhido aleatoriamente para ${outputVariable}:`, randomId);\r",
+                              "    } else {\r",
+                              "        console.log(`A variável '${envVariable}' não está definida ou está vazia.`);\r",
+                              "    }\r",
+                              "}\r",
+                              "\r",
+                              "\r",
+                              "// Obter ID randomico \"NivelRisco_Vlr_Ob\" para usar em NivelRisco\r",
+                              "getRandomId(\"NivelRisco_Vlr_Ob\", \"NivelRisco_Vlr_Ob_Randon\");\r",
+                              ""
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        },
+                        {
+                          "listen": "test",
+                          "script": {
+                            "exec": [
+                              "\r",
+                              "var jsonData = pm.response.json();\r",
+                              "var objects = jsonData.dados;\r",
+                              "var objectCount = objects.length;\r",
+                              "var objectIds = objects.map(obj => obj.id);\r",
+                              "\r",
+                              "pm.test(\"O tempo de resposta é menor que 300ms\", function () {\r",
+                              "\tpm.expect(pm.response.responseTime).to.be.below(300);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status Code GET/POST - 200\", function () {\r",
+                              "\tpm.expect(pm.response.code).to.be.oneOf([200]);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status - OK Sucesso\", function () {\r",
+                              "\tpm.response.to.have.status(\"OK\");\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Espera de (Json) na resposta\", function () {\r",
+                              "\tpm.expect(jsonData).to.exist;\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Presença de Content-Type\", function () {\r",
+                              "\tpm.response.to.have.header(\"Content-Type\");\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Contagem de Objetos principais registrados.: ${objectCount}`, function () {\r",
+                              "\tpm.expect(objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.variables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.variables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "\tconsole.log(\"Quantidade de Objetos Principais:\", objectCount);\r",
+                              "\tconsole.log(\"IDs dos Objetos Principais:\", objectIds);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Obtenção dos respectivos IDs de cada Objeto`, function () {\r",
+                              "    // var objectCount = jsonData.length;\r",
+                              "\t// var objectIds = jsonData.map(obj => obj.id);\r",
+                              "\tpm.expect(objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.environment.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "    pm.variables.set(\"MunicipioFronteira_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.variables.set(\"MunicipioFronteira_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "\tconsole.log(\"Quantidade de Objetos Principais:\", objectCount);\r",
+                              "\tconsole.log(\"IDs dos Objetos Principais:\", objectIds);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Validação das propriedades (id/risco/MêsAt/Aprov/datAt/UserAt) \", () => {\r",
+                              "    pm.expect(objectCount).to.be.above(0);\r",
+                              "});\r",
+                              "\r",
+                              "if (objectCount > 0) {\r",
+                              "\tlet obj = objects[0];\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'id'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('id');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'risco'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('risco');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'dataAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'usuarioAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\t/* \tpm.test(`Verificação da propriedade 'qtMesesAtualizacao'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtAprovadoresComite'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "\t}); */\r",
+                              "\t\r",
+                              "};\r",
+                              "    \r",
+                              "\r",
+                              "\r",
+                              "/* var objectPrpty = jsonData.map(obj => obj);\r",
+                              "jsonData.forEach((obj, index) => {\r",
+                              "\tpm.test(`Verificação da propriedade 'id'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('id');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'risco'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('risco');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtMesesAtualizacao'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtAprovadoresComite'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'dataAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'usuarioAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "\t});\r",
+                              "});\r",
+                              "\r",
+                              "\r",
+                              "// Percorra cada objeto na matriz de resposta\r",
+                              "/* jsonData.forEach((obj, index) => {\r",
+                              "    // Teste a presença de cada propriedade necessária\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'id'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('id');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'risco'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('risco');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'qtMesesAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'qtAprovadoresComite'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'dataAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'usuarioAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "    });\r",
+                              "}); */\r",
+                              "\r",
+                              "\r",
+                              "console.log();\r",
+                              "console.log(\"============Fim de (MunicipioFronteira/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              ""
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        }
+                      ],
+                      "protocolProfileBehavior": {
+                        "strictSSL": true,
+                        "followOriginalHttpMethod": true,
+                        "followAuthorizationHeader": true,
+                        "removeRefererHeaderOnRedirect": true,
+                        "insecureHTTPParser": false,
+                        "disableCookies": true,
+                        "tlsPreferServerCiphers": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "accept",
+                            "value": "text/plain"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{dev_baseUrl}}/kyc/v1/MunicipioFronteira/filtromunicipios?NivelRisco={{NivelRisco_Vlr_Ob_Randon}}",
+                          "host": [
+                            "{{dev_baseUrl}}"
+                          ],
+                          "path": [
+                            "kyc",
+                            "v1",
+                            "MunicipioFronteira",
+                            "filtromunicipios"
+                          ],
+                          "query": [
+                            {
+                              "key": "Nome",
+                              "value": "",
+                              "description": "string\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "Uf",
+                              "value": "",
+                              "description": "array[string]\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "CodigoIbge",
+                              "value": "",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "ItensPagina",
+                              "value": "",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "PaginaAtual",
+                              "value": "",
+                              "description": "Integers",
+                              "disabled": true
+                            },
+                            {
+                              "key": "NivelRisco",
+                              "value": "{{NivelRisco_Vlr_Ob_Randon}}",
+                              "description": "array[string]\n(query)"
+                            }
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "EnderecoCritico-GETALL",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "exec": [
+                              "console.log();\r",
+                              "console.log(\"============Inicio de (EnderecoCritico/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              "var response = pm.response.json();\r",
+                              "\r",
+                              "pm.test(\"O tempo de resposta é menor que 200ms\", function () {\r",
+                              "\tpm.expect(pm.response.responseTime).to.be.below(200);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status Code GET/POST - 200, 201, 202\", function () {\r",
+                              "\tpm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status - OK Sucesso\", function () {\r",
+                              "\tpm.response.to.have.status(200);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Espera de (Json) na resposta\", function () {\r",
+                              "\tvar jsonData = pm.response.json();\r",
+                              "\tpm.expect(jsonData).to.exist;\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Corpo da requisição, está correto em (Json)\", function () {\r",
+                              "\tvar jsonData = pm.response.json();\r",
+                              "\tpm.response.to.have.body(jsonData);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Presença de Content-Type\", function () {\r",
+                              "\tpm.response.to.have.header(\"Content-Type\");\r",
+                              "});\r",
+                              "\r",
+                              "\r",
+                              "/* pm.test(\"Validação.: Pai (success: true / returnStatus) OU (success: false / errorMessage)\", function () {\r",
+                              "\t\r",
+                              "    if (response.success === true) {\r",
+                              "\r",
+                              "\r",
+                              "\t\tpm.test(\"Contagem de Objetos principais, e Obtenção de seus respectivos IDs\", function () {\r",
+                              "\r",
+                              "    \t\tlet jsonResponse = pm.response.json();\r",
+                              "    \t\tlet objects = jsonResponse.response;\r",
+                              "    \t\tlet objectCount = objects.length;\r",
+                              "    \t\tlet objectIds = objects.map(obj => obj.id);\r",
+                              "    \t\tpm.environment.set(\"EnderecoCritico_QTD_Ob\", objectCount);\r",
+                              "    \t\tpm.environment.set(\"EnderecoCritico_IDs_Ob\", objectIds.join(','));\r",
+                              "    \t\tpm.collectionVariables.set(\"EnderecoCritico_IDs_Ob\", objectIds.join(','));\r",
+                              "\t\t\tpm.collectionVariables.set(\"EnderecoCritico_QTD_Ob\", objectCount);\r",
+                              "    \t\tpm.variables.set(\"EnderecoCritico_IDs_Ob\", objectIds.join(','));\r",
+                              "\t\t\tpm.variables.set(\"EnderecoCritico_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "    \t\tconsole.log(\"Quantidade de Objetos Principais:\", objectCount);\r",
+                              "    \t\tconsole.log(\"IDs dos Objetos Principais:\", objectIds);\r",
+                              "\t\t});\r",
+                              "\r",
+                              "\t\tpm.test(\"Presença de Objeto obtido 'Array' no Body do (Response)\", function () {\r",
+                              "    \t\tpm.expect(response.response).to.be.an(\"array\").that.is.not.empty;\r",
+                              "\t\t\t\tconsole.log(\"Presença de Array no Body do (Response).: \", response.response);\r",
+                              "\t\t\t\tconsole.log();\r",
+                              "\t\t});\r",
+                              "\r",
+                              "    } else if (response.success === false || response.success === undefined || response.success === null) {\r",
+                              "\t\t\r",
+                              "\t\t//Esse Teste é colocado nesta posição para falhar propositalmente, para ser dado atenção caso apareça.\r",
+                              "\t\tpm.test(\"Atenção - Falha na requisição\", function () {\r",
+                              "    \t\tpm.expect(response.success).to.be.true;\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t\tconsole.log(\"success.:\", response.success);\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t});\r",
+                              "\r",
+                              "\t\tpm.test(\"Atenção - Falha na requisição - parametro (success) = false\", function () {\r",
+                              "\t\t\tpm.expect(response.success).to.be.false;\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t\tconsole.log(\"success.:\", response.success);\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t});\r",
+                              "\r",
+                              "\t\tpm.test(\"Atenção - Falha na requisição - Presença do parametro (errorMessage)\", function () {\r",
+                              "\t\t\tvar response = pm.response.json();\r",
+                              "    \t\tpm.expect(response).to.have.property('errorMessage');\r",
+                              "\t\t});\r",
+                              "\r",
+                              "\t\tpm.test(\"Atenção - Falha na requisição - Valor do parametro (errorMessage) Verificar mensagem no body\", function () {\r",
+                              "\t\t\tpm.expect(response.errorMessage).to.be.not.empty;\r",
+                              "\t\t\tconsole.log(\"errorMessage.:\", response.errorMessage);\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t});\r",
+                              "\r",
+                              "\t\tpm.test(\"Atenção - Falha na requisição - Valor do parametro (erros) Maior que 0\", function () {\r",
+                              "\t\t\tlet objectCount = response.erros.length;\r",
+                              "\t\t\tpm.expect(objectCount).to.be.greaterThan(0);\r",
+                              "\t\t\tconsole.log(\"Valor do parametro (erros) Maior que 0 = Se(success = False).:\", objectCount);\r",
+                              "\t\t\tconsole.log(\"Conteúdo do parametro (erros) Maior que 0 = Se(success = False).:\", response.erros);\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t})\r",
+                              "\r",
+                              "    }\r",
+                              "}); */\r",
+                              "\r",
+                              "/* pm.test(\"Atualização das variáveis de ambiente\", function nomeVariavel(){\r",
+                              "\tlet environment = pm.environment.toObject();\r",
+                              "\tlet environmentName = pm.environment.name;\r",
+                              "\tconsole.log(`Valores do ambiente '${environmentName}' sincronizados.`);\r",
+                              "\tconsole.log();\r",
+                              "\tconsole.log(`Valores do ambiente`, environment);\r",
+                              "\tconsole.log();\r",
+                              "\r",
+                              "\t// Copiar cada valor atual para o valor inicial\r",
+                              "\tfor (let key in environment) {\r",
+                              "\t    if (environment.hasOwnProperty(key)) {\r",
+                              "\t        pm.environment.set(key, pm.environment.get(key));\r",
+                              "\t    }\r",
+                              "\t}\r",
+                              "\r",
+                              "\t// Sincronizar valores atuais para valores iniciais\r",
+                              "\tObject.keys(environment).forEach(function(key) {\r",
+                              "\t    if (key !== 'id' && key !== 'name' && key !== '_postman_variable_scope' && key !== '_postman_exported_at' && key !== '_postman_exported_using') {\r",
+                              "\t        pm.environment.set(key, pm.environment.get(key));\r",
+                              "\t    }\r",
+                              "\t});\r",
+                              "\r",
+                              "\t// pm.environment.update(environment);\r",
+                              "\r",
+                              "\r",
+                              "\t// Mensagem de conclusão\r",
+                              "\tconsole.log(`Todos os valores atuais foram sincronizados com os valores iniciais no ambiente '${pm.environment.name}'.`);\r",
+                              "\r",
+                              "});\r",
+                              "\r",
+                              "\r",
+                              " */\r",
+                              "\r",
+                              "console.log();\r",
+                              "console.log(\"============Fim de (EnderecoCritico/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              ""
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        }
+                      ],
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "accept",
+                            "value": "text/plain"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{dev_baseUrl}}/kyc/v1/EnderecoCritico/filtroenderecos",
+                          "host": [
+                            "{{dev_baseUrl}}"
+                          ],
+                          "path": [
+                            "kyc",
+                            "v1",
+                            "EnderecoCritico",
+                            "filtroenderecos"
+                          ],
+                          "query": [
+                            {
+                              "key": "Cep",
+                              "value": "",
+                              "disabled": true
+                            },
+                            {
+                              "key": "Logradouro",
+                              "value": "",
+                              "disabled": true
+                            },
+                            {
+                              "key": "Municipio",
+                              "value": "",
+                              "disabled": true
+                            },
+                            {
+                              "key": "Ativo",
+                              "value": "true",
+                              "disabled": true
+                            },
+                            {
+                              "key": "ItensPagina",
+                              "value": "100",
+                              "disabled": true
+                            },
+                            {
+                              "key": "PaginaAtual",
+                              "value": "",
+                              "disabled": true
+                            }
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "EnderecoCritico-GET-Filter",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "accept",
+                            "value": "text/plain"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{dev_baseUrl}}/kyc/v1/EnderecoCritico/filtroenderecos?Nome=São Paulo",
+                          "host": [
+                            "{{dev_baseUrl}}"
+                          ],
+                          "path": [
+                            "kyc",
+                            "v1",
+                            "EnderecoCritico",
+                            "filtroenderecos"
+                          ],
+                          "query": [
+                            {
+                              "key": "Nome",
+                              "value": "São Paulo",
+                              "description": "string\n(query)"
+                            },
+                            {
+                              "key": "Uf",
+                              "value": "",
+                              "description": "array[string]\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "CodigoIbge",
+                              "value": "",
+                              "description": "string\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "NivelRisco",
+                              "value": "",
+                              "description": "array[string]\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "ItensPagina",
+                              "value": "",
+                              "description": "integer($int32)\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "PaginaAtual",
+                              "value": null,
+                              "description": "integer($int32)\n(query)",
+                              "disabled": true
+                            }
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "Profissao-GETALL",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "exec": [
+                              "console.log();\r",
+                              "console.log(\"============Inicio de (Proffisao/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              "var response = pm.response.json();\r",
+                              "\r",
+                              "pm.test(\"O tempo de resposta é menor que 200ms\", function () {\r",
+                              "\tpm.expect(pm.response.responseTime).to.be.below(200);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status Code GET/POST - 200, 201, 202\", function () {\r",
+                              "\tpm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status - OK Sucesso\", function () {\r",
+                              "\tpm.response.to.have.status(200);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Espera de (Json) na resposta\", function () {\r",
+                              "\tvar jsonData = pm.response.json();\r",
+                              "\tpm.expect(jsonData).to.exist;\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Corpo da requisição, está correto em (Json)\", function () {\r",
+                              "\tvar jsonData = pm.response.json();\r",
+                              "\tpm.response.to.have.body(jsonData);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Presença de Content-Type\", function () {\r",
+                              "\tpm.response.to.have.header(\"Content-Type\");\r",
+                              "});\r",
+                              "\r",
+                              "\r",
+                              "/* pm.test(\"Validação.: Pai (success: true / returnStatus) OU (success: false / errorMessage)\", function () {\r",
+                              "\t\r",
+                              "    if (response.success === true) {\r",
+                              "\r",
+                              "\r",
+                              "\t\tpm.test(\"Contagem de Objetos principais, e Obtenção de seus respectivos IDs\", function () {\r",
+                              "\r",
+                              "    \t\tlet jsonResponse = pm.response.json();\r",
+                              "    \t\tlet objects = jsonResponse.response;\r",
+                              "    \t\tlet objectCount = objects.length;\r",
+                              "    \t\tlet objectIds = objects.map(obj => obj.id);\r",
+                              "    \t\tpm.environment.set(\"Proffisao_QTD_Ob\", objectCount);\r",
+                              "    \t\tpm.environment.set(\"Proffisao_IDs_Ob\", objectIds.join(','));\r",
+                              "    \t\tpm.collectionVariables.set(\"Proffisao_IDs_Ob\", objectIds.join(','));\r",
+                              "\t\t\tpm.collectionVariables.set(\"Proffisao_QTD_Ob\", objectCount);\r",
+                              "    \t\tpm.variables.set(\"Proffisao_IDs_Ob\", objectIds.join(','));\r",
+                              "\t\t\tpm.variables.set(\"Proffisao_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "    \t\tconsole.log(\"Quantidade de Objetos Principais:\", objectCount);\r",
+                              "    \t\tconsole.log(\"IDs dos Objetos Principais:\", objectIds);\r",
+                              "\t\t});\r",
+                              "\r",
+                              "\t\tpm.test(\"Presença de Objeto obtido 'Array' no Body do (Response)\", function () {\r",
+                              "    \t\tpm.expect(response.response).to.be.an(\"array\").that.is.not.empty;\r",
+                              "\t\t\t\tconsole.log(\"Presença de Array no Body do (Response).: \", response.response);\r",
+                              "\t\t\t\tconsole.log();\r",
+                              "\t\t});\r",
+                              "\r",
+                              "    } else if (response.success === false || response.success === undefined || response.success === null) {\r",
+                              "\t\t\r",
+                              "\t\t//Esse Teste é colocado nesta posição para falhar propositalmente, para ser dado atenção caso apareça.\r",
+                              "\t\tpm.test(\"Atenção - Falha na requisição\", function () {\r",
+                              "    \t\tpm.expect(response.success).to.be.true;\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t\tconsole.log(\"success.:\", response.success);\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t});\r",
+                              "\r",
+                              "\t\tpm.test(\"Atenção - Falha na requisição - parametro (success) = false\", function () {\r",
+                              "\t\t\tpm.expect(response.success).to.be.false;\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t\tconsole.log(\"success.:\", response.success);\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t});\r",
+                              "\r",
+                              "\t\tpm.test(\"Atenção - Falha na requisição - Presença do parametro (errorMessage)\", function () {\r",
+                              "\t\t\tvar response = pm.response.json();\r",
+                              "    \t\tpm.expect(response).to.have.property('errorMessage');\r",
+                              "\t\t});\r",
+                              "\r",
+                              "\t\tpm.test(\"Atenção - Falha na requisição - Valor do parametro (errorMessage) Verificar mensagem no body\", function () {\r",
+                              "\t\t\tpm.expect(response.errorMessage).to.be.not.empty;\r",
+                              "\t\t\tconsole.log(\"errorMessage.:\", response.errorMessage);\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t});\r",
+                              "\r",
+                              "\t\tpm.test(\"Atenção - Falha na requisição - Valor do parametro (erros) Maior que 0\", function () {\r",
+                              "\t\t\tlet objectCount = response.erros.length;\r",
+                              "\t\t\tpm.expect(objectCount).to.be.greaterThan(0);\r",
+                              "\t\t\tconsole.log(\"Valor do parametro (erros) Maior que 0 = Se(success = False).:\", objectCount);\r",
+                              "\t\t\tconsole.log(\"Conteúdo do parametro (erros) Maior que 0 = Se(success = False).:\", response.erros);\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t})\r",
+                              "\r",
+                              "    }\r",
+                              "}); */\r",
+                              "\r",
+                              "/* pm.test(\"Atualização das variáveis de ambiente\", function nomeVariavel(){\r",
+                              "\tlet environment = pm.environment.toObject();\r",
+                              "\tlet environmentName = pm.environment.name;\r",
+                              "\tconsole.log(`Valores do ambiente '${environmentName}' sincronizados.`);\r",
+                              "\tconsole.log();\r",
+                              "\tconsole.log(`Valores do ambiente`, environment);\r",
+                              "\tconsole.log();\r",
+                              "\r",
+                              "\t// Copiar cada valor atual para o valor inicial\r",
+                              "\tfor (let key in environment) {\r",
+                              "\t    if (environment.hasOwnProperty(key)) {\r",
+                              "\t        pm.environment.set(key, pm.environment.get(key));\r",
+                              "\t    }\r",
+                              "\t}\r",
+                              "\r",
+                              "\t// Sincronizar valores atuais para valores iniciais\r",
+                              "\tObject.keys(environment).forEach(function(key) {\r",
+                              "\t    if (key !== 'id' && key !== 'name' && key !== '_postman_variable_scope' && key !== '_postman_exported_at' && key !== '_postman_exported_using') {\r",
+                              "\t        pm.environment.set(key, pm.environment.get(key));\r",
+                              "\t    }\r",
+                              "\t});\r",
+                              "\r",
+                              "\t// pm.environment.update(environment);\r",
+                              "\r",
+                              "\r",
+                              "\t// Mensagem de conclusão\r",
+                              "\tconsole.log(`Todos os valores atuais foram sincronizados com os valores iniciais no ambiente '${pm.environment.name}'.`);\r",
+                              "\r",
+                              "});\r",
+                              "\r",
+                              "\r",
+                              " */\r",
+                              "\r",
+                              "console.log();\r",
+                              "console.log(\"============Fim de (Proffisao/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              ""
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        }
+                      ],
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "accept",
+                            "value": "text/plain"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{dev_baseUrl}}/kyc/v1/Profissao/filtroprofissoes",
+                          "host": [
+                            "{{dev_baseUrl}}"
+                          ],
+                          "path": [
+                            "kyc",
+                            "v1",
+                            "Profissao",
+                            "filtroprofissoes"
+                          ],
+                          "query": [
+                            {
+                              "key": "Nome",
+                              "value": "Soldado",
+                              "disabled": true
+                            },
+                            {
+                              "key": "Ativo",
+                              "value": "true",
+                              "disabled": true
+                            },
+                            {
+                              "key": "NivelRisco",
+                              "value": "baixo",
+                              "disabled": true
+                            },
+                            {
+                              "key": "ItensPagina",
+                              "value": "100",
+                              "disabled": true
+                            },
+                            {
+                              "key": "PaginaAtual",
+                              "value": "10",
+                              "disabled": true
+                            }
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "Profissao-GET-Filter",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "accept",
+                            "value": "text/plain"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{dev_baseUrl}}/kyc/v1/Profissao/filtroprofissoes",
+                          "host": [
+                            "{{dev_baseUrl}}"
+                          ],
+                          "path": [
+                            "kyc",
+                            "v1",
+                            "Profissao",
+                            "filtroprofissoes"
+                          ],
+                          "query": [
+                            {
+                              "key": "Nome",
+                              "value": "Soldado",
+                              "disabled": true
+                            },
+                            {
+                              "key": "Ativo",
+                              "value": "true",
+                              "disabled": true
+                            },
+                            {
+                              "key": "NivelRisco",
+                              "value": "baixo",
+                              "disabled": true
+                            },
+                            {
+                              "key": "ItensPagina",
+                              "value": "100",
+                              "disabled": true
+                            },
+                            {
+                              "key": "PaginaAtual",
+                              "value": "10",
+                              "disabled": true
+                            }
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "SetorCnae-GETALL",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "exec": [
+                              "console.log();\r",
+                              "console.log(\"============Inicio de (Cnae/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              "var response = pm.response.json();\r",
+                              "\r",
+                              "pm.test(\"O tempo de resposta é menor que 200ms\", function () {\r",
+                              "\tpm.expect(pm.response.responseTime).to.be.below(200);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status Code GET/POST - 200, 201, 202\", function () {\r",
+                              "\tpm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status - OK Sucesso\", function () {\r",
+                              "\tpm.response.to.have.status(200);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Espera de (Json) na resposta\", function () {\r",
+                              "\tvar jsonData = pm.response.json();\r",
+                              "\tpm.expect(jsonData).to.exist;\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Corpo da requisição, está correto em (Json)\", function () {\r",
+                              "\tvar jsonData = pm.response.json();\r",
+                              "\tpm.response.to.have.body(jsonData);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Presença de Content-Type\", function () {\r",
+                              "\tpm.response.to.have.header(\"Content-Type\");\r",
+                              "});\r",
+                              "\r",
+                              "\r",
+                              "/* pm.test(\"Validação.: Pai (success: true / returnStatus) OU (success: false / errorMessage)\", function () {\r",
+                              "\t\r",
+                              "    if (response.success === true) {\r",
+                              "\r",
+                              "\r",
+                              "\t\tpm.test(\"Contagem de Objetos principais, e Obtenção de seus respectivos IDs\", function () {\r",
+                              "\r",
+                              "    \t\tlet jsonResponse = pm.response.json();\r",
+                              "    \t\tlet objects = jsonResponse.response;\r",
+                              "    \t\tlet objectCount = objects.length;\r",
+                              "    \t\tlet objectIds = objects.map(obj => obj.id);\r",
+                              "    \t\tpm.environment.set(\"Cnae_QTD_Ob\", objectCount);\r",
+                              "    \t\tpm.environment.set(\"Cnae_IDs_Ob\", objectIds.join(','));\r",
+                              "    \t\tpm.collectionVariables.set(\"Cnae_IDs_Ob\", objectIds.join(','));\r",
+                              "\t\t\tpm.collectionVariables.set(\"Cnae_QTD_Ob\", objectCount);\r",
+                              "    \t\tpm.variables.set(\"Cnae_IDs_Ob\", objectIds.join(','));\r",
+                              "\t\t\tpm.variables.set(\"Cnae_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "    \t\tconsole.log(\"Quantidade de Objetos Principais:\", objectCount);\r",
+                              "    \t\tconsole.log(\"IDs dos Objetos Principais:\", objectIds);\r",
+                              "\t\t});\r",
+                              "\r",
+                              "\t\tpm.test(\"Presença de Objeto obtido 'Array' no Body do (Response)\", function () {\r",
+                              "    \t\tpm.expect(response.response).to.be.an(\"array\").that.is.not.empty;\r",
+                              "\t\t\t\tconsole.log(\"Presença de Array no Body do (Response).: \", response.response);\r",
+                              "\t\t\t\tconsole.log();\r",
+                              "\t\t});\r",
+                              "\r",
+                              "    } else if (response.success === false || response.success === undefined || response.success === null) {\r",
+                              "\t\t\r",
+                              "\t\t//Esse Teste é colocado nesta posição para falhar propositalmente, para ser dado atenção caso apareça.\r",
+                              "\t\tpm.test(\"Atenção - Falha na requisição\", function () {\r",
+                              "    \t\tpm.expect(response.success).to.be.true;\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t\tconsole.log(\"success.:\", response.success);\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t});\r",
+                              "\r",
+                              "\t\tpm.test(\"Atenção - Falha na requisição - parametro (success) = false\", function () {\r",
+                              "\t\t\tpm.expect(response.success).to.be.false;\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t\tconsole.log(\"success.:\", response.success);\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t});\r",
+                              "\r",
+                              "\t\tpm.test(\"Atenção - Falha na requisição - Presença do parametro (errorMessage)\", function () {\r",
+                              "\t\t\tvar response = pm.response.json();\r",
+                              "    \t\tpm.expect(response).to.have.property('errorMessage');\r",
+                              "\t\t});\r",
+                              "\r",
+                              "\t\tpm.test(\"Atenção - Falha na requisição - Valor do parametro (errorMessage) Verificar mensagem no body\", function () {\r",
+                              "\t\t\tpm.expect(response.errorMessage).to.be.not.empty;\r",
+                              "\t\t\tconsole.log(\"errorMessage.:\", response.errorMessage);\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t});\r",
+                              "\r",
+                              "\t\tpm.test(\"Atenção - Falha na requisição - Valor do parametro (erros) Maior que 0\", function () {\r",
+                              "\t\t\tlet objectCount = response.erros.length;\r",
+                              "\t\t\tpm.expect(objectCount).to.be.greaterThan(0);\r",
+                              "\t\t\tconsole.log(\"Valor do parametro (erros) Maior que 0 = Se(success = False).:\", objectCount);\r",
+                              "\t\t\tconsole.log(\"Conteúdo do parametro (erros) Maior que 0 = Se(success = False).:\", response.erros);\r",
+                              "\t\t\tconsole.log();\r",
+                              "\t\t})\r",
+                              "\r",
+                              "    }\r",
+                              "}); */\r",
+                              "\r",
+                              "/* pm.test(\"Atualização das variáveis de ambiente\", function nomeVariavel(){\r",
+                              "\tlet environment = pm.environment.toObject();\r",
+                              "\tlet environmentName = pm.environment.name;\r",
+                              "\tconsole.log(`Valores do ambiente '${environmentName}' sincronizados.`);\r",
+                              "\tconsole.log();\r",
+                              "\tconsole.log(`Valores do ambiente`, environment);\r",
+                              "\tconsole.log();\r",
+                              "\r",
+                              "\t// Copiar cada valor atual para o valor inicial\r",
+                              "\tfor (let key in environment) {\r",
+                              "\t    if (environment.hasOwnProperty(key)) {\r",
+                              "\t        pm.environment.set(key, pm.environment.get(key));\r",
+                              "\t    }\r",
+                              "\t}\r",
+                              "\r",
+                              "\t// Sincronizar valores atuais para valores iniciais\r",
+                              "\tObject.keys(environment).forEach(function(key) {\r",
+                              "\t    if (key !== 'id' && key !== 'name' && key !== '_postman_variable_scope' && key !== '_postman_exported_at' && key !== '_postman_exported_using') {\r",
+                              "\t        pm.environment.set(key, pm.environment.get(key));\r",
+                              "\t    }\r",
+                              "\t});\r",
+                              "\r",
+                              "\t// pm.environment.update(environment);\r",
+                              "\r",
+                              "\r",
+                              "\t// Mensagem de conclusão\r",
+                              "\tconsole.log(`Todos os valores atuais foram sincronizados com os valores iniciais no ambiente '${pm.environment.name}'.`);\r",
+                              "\r",
+                              "});\r",
+                              "\r",
+                              "\r",
+                              " */\r",
+                              "\r",
+                              "console.log();\r",
+                              "console.log(\"============Fim de (Cnae/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              ""
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        }
+                      ],
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "accept",
+                            "value": "text/plain"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{dev_baseUrl}}/kyc/v1/SetorCnae/filtrosetores?Nome=Administração",
+                          "host": [
+                            "{{dev_baseUrl}}"
+                          ],
+                          "path": [
+                            "kyc",
+                            "v1",
+                            "SetorCnae",
+                            "filtrosetores"
+                          ],
+                          "query": [
+                            {
+                              "key": "Nome",
+                              "value": "Administração",
+                              "description": "string\n(query)"
+                            },
+                            {
+                              "key": "Secoes",
+                              "value": "Metalurgia",
+                              "description": "array[string]\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "Subclasse",
+                              "value": "Caldeira",
+                              "description": "string\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "NivelRisco",
+                              "value": "baixo",
+                              "description": "array[string]\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "ItensPagina",
+                              "value": "100",
+                              "description": "integer($int32)\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "PaginaAtual",
+                              "value": "1",
+                              "description": "integer($int32)\n(query)",
+                              "disabled": true
+                            }
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "SetorCnae-GET-Filter",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "accept",
+                            "value": "text/plain"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{dev_baseUrl}}/kyc/v1/SetorCnae/filtrosetores",
+                          "host": [
+                            "{{dev_baseUrl}}"
+                          ],
+                          "path": [
+                            "kyc",
+                            "v1",
+                            "SetorCnae",
+                            "filtrosetores"
+                          ],
+                          "query": [
+                            {
+                              "key": "Nome",
+                              "value": "2539001",
+                              "disabled": true
+                            },
+                            {
+                              "key": "Secoes",
+                              "value": "Metalurgia",
+                              "disabled": true
+                            },
+                            {
+                              "key": "Subclasse",
+                              "value": "Caldeira",
+                              "disabled": true
+                            },
+                            {
+                              "key": "NivelRisco",
+                              "value": "baixo",
+                              "disabled": true
+                            },
+                            {
+                              "key": "ItensPagina",
+                              "value": "100",
+                              "disabled": true
+                            },
+                            {
+                              "key": "PaginaAtual",
+                              "value": "1",
+                              "disabled": true
+                            }
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "NivelRisco-GETALL",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "exec": [
+                              "console.log();\r",
+                              "console.log(\"============Inicio de (NivelRisco/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              "var jsonData = pm.response.json();\r",
+                              "var objects = jsonData.response;\r",
+                              "var objectCount = jsonData.length;\r",
+                              "var objectIds = jsonData.map(obj => obj.id);\r",
+                              "\r",
+                              "pm.test(\"O tempo de resposta é menor que 300ms\", function () {\r",
+                              "\tpm.expect(pm.response.responseTime).to.be.below(300);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status Code GET/POST - 200\", function () {\r",
+                              "\tpm.expect(pm.response.code).to.be.oneOf([200]);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status - OK Sucesso\", function () {\r",
+                              "\tpm.response.to.have.status(\"OK\");\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Espera de (Json) na resposta\", function () {\r",
+                              "\tpm.expect(jsonData).to.exist;\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Presença de Content-Type\", function () {\r",
+                              "\tpm.response.to.have.header(\"Content-Type\");\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Contagem de Objetos principais registrados.: ${objectCount}`, function () {\r",
+                              "\tpm.expect(objectCount);\r",
+                              "    pm.environment.set(\"NivelRisco_QTD_Ob\", objectCount);\r",
+                              "    pm.environment.set(\"NivelRisco_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"NivelRisco_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"NivelRisco_QTD_Ob\", objectCount);\r",
+                              "    pm.variables.set(\"NivelRisco_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.variables.set(\"NivelRisco_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "\tconsole.log(\"Quantidade de Objetos Principais:\", objectCount);\r",
+                              "\tconsole.log(\"IDs dos Objetos Principais:\", objectIds);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(`Obtenção dos respectivos IDs de cada Objeto`, function () {\r",
+                              "    // var objectCount = jsonData.length;\r",
+                              "\t// var objectIds = jsonData.map(obj => obj.id);\r",
+                              "\tpm.expect(objectCount);\r",
+                              "    pm.environment.set(\"NivelRisco_QTD_Ob\", objectCount);\r",
+                              "    pm.environment.set(\"NivelRisco_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"NivelRisco_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.collectionVariables.set(\"NivelRisco_QTD_Ob\", objectCount);\r",
+                              "    pm.variables.set(\"NivelRisco_IDs_Ob\", objectIds.join(','));\r",
+                              "    pm.variables.set(\"NivelRisco_QTD_Ob\", objectCount);\r",
+                              "\r",
+                              "\tconsole.log(\"Quantidade de Objetos Principais:\", objectCount);\r",
+                              "\tconsole.log(\"IDs dos Objetos Principais:\", objectIds);\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Validação das propriedades (id/risco/MêsAt/Aprov/datAt/UserAt) \", () => {\r",
+                              "    pm.expect(jsonData.length).to.be.above(0);\r",
+                              "});\r",
+                              "\r",
+                              "if (jsonData.length > 0) {\r",
+                              "\tlet obj = jsonData[0];\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'id'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('id');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'risco'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('risco');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtMesesAtualizacao'`, () => {\r",
+                              "\t   \tpm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtAprovadoresComite'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'dataAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'usuarioAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "\t});\r",
+                              "};\r",
+                              "    \r",
+                              "\r",
+                              "\r",
+                              "/* var objectPrpty = jsonData.map(obj => obj);\r",
+                              "jsonData.forEach((obj, index) => {\r",
+                              "\tpm.test(`Verificação da propriedade 'id'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('id');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'risco'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('risco');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtMesesAtualizacao'`, () => {\r",
+                              "    \tpm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'qtAprovadoresComite'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'dataAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "\t});\r",
+                              "\r",
+                              "\tpm.test(`Verificação da propriedade 'usuarioAtualizacao'`, () => {\r",
+                              "\t    pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "\t});\r",
+                              "}); */\r",
+                              "\r",
+                              "\r",
+                              "// Percorra cada objeto na matriz de resposta\r",
+                              "/* jsonData.forEach((obj, index) => {\r",
+                              "    // Teste a presença de cada propriedade necessária\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'id'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('id');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'risco'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('risco');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'qtMesesAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('qtMesesAtualizacao');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'qtAprovadoresComite'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('qtAprovadoresComite');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'dataAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('dataAtualizacao');\r",
+                              "    });\r",
+                              "\r",
+                              "    pm.test(`Object ${index + 1}: Should have property 'usuarioAtualizacao'`, () => {\r",
+                              "        pm.expect(obj).to.have.property('usuarioAtualizacao');\r",
+                              "    });\r",
+                              "}); */\r",
+                              "\r",
+                              "\r",
+                              "console.log();\r",
+                              "console.log(\"============Fim de (NivelRisco/GET-ALL)============\");\r",
+                              "console.log();\r",
+                              "\r",
+                              ""
+                            ],
+                            "type": "text/javascript",
+                            "packages": {}
+                          }
+                        }
+                      ],
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "accept",
+                            "value": "text/plain"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{dev_baseUrl}}/kyc/v1/NivelRisco/dados",
+                          "host": [
+                            "{{dev_baseUrl}}"
+                          ],
+                          "path": [
+                            "kyc",
+                            "v1",
+                            "NivelRisco",
+                            "dados"
+                          ],
+                          "query": [
+                            {
+                              "key": "id",
+                              "value": "1",
+                              "description": "integer($int32)\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "risco",
+                              "value": "Baixo",
+                              "description": "string\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "Subclasse",
+                              "value": "Caldeira",
+                              "description": "string\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "NivelRisco",
+                              "value": "baixo",
+                              "description": "array[string]\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "ItensPagina",
+                              "value": "100",
+                              "description": "integer($int32)\n(query)",
+                              "disabled": true
+                            },
+                            {
+                              "key": "PaginaAtual",
+                              "value": "1",
+                              "description": "integer($int32)\n(query)",
+                              "disabled": true
+                            }
+                          ]
+                        },
+                        "description": "Obtenção da tabela inteira dos Níveis de Risco"
+                      },
+                      "response": []
+                    }
+                  ],
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "key": "token",
+                        "value": "{{token}}",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "event": [
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "type": "text/javascript",
+                        "packages": {},
+                        "exec": [
+                          ""
+                        ]
+                      }
+                    },
+                    {
+                      "listen": "test",
+                      "script": {
+                        "type": "text/javascript",
+                        "packages": {},
+                        "exec": [
+                          ""
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CompliceService",
+              "item": [
+                {
+                  "name": "Lista-documentos",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "accept",
+                        "value": "text/plain"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOb21lIjoiYW5zZWxtby5tb3JlaXJhIiwiSWRDYW5hbFZlbmRhIjoiIiwiSWRUaXBvVXN1YXJpbyI6IjQiLCJQZXJtaXNzYW8iOiJTeUJTSUhPWG5wV3J4by9EZzNnSklMR3puVFVjSFk5dWpHV2pVY2drZTNVd0cydnp3MjdDaXZKWU0xVTg2R20xNkZwWUVyZTNhWWVCOXExYUppazBseFpKd0ZHYzlOTGZkWVE1U0hzL1U4ZldGSU9rcUE1aTcrQ0E4cVMrQ1BIYUN2SWFTbjhkWVFWenFMZ3M0bElxU2xUckhrbTFsdUVKaGQyLytUQXdrRXNYR1haaVVCU2krbXZrOW10b3hJd2JkandBVC9mdnNCMS81ejMzOCs3MlNmYVI4ZzZxajg5R1o2OGQ3Y2k0d05ZPSIsIklkVXN1YXJpbyI6IkYzODM1QjdDLUU5QkItNEYyMS1CQUFCLUFGQkZCRjRFQTY0RCIsIkVtYWlsIjoiQU5TRUxNTy5NT1JFSVJBIiwiR3VpZCI6ImZlZDQzNGIzLTM2NWQtNDM3YS1hYTU3LWYzZmIyNTE4OWVhMiIsIm5iZiI6MTcyMzIyMDQ4NSwiZXhwIjoxNzIzMjI0MDg1LCJpYXQiOjE3MjMyMjA0ODV9.6dqdCzuzy74EsQ-seVyk7PEJFWw46YcPkaWdaT_axrI"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"documentos\": [\r\n    \"37567286840\"\r\n  ],\r\n  \"bureau\": [\r\n    \"serpro\"\r\n  ]\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "https://dev-api-plataforma-kyc.bancomaster.com.br/kyc/v1/Importacao/lista-documentos",
+                      "protocol": "https",
+                      "host": [
+                        "dev-api-plataforma-kyc",
+                        "bancomaster",
+                        "com",
+                        "br"
+                      ],
+                      "path": [
+                        "kyc",
+                        "v1",
+                        "Importacao",
+                        "lista-documentos"
+                      ]
+                    },
+                    "description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://dev-api-plataforma-kyc.bancomaster.com.br/kyc/v1/Importacao/lista-documentos' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOb21lIjoiYW5zZWxtby5tb3JlaXJhIiwiSWRDYW5hbFZlbmRhIjoiIiwiSWRUaXBvVXN1YXJpbyI6IjQiLCJQZXJtaXNzYW8iOiJTeUJTSUhPWG5wV3J4by9EZzNnSklMR3puVFVjSFk5dWpHV2pVY2drZTNVd0cydnp3MjdDaXZKWU0xVTg2R20xNkZwWUVyZTNhWWVCOXExYUppazBseFpKd0ZHYzlOTGZkWVE1U0hzL1U4ZldGSU9rcUE1aTcrQ0E4cVMrQ1BIYUN2SWFTbjhkWVFWenFMZ3M0bElxU2xUckhrbTFsdUVKaGQyLytUQXdrRXNYR1haaVVCU2krbXZrOW10b3hJd2JkandBVC9mdnNCMS81ejMzOCs3MlNmYVI4ZzZxajg5R1o2OGQ3Y2k0d05ZPSIsIklkVXN1YXJpbyI6IkYzODM1QjdDLUU5QkItNEYyMS1CQUFCLUFGQkZCRjRFQTY0RCIsIkVtYWlsIjoiQU5TRUxNTy5NT1JFSVJBIiwiR3VpZCI6ImZlZDQzNGIzLTM2NWQtNDM3YS1hYTU3LWYzZmIyNTE4OWVhMiIsIm5iZiI6MTcyMzIyMDQ4NSwiZXhwIjoxNzIzMjI0MDg1LCJpYXQiOjE3MjMyMjA0ODV9.6dqdCzuzy74EsQ-seVyk7PEJFWw46YcPkaWdaT_axrI' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"documentos\": [\r\n    \"37567286840\"\r\n  ],\r\n  \"bureau\": [\r\n    \"serpro\"\r\n  ]\r\n}'"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Consulta_Lote_Batch",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "accept",
+                        "value": "text/plain"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOb21lIjoiYW5zZWxtby5tb3JlaXJhIiwiSWRDYW5hbFZlbmRhIjoiIiwiSWRUaXBvVXN1YXJpbyI6IjQiLCJQZXJtaXNzYW8iOiJTeUJTSUhPWG5wV3J4by9EZzNnSklMR3puVFVjSFk5dWpHV2pVY2drZTNVd0cydnp3MjdDaXZKWU0xVTg2R20xNkZwWUVyZTNhWWVCOXExYUppazBseFpKd0ZHYzlOTGZkWVE1U0hzL1U4ZldGSU9rcUE1aTcrQ0E4cVMrQ1BIYUN2SWFTbjhkWVFWenFMZ3M0bElxU2xUckhrbTFsdUVKaGQyLytUQXdrRXNYR1haaVVCU2krbXZrOW10b3hJd2JkandBVC9mdnNCMS81ejMzOCs3MlNmYVI4ZzZxajg5R1o2OGQ3Y2k0d05ZPSIsIklkVXN1YXJpbyI6IkYzODM1QjdDLUU5QkItNEYyMS1CQUFCLUFGQkZCRjRFQTY0RCIsIkVtYWlsIjoiQU5TRUxNTy5NT1JFSVJBIiwiR3VpZCI6ImZlZDQzNGIzLTM2NWQtNDM3YS1hYTU3LWYzZmIyNTE4OWVhMiIsIm5iZiI6MTcyMzIyMDQ4NSwiZXhwIjoxNzIzMjI0MDg1LCJpYXQiOjE3MjMyMjA0ODV9.6dqdCzuzy74EsQ-seVyk7PEJFWw46YcPkaWdaT_axrI"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "https://dev-api-plataforma-kyc.bancomaster.com.br/kyc/v1/Importacao/status-batch?batchNr=cc8e23ae-cd87-4322-a735-6e2f69bb942b",
+                      "protocol": "https",
+                      "host": [
+                        "dev-api-plataforma-kyc",
+                        "bancomaster",
+                        "com",
+                        "br"
+                      ],
+                      "path": [
+                        "kyc",
+                        "v1",
+                        "Importacao",
+                        "status-batch"
+                      ],
+                      "query": [
+                        {
+                          "key": "batchNr",
+                          "value": "cc8e23ae-cd87-4322-a735-6e2f69bb942b"
+                        }
+                      ]
+                    },
+                    "description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://dev-api-plataforma-kyc.bancomaster.com.br/kyc/v1/Importacao/status-batch?batchNr=cc8e23ae-cd87-4322-a735-6e2f69bb942b' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOb21lIjoiYW5zZWxtby5tb3JlaXJhIiwiSWRDYW5hbFZlbmRhIjoiIiwiSWRUaXBvVXN1YXJpbyI6IjQiLCJQZXJtaXNzYW8iOiJTeUJTSUhPWG5wV3J4by9EZzNnSklMR3puVFVjSFk5dWpHV2pVY2drZTNVd0cydnp3MjdDaXZKWU0xVTg2R20xNkZwWUVyZTNhWWVCOXExYUppazBseFpKd0ZHYzlOTGZkWVE1U0hzL1U4ZldGSU9rcUE1aTcrQ0E4cVMrQ1BIYUN2SWFTbjhkWVFWenFMZ3M0bElxU2xUckhrbTFsdUVKaGQyLytUQXdrRXNYR1haaVVCU2krbXZrOW10b3hJd2JkandBVC9mdnNCMS81ejMzOCs3MlNmYVI4ZzZxajg5R1o2OGQ3Y2k0d05ZPSIsIklkVXN1YXJpbyI6IkYzODM1QjdDLUU5QkItNEYyMS1CQUFCLUFGQkZCRjRFQTY0RCIsIkVtYWlsIjoiQU5TRUxNTy5NT1JFSVJBIiwiR3VpZCI6ImZlZDQzNGIzLTM2NWQtNDM3YS1hYTU3LWYzZmIyNTE4OWVhMiIsIm5iZiI6MTcyMzIyMDQ4NSwiZXhwIjoxNzIzMjI0MDg1LCJpYXQiOjE3MjMyMjA0ODV9.6dqdCzuzy74EsQ-seVyk7PEJFWw46YcPkaWdaT_axrI'"
+                  },
+                  "response": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "NivelRisco_IDs_Ob",
+      "value": ""
+    },
+    {
+      "key": "NivelRisco_QTD_Ob",
+      "value": ""
+    },
+    {
+      "key": "MunicipioFronteira_IDs_Ob",
+      "value": ""
+    },
+    {
+      "key": "MunicipioFronteira_QTD_Ob",
+      "value": ""
+    }
+  ]
+}

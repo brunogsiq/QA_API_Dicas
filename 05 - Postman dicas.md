@@ -14,7 +14,6 @@ Bom: Get User by ID
 3. 🔗 Utilize Variáveis
 Reutilize valores comuns como URLs ou tokens através de variáveis.
 Exemplo:
-bash
 Copiar código
 GET {{api_url}}/users/123
 
@@ -45,7 +44,6 @@ Snippets para verificar se o corpo da resposta contém uma string específica.
 8. ⚙️ Use Pre-request Scripts
 Configure variáveis ou parâmetros antes de enviar uma requisição.
 Exemplo:
-javascript
 Copiar código
 pm.variables.set("current_date", new Date().toUTCString());
 

@@ -1,0 +1,222 @@
+{
+  "info": {
+    "_postman_id": "1a3135e9-0869-4f60-a2d2-4afccbf3376b",
+    "name": "5 - Pokemon API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "37217607",
+    "_collection_link": "https://go.postman.co/collection/37217607-1a3135e9-0869-4f60-a2d2-4afccbf3376b?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "01 - Busca Endpoints API",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/?limit=100000&offset=0",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            ""
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "100000"
+            },
+            {
+              "key": "offset",
+              "value": "0"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "02 - Busca pokemon - todos",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code é 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Json contém 'Nome'\", function () {\r",
+              "    pm.expect(pm.response.text()).to.include(\"name\");\r",
+              "});\r",
+              "\r",
+              "// Acessar o objeto JSON da resposta\r",
+              "const responseJson = pm.response.json();\r",
+              "\r",
+              "// Iterar sobre o array de resultados\r",
+              "responseJson.results.forEach((pokemon, index) => {\r",
+              "    // Extrair o nome\r",
+              "    const pokemonName = pokemon.name;\r",
+              "\r",
+              "    // Extrair o ID do URL (segmento final após a última '/')\r",
+              "    const pokemonId = pokemon.url.match(/\\/pokemon\\/(\\d+)\\//)[1];\r",
+              "\r",
+              "    // Armazenar nome e ID em variáveis de ambiente\r",
+              "    pm.environment.set(`pokemonName${index + 1}`, pokemonName);\r",
+              "    pm.environment.set(`pokemonId${index + 1}`, pokemonId);\r",
+              "});\r",
+              "\r",
+              "console.log(`Processados ${responseJson.results.length} Pokémons.`);\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/{{pokemonSearch}}?offset=0&limit=150",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "{{pokemonSearch}}"
+          ],
+          "query": [
+            {
+              "key": "offset",
+              "value": "0",
+              "type": "text"
+            },
+            {
+              "key": "limit",
+              "value": "150",
+              "type": "text"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "03 - Busca pokemon - id específico",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code é 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Json contém 'id'\", function () {\r",
+              "    let idPokemon = pm.response.json().id;\r",
+              "    pm.environment.set(\"idPokemon\", idPokemon);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Json contém 'name'\", function () {\r",
+              "    let namePokemon = pm.response.json().name;\r",
+              "    pm.environment.set(\"namePokemon\", namePokemon);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/{{pokemonSearch}}/{{pokemonId150}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "{{pokemonSearch}}",
+            "{{pokemonId150}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "04 - Busca pokemon - name específico",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code é 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Json contém 'id'\", function () {\r",
+              "    let idPokemon = pm.response.json().id;\r",
+              "    pm.environment.set(\"idPokemon\", idPokemon);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Json contém 'name'\", function () {\r",
+              "    let namePokemon = pm.response.json().name;\r",
+              "    pm.environment.set(\"namePokemon\", namePokemon);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/{{pokemonSearch}}/{{pokemonName25}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "{{pokemonSearch}}",
+            "{{pokemonName25}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

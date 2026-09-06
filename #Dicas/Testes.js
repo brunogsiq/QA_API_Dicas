@@ -100,3 +100,22 @@ SELECT * FROM Users WHERE UserId = 1 OR 1=1;
 SELECT * FROM Users WHERE id = 1 OR 1=1;
 SELECT * FROM Users WHERE Name ="" or ""="" AND Pass ="" or ""="";
 SELECT * FROM Users; DROP TABLE Teste;
+
+--**--
+
+Anotações:
+    Em ambiente de HML ou Dev:
+        Positivo
+        Endpoint
+        Status da requisição
+        Tipo de requisição
+        Contrato
+        Parâmetros do cabeçalho
+        Parâmetros do corpo
+        Performance (tempo de resposta em ms)
+        Mensagens de retorno
+            Mensagem de sucesso
+            Mensagem de erro para entradas inválidas
+            Mensagem de erro para entradas não esperadas
+
+            

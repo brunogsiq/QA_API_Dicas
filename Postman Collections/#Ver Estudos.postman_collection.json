@@ -1,0 +1,912 @@
+{
+  "info": {
+    "_postman_id": "1e760927-5f9a-4cd1-aecb-4f98f20eb734",
+    "name": "#Ver Estudos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "37217607",
+    "_collection_link": "https://go.postman.co/collection/37217607-1e760927-5f9a-4cd1-aecb-4f98f20eb734?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Geração de Dados - CPF e CNPJ",
+      "item": [
+        {
+          "name": "4Devs-Docs",
+          "item": [
+            {
+              "name": "BFF - 4devs-gerador_de_cpf",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "https://www.4devs.com.br/gerador_de_cpf",
+                  "protocol": "https",
+                  "host": [
+                    "www",
+                    "4devs",
+                    "com",
+                    "br"
+                  ],
+                  "path": [
+                    "gerador_de_cpf"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Gerador_ DOC",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "console.log();\r",
+                      "console.log(\"============Inicio de (Gerador_doc)============\");\r",
+                      "console.log();\r",
+                      "\r",
+                      "// Função para obter ID aleatório a partir de uma variável de ambiente\r",
+                      "function getRandomId(envVariable, outputVariable) {\r",
+                      "    let ids = pm.environment.get(envVariable);\r",
+                      "    \r",
+                      "    if (ids) {\r",
+                      "        let idsArray = ids.split(',');\r",
+                      "        let randomIndex = Math.floor(Math.random() * idsArray.length);\r",
+                      "        let randomId = idsArray[randomIndex].trim();\r",
+                      "\r",
+                      "        pm.environment.set(outputVariable, randomId);\r",
+                      "        // pm.collectionVariables.set(outputVariable, randomId);\r",
+                      "        // pm.variables.set(outputVariable, randomId);\r",
+                      "\r",
+                      "        console.log(`IDs disponíveis em ${envVariable}:`, idsArray);\r",
+                      "        console.log(`ID escolhido aleatoriamente para ${outputVariable}:`, randomId);\r",
+                      "    } else {\r",
+                      "        console.log(`A variável '${envVariable}' não está definida ou está vazia.`);\r",
+                      "    }\r",
+                      "}\r",
+                      "\r",
+                      "// Obter ID randomico \"NivelRisco_Vlr_Ob\" para usar em NivelRisco\r",
+                      "getRandomId(\"Filtros_siglasUF_Valores\", \"UF_Atual\");\r",
+                      "\r",
+                      "\r",
+                      "\r",
+                      "//Cria uma nova variável para um novo doc consultado\r",
+                      "// Obtém o contador atual de doc ou inicializa em 0\r",
+                      "let counter = parseInt(pm.environment.get(\"doc_counter\"), 10) || 0;\r",
+                      "\r",
+                      "// Se o contador for 0 ou não existir, inicializa com 1\r",
+                      "if (counter === 0) {\r",
+                      "    counter = 1;\r",
+                      "} else {\r",
+                      "    // Incrementa o contador para a próxima variável\r",
+                      "    counter += 1;\r",
+                      "}\r",
+                      "\r",
+                      "// Gera o nome da nova variável, como \"doc_1\", \"doc_2\", etc.\r",
+                      "let variableName = `doc_${counter}`;\r",
+                      "\r",
+                      "// Armazena o nome da variável que será usada no teste (Post-request)\r",
+                      "pm.environment.set(\"current_doc_variable\", variableName);\r",
+                      "\r",
+                      "// Atualiza o contador no ambiente para a próxima requisição\r",
+                      "pm.environment.set(\"doc_counter\", counter);\r",
+                      "\r",
+                      "console.log(`Contador atual de Doc: ${counter}`);\r",
+                      "console.log(`Nova variável criada: ${variableName}`);\r",
+                      "\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "\r",
+                      "// Captura o valor do response body (número retornado)\r",
+                      "let responseValue = pm.response.text().trim();\r",
+                      "\r",
+                      "// Obtém o nome da variável criada no Pre-request Script\r",
+                      "let variableName = pm.environment.get(\"current_doc_variable\");\r",
+                      "\r",
+                      "// Insere o valor do response na nova variável criada\r",
+                      "pm.environment.set(variableName, responseValue);\r",
+                      "\r",
+                      "console.log(`Variável ${variableName} atualizada com o valor: ${responseValue}`);\r",
+                      "\r",
+                      "console.log();\r",
+                      "console.log(\"============FIM de (Gerador_doc)============\");\r",
+                      "console.log();\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "key": "accept-language",
+                    "value": "pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6"
+                  },
+                  {
+                    "key": "cache-control",
+                    "value": "no-cache"
+                  },
+                  {
+                    "key": "content-type",
+                    "value": "application/x-www-form-urlencoded; charset=UTF-8"
+                  },
+                  {
+                    "key": "cookie",
+                    "value": "_ga=GA1.1.451018851.1722906356; CookieScriptConsent={\"googleconsentmap\":{\"ad_storage\":\"targeting\",\"analytics_storage\":\"performance\",\"functionality_storage\":\"functionality\",\"personalization_storage\":\"functionality\",\"security_storage\":\"functionality\"},\"firstpage\":\"https://www.4devs.com.br/\",\"action\":\"accept\",\"categories\":\"[\\\"unclassified\\\",\\\"targeting\\\",\\\"performance\\\"]\",\"key\":\"c596f148-06b9-44d8-803d-26c4e94f3943\"}; cto_bundle=Ygezzl9TMTkxNyUyQkZzYURvbzU5QmlsOW4yUk5VU1glMkJtViUyRkRTZ1l6ZXVQUHhmMUMxYUFUclZNJTJGa0tJS3JjJTJGd2lCektsaCUyRm9jM2hmWU01cnVMTTlsNGJNeTVieERmODN2ZVBxY0glMkZ1b0pxTjZTcDNDZ3VYOHNYN3pZNndqV3NYaE1mbjV4; _lr_geo_location=BR; __gads=ID=975b7953ea164d91:T=1722906375:RT=1723200036:S=ALNI_MZlYw6P0ZTC6YbupLuFWUOL605T-Q; __gpi=UID=00000a4b694e747f:T=1722906375:RT=1723200036:S=ALNI_Mb0wWcmzysMVBGwzFFenYlh3tqdcQ; _cc_id=147436f910c1a76dd308aaf5394fd889; panoramaId_expiry=1723286516525; _clck=ahakjg%7C2%7Cfo6%7C0%7C1679; _clsk=j9saq3%7C1723200122694%7C1%7C1%7Cn.clarity.ms%2Fcollect; __eoi=ID=ad46859078c2a6f6:T=1723200129:RT=1723200129:S=AA-AfjYe7Lx7KQti2fhCe0AjKreU; _ga_7RD2VB3FJH=GS1.1.1723200033.6.1.1723200192.0.0.0"
+                  },
+                  {
+                    "key": "dnt",
+                    "value": "1"
+                  },
+                  {
+                    "key": "origin",
+                    "value": "https://www.4devs.com.br"
+                  },
+                  {
+                    "key": "pragma",
+                    "value": "no-cache"
+                  },
+                  {
+                    "key": "priority",
+                    "value": "u=1, i"
+                  },
+                  {
+                    "key": "referer",
+                    "value": "https://www.4devs.com.br/gerador_de_cpf"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Not)A;Brand\";v=\"99\", \"Microsoft Edge\";v=\"127\", \"Chromium\";v=\"127\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"Windows\""
+                  },
+                  {
+                    "key": "sec-fetch-dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "sec-fetch-mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "sec-fetch-site",
+                    "value": "same-origin"
+                  },
+                  {
+                    "key": "user-agent",
+                    "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36 Edg/127.0.0.0"
+                  },
+                  {
+                    "key": "x-requested-with",
+                    "value": "XMLHttpRequest"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "pontuacao",
+                      "value": "S",
+                      "description": "Booleano | S / N - Para qualquer documento deve escolher essa opção, sim ou não",
+                      "type": "text"
+                    },
+                    {
+                      "key": "cpf_estado",
+                      "value": "",
+                      "description": "Estados BR / Vazio = indiferente | Usar a variável {{UF_Atual}}",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "acao",
+                      "value": "gerar_cnpj",
+                      "type": "text"
+                    },
+                    {
+                      "key": "acao",
+                      "value": "gerar_cpf",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "acao",
+                      "value": "gerar_rg",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "acao",
+                      "value": "gerar_cnh",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "acao",
+                      "value": "gerador_certidao",
+                      "description": "Quando ativar essa opção - deve ativar a opção \"tipo_certidao\"",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "tipo_certidao",
+                      "value": "Indiferente",
+                      "description": "Indiferente / nascimento / casamento / casamento_religioso / obito",
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{host_4Devs_Prod}}/ferramentas_online.php",
+                  "host": [
+                    "{{host_4Devs_Prod}}"
+                  ],
+                  "path": [
+                    "ferramentas_online.php"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Gerador_ DOC_dinamico",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "console.log();\r",
+                      "console.log(\"============Inicio de (Gerador_doc)============\");\r",
+                      "console.log();\r",
+                      "\r",
+                      "// Função para obter ID aleatório a partir de uma variável de ambiente\r",
+                      "function getRandomId(envVariable, outputVariable) {\r",
+                      "    let ids = pm.environment.get(envVariable);\r",
+                      "    \r",
+                      "    if (ids) {\r",
+                      "        let idsArray = ids.split(',');\r",
+                      "        let randomIndex = Math.floor(Math.random() * idsArray.length);\r",
+                      "        let randomId = idsArray[randomIndex].trim();\r",
+                      "\r",
+                      "        pm.environment.set(outputVariable, randomId);\r",
+                      "\r",
+                      "        console.log(`IDs disponíveis em ${envVariable}:`, idsArray);\r",
+                      "        console.log(`ID escolhido aleatoriamente para ${outputVariable}:`, randomId);\r",
+                      "    } else {\r",
+                      "        console.log(`A variável '${envVariable}' não está definida ou está vazia.`);\r",
+                      "    }\r",
+                      "}\r",
+                      "// Obter ID randômico \"Filtros_siglasUF_Valores\" para usar em \"UF_Atual\"\r",
+                      "getRandomId(\"Filtros_siglasUF_Valores\", \"UF_Atual\");\r",
+                      "\r",
+                      "\r",
+                      "// Função para obter o valor do parâmetro `acao` ativo no form-data\r",
+                      "function getActiveAcao() {\r",
+                      "    let activeAcao = null;\r",
+                      "\r",
+                      "    // Verifica se o corpo da requisição existe e é do tipo form-data\r",
+                      "    if (pm.request.body && pm.request.body.mode === 'formdata') {\r",
+                      "        let formDataItems = pm.request.body.formdata.members;\r",
+                      "\r",
+                      "        // Itera sobre os itens do form-data\r",
+                      "        formDataItems.forEach(function (item) {\r",
+                      "            if (item.key === 'acao' && !item.disabled) {\r",
+                      "                activeAcao = item.value;\r",
+                      "            }\r",
+                      "        });\r",
+                      "    }\r",
+                      "\r",
+                      "    if (activeAcao) {\r",
+                      "        console.log(`Parâmetro 'acao' ativo: ${activeAcao}`);\r",
+                      "        return activeAcao;\r",
+                      "    } else {\r",
+                      "        throw new Error(\"Nenhum parâmetro 'acao' ativo encontrado!\");\r",
+                      "    }\r",
+                      "}\r",
+                      "\r",
+                      "// Obter o valor do parâmetro `acao` ativo\r",
+                      "let acao = getActiveAcao();\r",
+                      "\r",
+                      "// Obtém o contador atual de `acao` ou inicializa em 0\r",
+                      "let counter = parseInt(pm.environment.get(`counter_${acao}`), 10) || 0;\r",
+                      "\r",
+                      "// Se o contador for 0 ou não existir, inicializa com 1\r",
+                      "if (counter === 0) {\r",
+                      "    counter = 1;\r",
+                      "} else {\r",
+                      "    // Incrementa o contador para a próxima variável\r",
+                      "    counter += 1;\r",
+                      "}\r",
+                      "\r",
+                      "// Gera o nome da nova variável, como \"gerar_cnpj_1\", \"gerar_rg_2\", etc.\r",
+                      "let variableName = `${acao}_${counter}`;\r",
+                      "\r",
+                      "// Armazena o nome da variável que será usada no teste (Post-request)\r",
+                      "pm.environment.set(\"current_doc_variable\", variableName);\r",
+                      "\r",
+                      "// Atualiza o contador no ambiente para a próxima requisição\r",
+                      "pm.environment.set(`counter_${acao}`, counter);\r",
+                      "\r",
+                      "console.log(`Contador atual de ${acao}: ${counter}`);\r",
+                      "console.log(`Nova variável criada: ${variableName}`);\r",
+                      "\r",
+                      "\r",
+                      "\r",
+                      "\r",
+                      "\r",
+                      "\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "\r",
+                      "// Captura o valor do response body (número retornado)\r",
+                      "let responseValue = pm.response.text().trim();\r",
+                      "\r",
+                      "// Obtém o nome da variável criada no Pre-request Script\r",
+                      "let variableName = pm.environment.get(\"current_doc_variable\");\r",
+                      "\r",
+                      "// Insere o valor do response na nova variável criada\r",
+                      "pm.environment.set(variableName, responseValue);\r",
+                      "\r",
+                      "console.log(`Variável ${variableName} atualizada com o valor: ${responseValue}`);\r",
+                      "\r",
+                      "console.log();\r",
+                      "console.log(\"============FIM de (Gerador_doc)============\");\r",
+                      "console.log();\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "key": "accept-language",
+                    "value": "pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6"
+                  },
+                  {
+                    "key": "cache-control",
+                    "value": "no-cache"
+                  },
+                  {
+                    "key": "content-type",
+                    "value": "application/x-www-form-urlencoded; charset=UTF-8"
+                  },
+                  {
+                    "key": "cookie",
+                    "value": "_ga=GA1.1.451018851.1722906356; CookieScriptConsent={\"googleconsentmap\":{\"ad_storage\":\"targeting\",\"analytics_storage\":\"performance\",\"functionality_storage\":\"functionality\",\"personalization_storage\":\"functionality\",\"security_storage\":\"functionality\"},\"firstpage\":\"https://www.4devs.com.br/\",\"action\":\"accept\",\"categories\":\"[\\\"unclassified\\\",\\\"targeting\\\",\\\"performance\\\"]\",\"key\":\"c596f148-06b9-44d8-803d-26c4e94f3943\"}; cto_bundle=Ygezzl9TMTkxNyUyQkZzYURvbzU5QmlsOW4yUk5VU1glMkJtViUyRkRTZ1l6ZXVQUHhmMUMxYUFUclZNJTJGa0tJS3JjJTJGd2lCektsaCUyRm9jM2hmWU01cnVMTTlsNGJNeTVieERmODN2ZVBxY0glMkZ1b0pxTjZTcDNDZ3VYOHNYN3pZNndqV3NYaE1mbjV4; _lr_geo_location=BR; __gads=ID=975b7953ea164d91:T=1722906375:RT=1723200036:S=ALNI_MZlYw6P0ZTC6YbupLuFWUOL605T-Q; __gpi=UID=00000a4b694e747f:T=1722906375:RT=1723200036:S=ALNI_Mb0wWcmzysMVBGwzFFenYlh3tqdcQ; _cc_id=147436f910c1a76dd308aaf5394fd889; panoramaId_expiry=1723286516525; _clck=ahakjg%7C2%7Cfo6%7C0%7C1679; _clsk=j9saq3%7C1723200122694%7C1%7C1%7Cn.clarity.ms%2Fcollect; __eoi=ID=ad46859078c2a6f6:T=1723200129:RT=1723200129:S=AA-AfjYe7Lx7KQti2fhCe0AjKreU; _ga_7RD2VB3FJH=GS1.1.1723200033.6.1.1723200192.0.0.0"
+                  },
+                  {
+                    "key": "dnt",
+                    "value": "1"
+                  },
+                  {
+                    "key": "origin",
+                    "value": "https://www.4devs.com.br"
+                  },
+                  {
+                    "key": "pragma",
+                    "value": "no-cache"
+                  },
+                  {
+                    "key": "priority",
+                    "value": "u=1, i"
+                  },
+                  {
+                    "key": "referer",
+                    "value": "https://www.4devs.com.br/gerador_de_cpf"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Not)A;Brand\";v=\"99\", \"Microsoft Edge\";v=\"127\", \"Chromium\";v=\"127\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"Windows\""
+                  },
+                  {
+                    "key": "sec-fetch-dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "sec-fetch-mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "sec-fetch-site",
+                    "value": "same-origin"
+                  },
+                  {
+                    "key": "user-agent",
+                    "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36 Edg/127.0.0.0"
+                  },
+                  {
+                    "key": "x-requested-with",
+                    "value": "XMLHttpRequest"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "pontuacao",
+                      "value": "S",
+                      "contentType": "",
+                      "description": "Booleano | S / N - Para qualquer documento deve escolher essa opção, sim ou não",
+                      "type": "text"
+                    },
+                    {
+                      "key": "cpf_estado",
+                      "value": "{{UF_Atual}}",
+                      "description": "Estados BR / Vazio = indiferente | Usar a variável {{UF_Atual}}",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "acao",
+                      "value": "gerar_rg",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "acao",
+                      "value": "gerar_cpf",
+                      "type": "text"
+                    },
+                    {
+                      "key": "acao",
+                      "value": "gerar_cnh",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "acao",
+                      "value": "gerador_certidao",
+                      "description": "Quando ativar essa opção - deve ativar a opção \"tipo_certidao\"",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "acao",
+                      "value": "gerar_cnpj",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "tipo_certidao",
+                      "value": "Indiferente",
+                      "description": "Indiferente / nascimento / casamento / casamento_religioso / obito",
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{host_4Devs_Prod}}/ferramentas_online.php",
+                  "host": [
+                    "{{host_4Devs_Prod}}"
+                  ],
+                  "path": [
+                    "ferramentas_online.php"
+                  ]
+                },
+                "description": "Para essa requisição é necessário.:\n\n1. Escolher se o documento deverá ter ou não pontuações | Booleano = S/N.\n    \n2. Selecionar o documento desejado conforma a necessidade.\n    \n\nPara geração de doc em massa, é preciso rodar esse enpoint em \"Run Collection\".:\n\n1. Selecione apenas os endpoints desejados, neste caso (nosso gerador de doc).\n    \n2. Selecione a quantidade de iterações (repetições de request / quantas vezes a request será enviada)\n    \n3. Ative o Checkbox da opção \"Persist responses for a session\"\n    \n4. Coloque pra rodar.\n    \n5. Após o término da \"Run\", Export seu ambiente de variável.\n    \n6. Acesse o arquivo exportado, e extraia os documentos desejados."
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Go Rest",
+      "item": [
+        {
+          "name": "Usuario",
+          "item": [
+            {
+              "name": "Buscar todos os usuarios",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{Token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL_Base}}/users",
+                  "host": [
+                    "{{URL_Base}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Criar usuario",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{Token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer ACCESS-TOKEN",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Bruno Siq\",\r\n    \"gender\": \"male\",\r\n    \"email\": \"brunogsiq@gmail.com\",\r\n    \"status\": \"active\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://gorest.co.in/public/v2/users",
+                  "protocol": "https",
+                  "host": [
+                    "gorest",
+                    "co",
+                    "in"
+                  ],
+                  "path": [
+                    "public",
+                    "v2",
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Buscar usuario por id",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{Token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{URL_Base}}/users/8041342",
+                  "host": [
+                    "{{URL_Base}}"
+                  ],
+                  "path": [
+                    "users",
+                    "8041342"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Alterar Usuario",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{Token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Bruno Siqueira\",\r\n    \"email\": \"brunogsiq@gmail.com\",\r\n    \"status\": \"active\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://gorest.co.in/public/v2/users/8031183",
+                  "protocol": "https",
+                  "host": [
+                    "gorest",
+                    "co",
+                    "in"
+                  ],
+                  "path": [
+                    "public",
+                    "v2",
+                    "users",
+                    "8031183"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Apagar um Usuario",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{Token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "https://gorest.co.in/public/v2/users/6987649",
+                  "protocol": "https",
+                  "host": [
+                    "gorest",
+                    "co",
+                    "in"
+                  ],
+                  "path": [
+                    "public",
+                    "v2",
+                    "users",
+                    "6987649"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Posts",
+          "item": [
+            {
+              "name": "Buscar post por id",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "e4e6b6d7fd92035f6e46f808d38a99b566029bffe6742522d10bc2e5b9ef41f2",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{URL_Base}}/posts/138069",
+                  "host": [
+                    "{{URL_Base}}"
+                  ],
+                  "path": [
+                    "posts",
+                    "138069"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Buscar todos os POSTS",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "e4e6b6d7fd92035f6e46f808d38a99b566029bffe6742522d10bc2e5b9ef41f2",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{URL_Base}}/posts",
+                  "host": [
+                    "{{URL_Base}}"
+                  ],
+                  "path": [
+                    "posts"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Criar POST",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "e4e6b6d7fd92035f6e46f808d38a99b566029bffe6742522d10bc2e5b9ef41f2",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer ACCESS-TOKEN",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \r\n    \"user_id\": 6983651,\r\n    \"title\": \"TESTE POSTS .\",\r\n    \"body\": \"Teste body\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL_Base}}/posts",
+                  "host": [
+                    "{{URL_Base}}"
+                  ],
+                  "path": [
+                    "posts"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -69,4 +69,5 @@ PATCH Requests: Atualize parcialmente um recurso. Envie apenas os campos que pre
 DELETE Requests: Remova dados. Verifique se a operação foi bem-sucedida e se o recurso foi removido.
 
 HEAD Requests: Verifique cabeçalhos sem transferir o recurso. Ideal para metadados.
+
 OPTIONS Requests: Descubra quais métodos HTTP são suportados para um recurso específico.

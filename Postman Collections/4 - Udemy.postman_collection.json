@@ -1,0 +1,3068 @@
+{
+  "info": {
+    "_postman_id": "97f9220a-916a-43bd-885d-353021dd7a37",
+    "name": "4 - Udemy",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "37217607",
+    "_collection_link": "https://go.postman.co/collection/37217607-97f9220a-916a-43bd-885d-353021dd7a37?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Projeto 1",
+      "item": [
+        {
+          "name": "1 - Validar acesso com sucesso.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var teste = 0;\r",
+                  "var complemento = 0;\r",
+                  "\r",
+                  "pm.test(`${++teste}.${++complemento} - Validar acesso com sucesso.`, function ()\r",
+                  "{\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "    console.log(`${teste}.${complemento} - Resultado:    \\nAcesso realizado com sucesso.`);\r",
+                  "\r",
+                  "    pm.environment.set(\"teste\", teste);\r",
+                  "    pm.environment.set(\"complemento\", complemento);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl_DocPostman}}/get",
+              "host": [
+                "{{baseUrl_DocPostman}}"
+              ],
+              "path": [
+                "get"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2.1 - Validar criação de usuário com sucesso.",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.variables.set(\"name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
+                  "pm.variables.set(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+                  "\r",
+                  "var randomFirstName = pm.variables.get(\"name\");\r",
+                  "var randomEmail = pm.variables.get(\"email\");\r",
+                  "\r",
+                  "console.log(\"Pre-ReqUest: \" + randomFirstName, \"male\", randomEmail, \"active\");\r",
+                  "\r",
+                  "pm.variables.set(\"name\", randomFirstName);\r",
+                  "pm.variables.set(\"email\", randomEmail);\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                  "pm.environment.set(\"complemento\", 0)\r",
+                  "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                  "\r",
+                  "pm.test(`${++teste}.${++complemento} - Validar criação de usuário.`, function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "\r",
+                  "    var responseJson = pm.response.json();\r",
+                  "\r",
+                  "    if (responseJson.data && responseJson.data.id) {\r",
+                  "        var id_CreateUser = responseJson.data.id;\r",
+                  "        pm.environment.set(\"id_CreateUser\", id_CreateUser);\r",
+                  "        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID: ${id_CreateUser} armazenado com sucesso.`);\r",
+                  "    } else {\r",
+                  "        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID: não encontrado.`);\r",
+                  "    }\r",
+                  "\r",
+                  "    // Atualizar complemento na variável de ambiente\r",
+                  "    pm.environment.set(\"complemento\", complemento);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"gender\": \"male\",\r\n    \"email\": \"{{email}}\",\r\n    \"status\": \"active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}",
+              "host": [
+                "{{baseUrl_GoRest}}"
+              ],
+              "path": [
+                "{{endpoint_GoRest_Users}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2.2 - Validar busca por usuário com sucesso.",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.variables.get(\"name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
+                  "pm.variables.get(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+                  "\r",
+                  "var randomFirstName = pm.variables.get(\"name\");\r",
+                  "var randomEmail = pm.variables.get(\"email\");"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                  "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                  "var id_CreateUser = parseInt(pm.environment.get(\"id_CreateUser\"))\r",
+                  "\r",
+                  "pm.test(`${++teste}.${++complemento} - Validar busca por usuário.`, function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "\r",
+                  "    var responseJson = pm.response.json();\r",
+                  "\r",
+                  "    if (responseJson.data && responseJson.data.id) {\r",
+                  "        var id_CreateUser = responseJson.data.id;\r",
+                  "        pm.environment.set(\"id_CreateUser\", id_CreateUser);\r",
+                  "        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID: ${id_CreateUser} encontrado com sucesso.`);\r",
+                  "    } else {\r",
+                  "        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID: não encontrado.`);\r",
+                  "    }\r",
+                  "\r",
+                  "    // Atualizar complemento na variável de ambiente\r",
+                  "    pm.environment.set(\"complemento\", complemento);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\" : \"{{id_CreateUser}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}",
+              "host": [
+                "{{baseUrl_GoRest}}"
+              ],
+              "path": [
+                "{{endpoint_GoRest_Users}}",
+                "{{id_CreateUser}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2.3 - Validar atualização de usuário com sucesso.",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.variables.set(\"name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
+                  "pm.variables.set(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+                  "\r",
+                  "var randomFirstName = pm.variables.get(\"name\");\r",
+                  "var randomEmail = pm.variables.get(\"email\");\r",
+                  "\r",
+                  "pm.variables.set(\"name\", randomFirstName);\r",
+                  "pm.variables.set(\"email\", randomEmail);"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                  "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                  "var id_CreateUser = parseInt(pm.environment.get(\"id_CreateUser\"));\r",
+                  "\r",
+                  "pm.test(`${++teste}.${++complemento} - Validar atualização de usuário.`, function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "\r",
+                  "    var responseJson = pm.response.json();\r",
+                  "\r",
+                  "    if (responseJson.data && responseJson.data.id) {\r",
+                  "        var id_CreateUser = responseJson.data.id;\r",
+                  "        pm.environment.set(\"id_CreateUser\", id_CreateUser);\r",
+                  "        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID: ${id_CreateUser} atualizado com sucesso.`);\r",
+                  "    } else {\r",
+                  "        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID: não encontrado.`);\r",
+                  "    }\r",
+                  "\r",
+                  "    // Atualizar complemento na variável de ambiente\r",
+                  "    pm.environment.set(\"complemento\", complemento);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"gender\": \"female\",\r\n    \"email\": \"{{email}}\",\r\n    \"status\": \"active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}",
+              "host": [
+                "{{baseUrl_GoRest}}"
+              ],
+              "path": [
+                "{{endpoint_GoRest_Users}}",
+                "{{id_CreateUser}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2.4 - Validar atualização parcial de usuário com sucesso.",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.variables.set(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+                  "\r",
+                  "var randomFirstName = pm.variables.get(\"name\");\r",
+                  "var randomEmail = pm.variables.get(\"email\");\r",
+                  "\r",
+                  "pm.variables.set(\"name\", randomFirstName);\r",
+                  "pm.variables.set(\"email\", randomEmail);"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                  "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                  "var id_CreateUser = parseInt(pm.environment.get(\"id_CreateUser\"));\r",
+                  "\r",
+                  "pm.test(`${++teste}.${++complemento} - Validar atualização parcial der usuário.`, function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "\r",
+                  "    var responseJson = pm.response.json();\r",
+                  "\r",
+                  "    if (responseJson.data && responseJson.data.id) {\r",
+                  "        var id_CreateUser = responseJson.data.id;\r",
+                  "        pm.environment.set(\"id_CreateUser\", id_CreateUser);\r",
+                  "        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID: ${id_CreateUser} atualização de propriedade com sucesso.`);\r",
+                  "    } else {\r",
+                  "        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID: não encontrado.`);\r",
+                  "    }\r",
+                  "\r",
+                  "    // Atualizar complemento na variável de ambiente\r",
+                  "    pm.environment.set(\"complemento\", complemento);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"gender\": \"female\",\r\n    \"email\": \"{{email}}\",\r\n    \"status\": \"active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}",
+              "host": [
+                "{{baseUrl_GoRest}}"
+              ],
+              "path": [
+                "{{endpoint_GoRest_Users}}",
+                "{{id_CreateUser}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2.5 - Validar deleção de usuário com sucesso.",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "var id_CreateUser = parseInt(pm.environment.get(\"id_CreateUser\"));"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                  "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                  "\r",
+                  "\r",
+                  "pm.test(`${++teste}.${++complemento} - Validar deleção de usuário.`, function () {\r",
+                  "\r",
+                  "    var responseJson = pm.response.json();\r",
+                  "\r",
+                  "    // Verificar se o campo data é null, indicando que a deleção foi bem-sucedida\r",
+                  "    if (responseJson.data === null) {\r",
+                  "        pm.response.to.have.status(200);\r",
+                  "        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID deletado com sucesso.`);\r",
+                  "    } else {\r",
+                  "        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID não encontrado ou não deletado.`);\r",
+                  "    }\r",
+                  "\r",
+                  "    // Atualizar complemento na variável de ambiente\r",
+                  "    pm.environment.set(\"complemento\", complemento);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}",
+              "host": [
+                "{{baseUrl_GoRest}}"
+              ],
+              "path": [
+                "{{endpoint_GoRest_Users}}",
+                "{{id_CreateUser}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2.6 - Validar busca por usuário deletado.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                  "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                  "var id_CreateUser = parseInt(pm.environment.get(\"id_CreateUser\"))\r",
+                  "\r",
+                  "pm.test(`${++teste}.${++complemento} - Validar busca por usuário.`, function () {\r",
+                  "    var id_CreateUser = pm.environment.get(\"id_CreateUser\");\r",
+                  "\r",
+                  "    pm.sendRequest({\r",
+                  "        url: `https://gorest.co.in/public-api/users/${id_CreateUser}`, \r",
+                  "        method: 'GET'\r",
+                  "    }, function (err, response) {\r",
+                  "        if (err) {\r",
+                  "            console.log(`${teste}.${complemento} - Erro ao buscar o ID: ${err}`);\r",
+                  "            pm.expect.fail(`Erro ao buscar o ID: ${err}`);\r",
+                  "            return;\r",
+                  "        }\r",
+                  "\r",
+                  "        var responseJson = response.json();\r",
+                  "\r",
+                  "        // Verifica se o status da resposta é 404 e se contém a mensagem esperada\r",
+                  "        if (responseJson.data.message === \"Resource not found\") {\r",
+                  "            console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID não encontrado após deletar.`);\r",
+                  "        } else {\r",
+                  "            console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID ainda encontrado ou resposta inesperada.`);\r",
+                  "            pm.expect.fail(`ID encontrado ou resposta inesperada. Código: ${response.code}, Mensagem: ${JSON.stringify(responseJson)}`);\r",
+                  "        }\r",
+                  "    });\r",
+                  "\r",
+                  "    // Atualizar complemento na variável de ambiente\r",
+                  "    pm.environment.set(\"complemento\", complemento);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\" : \"{{id_CreateUser}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}",
+              "host": [
+                "{{baseUrl_GoRest}}"
+              ],
+              "path": [
+                "{{endpoint_GoRest_Users}}",
+                "{{id_CreateUser}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Projeto 2",
+      "item": [
+        {
+          "name": "1 - Cadastra",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var teste = 0;\r",
+                  "var complemento = 0;\r",
+                  "\r",
+                  "pm.test(`${++teste}.${++complemento} - Validar criação de usuário.`, function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "\r",
+                  "    var responseJson = pm.response.json();\r",
+                  "\r",
+                  "    if (responseJson.data && responseJson.data.id) {\r",
+                  "        var id_CreateUser = responseJson.data.id;\r",
+                  "        pm.environment.set(\"id_CreateUser\", id_CreateUser);\r",
+                  "        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID: ${id_CreateUser} armazenado com sucesso.`);\r",
+                  "    } else {\r",
+                  "        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID: não encontrado.`);\r",
+                  "    }\r",
+                  "\r",
+                  "    // Atualizar complemento na variável de ambiente\r",
+                  "    pm.environment.set(\"teste\", teste);\r",
+                  "    pm.environment.set(\"complemento\", complemento);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.variables.set(\"name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
+                  "pm.variables.set(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+                  "\r",
+                  "var randomFirstName = pm.variables.get(\"name\");\r",
+                  "var randomEmail = pm.variables.get(\"email\");\r",
+                  "\r",
+                  "console.log(\"Pre-ReqUest: \" + randomFirstName, \"male\", randomEmail, \"active\");\r",
+                  "\r",
+                  "pm.variables.set(\"name\", randomFirstName);\r",
+                  "pm.variables.set(\"email\", randomEmail);\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"gender\": \"male\",\r\n    \"email\": \"{{email}}\",\r\n    \"status\": \"active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}",
+              "host": [
+                "{{baseUrl_GoRest}}"
+              ],
+              "path": [
+                "{{endpoint_GoRest_Users}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "1 - Cadastra",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"gender\": \"male\",\r\n    \"email\": \"{{email}}\",\r\n    \"status\": \"active\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}",
+                  "host": [
+                    "{{baseUrl_GoRest}}"
+                  ],
+                  "path": [
+                    "{{endpoint_GoRest_Users}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Fri, 26 Jul 2024 02:00:48 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "max-age=0, private, must-revalidate"
+                },
+                {
+                  "key": "etag",
+                  "value": "W/\"95e097f352b83466c4ec7c3203ccd90a\""
+                },
+                {
+                  "key": "location",
+                  "value": "https://gorest.co.in/public-api/users/7151097"
+                },
+                {
+                  "key": "referrer-policy",
+                  "value": "strict-origin-when-cross-origin"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "x-download-options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-permitted-cross-domain-policies",
+                  "value": "none"
+                },
+                {
+                  "key": "x-ratelimit-limit",
+                  "value": "90"
+                },
+                {
+                  "key": "x-ratelimit-remaining",
+                  "value": "89"
+                },
+                {
+                  "key": "x-ratelimit-reset",
+                  "value": "1"
+                },
+                {
+                  "key": "x-request-id",
+                  "value": "7eeea42b-c47d-4bd8-815e-63863665e352"
+                },
+                {
+                  "key": "x-runtime",
+                  "value": "0.145786"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "0"
+                },
+                {
+                  "key": "CF-Cache-Status",
+                  "value": "DYNAMIC"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=repb84W1eh6SQVckPUXwN2w7bbTt9OeAvBYUK%2BFhdZX2tiStI%2FR8pP6uFzxBmOv3xZM5eUXjN4RNHe0aEQuj%2F14dBeE9QaXVUzK8oF5L00fI06%2FK5dL6lpTa%2FKARWOo%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+                },
+                {
+                  "key": "NEL",
+                  "value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+                },
+                {
+                  "key": "Server",
+                  "value": "cloudflare"
+                },
+                {
+                  "key": "CF-RAY",
+                  "value": "8a90cc50eb221aab-GRU"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "br"
+                },
+                {
+                  "key": "alt-svc",
+                  "value": "h3=\":443\"; ma=86400"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"code\": 201,\n    \"meta\": null,\n    \"data\": {\n        \"id\": 7151097,\n        \"name\": \"Omari\",\n        \"email\": \"Cleta43@gmail.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "2 - Busca",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.variables.get(\"name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
+                  "pm.variables.get(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+                  "\r",
+                  "var randomFirstName = pm.variables.get(\"name\");\r",
+                  "var randomEmail = pm.variables.get(\"email\");"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                  "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                  "var id_CreateUser = parseInt(pm.environment.get(\"id_CreateUser\"))\r",
+                  "\r",
+                  "pm.test(`${++teste}.${++complemento} - Validar busca por usuário.`, function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "\r",
+                  "    var responseJson = pm.response.json();\r",
+                  "\r",
+                  "    if (responseJson.data && responseJson.data.id) {\r",
+                  "        var id_CreateUser = responseJson.data.id;\r",
+                  "        pm.environment.set(\"id_CreateUser\", id_CreateUser);\r",
+                  "        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID: ${id_CreateUser} encontrado com sucesso.`);\r",
+                  "    } else {\r",
+                  "        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID: não encontrado.`);\r",
+                  "    }\r",
+                  "\r",
+                  "    // Atualizar complemento na variável de ambiente\r",
+                  "    pm.environment.set(\"complemento\", complemento);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\" : \"{{id_CreateUser}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}",
+              "host": [
+                "{{baseUrl_GoRest}}"
+              ],
+              "path": [
+                "{{endpoint_GoRest_Users}}",
+                "{{id_CreateUser}}"
+              ],
+              "query": [
+                {
+                  "key": "/",
+                  "value": "7141631",
+                  "disabled": true
+                },
+                {
+                  "key": "",
+                  "value": null,
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "2 - Busca",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"id\" : \"{{id_CreateUser}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}",
+                  "host": [
+                    "{{baseUrl_GoRest}}"
+                  ],
+                  "path": [
+                    "{{endpoint_GoRest_Users}}",
+                    "{{id_CreateUser}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "/",
+                      "value": "7141631",
+                      "disabled": true
+                    },
+                    {
+                      "key": "",
+                      "value": null,
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Fri, 26 Jul 2024 02:00:50 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "max-age=0, private, must-revalidate"
+                },
+                {
+                  "key": "etag",
+                  "value": "W/\"1eb1477bef71c0aaa17da16b10fb98bb\""
+                },
+                {
+                  "key": "referrer-policy",
+                  "value": "strict-origin-when-cross-origin"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "x-download-options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-permitted-cross-domain-policies",
+                  "value": "none"
+                },
+                {
+                  "key": "x-ratelimit-limit",
+                  "value": "90"
+                },
+                {
+                  "key": "x-ratelimit-remaining",
+                  "value": "89"
+                },
+                {
+                  "key": "x-ratelimit-reset",
+                  "value": "1"
+                },
+                {
+                  "key": "x-request-id",
+                  "value": "f95de8a0-12c9-4a0c-98aa-57447b160c75"
+                },
+                {
+                  "key": "x-runtime",
+                  "value": "0.124135"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "0"
+                },
+                {
+                  "key": "CF-Cache-Status",
+                  "value": "DYNAMIC"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=unFiOkEpSmXMEUeo4MbjZ4QKxKcbYrs3s0s7DfFXj1n1M%2B4%2FxaWxV2nWSZwiQd2SqOCcremUOSlwqQbFhxjD%2BuaCRXKyqH0iFVzdqPwK3zXmXayJcnly6jLFcWt2CqM%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+                },
+                {
+                  "key": "NEL",
+                  "value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+                },
+                {
+                  "key": "Server",
+                  "value": "cloudflare"
+                },
+                {
+                  "key": "CF-RAY",
+                  "value": "8a90cc63389f1aab-GRU"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "br"
+                },
+                {
+                  "key": "alt-svc",
+                  "value": "h3=\":443\"; ma=86400"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"code\": 200,\n    \"meta\": null,\n    \"data\": {\n        \"id\": 7151097,\n        \"name\": \"Omari\",\n        \"email\": \"Cleta43@gmail.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Posts - Geral",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "//Busca informação do evento\r",
+                  "console.log(\"1: \" + pm.info.eventName)\r",
+                  "console.log(\"2: \" + pm.info.iteration)\r",
+                  "console.log(\"3: \"+ pm.info.iterationCount)\r",
+                  "console.log(\"4: \"+ pm.info.requestName)\r",
+                  "console.log(\"5: \"+ pm.info.requestId)\r",
+                  "\r",
+                  "// pre script de variáveis\r",
+                  "console.log(\"6: \" + pm.globals.get(\"ambiente\"));\r",
+                  "console.log(\"7: \" + pm.environment.get(\"baseUrl_GoRest\"));"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Lendo JSON e Armazenando.\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    if (jsonData && jsonData.data && jsonData.data.length > 0) {\r",
+                  "        var firstId = jsonData.data[0].id;\r",
+                  "        pm.environment.set(\"id_Posts\", firstId);\r",
+                  "        console.log(`8: Primeiro ID armazenado: ${firstId}`);\r",
+                  "    } else {\r",
+                  "        console.log(\"8: Nenhum dado encontrado na resposta.\");\r",
+                  "        pm.expect.fail(\"8: Nenhum dado encontrado na resposta.\");\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Posts}}/",
+              "host": [
+                "{{baseUrl_GoRest}}"
+              ],
+              "path": [
+                "{{endpoint_GoRest_Posts}}",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Posts",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Posts}}",
+                  "host": [
+                    "{{baseUrl_GoRest}}"
+                  ],
+                  "path": [
+                    "{{endpoint_GoRest_Posts}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Fri, 26 Jul 2024 02:00:54 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "max-age=0, private, must-revalidate"
+                },
+                {
+                  "key": "etag",
+                  "value": "W/\"a763130ed11110ebe9259690fbb93453\""
+                },
+                {
+                  "key": "referrer-policy",
+                  "value": "strict-origin-when-cross-origin"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "x-download-options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-permitted-cross-domain-policies",
+                  "value": "none"
+                },
+                {
+                  "key": "x-ratelimit-limit",
+                  "value": "90"
+                },
+                {
+                  "key": "x-ratelimit-remaining",
+                  "value": "89"
+                },
+                {
+                  "key": "x-ratelimit-reset",
+                  "value": "1"
+                },
+                {
+                  "key": "x-request-id",
+                  "value": "e1698061-44fa-44a7-a72b-696053fa5179"
+                },
+                {
+                  "key": "x-runtime",
+                  "value": "0.204282"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "0"
+                },
+                {
+                  "key": "CF-Cache-Status",
+                  "value": "DYNAMIC"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=FD5aQ1phvq03FW%2FAF5lPDiPmpu8uDBmQuWhRkKMkbcYIpXoxKb4mjlkceF7ILeD9cOtVc%2FlOyq5qdBEmovjVSNNBT2TFDoUlbssVdNSTIs%2FE10AUCeRVJ2m8vMFXNLo%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+                },
+                {
+                  "key": "NEL",
+                  "value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+                },
+                {
+                  "key": "Server",
+                  "value": "cloudflare"
+                },
+                {
+                  "key": "CF-RAY",
+                  "value": "8a90cc75eaa41aab-GRU"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "br"
+                },
+                {
+                  "key": "alt-svc",
+                  "value": "h3=\":443\"; ma=86400"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"code\": 200,\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 3108,\n            \"pages\": 311,\n            \"page\": 1,\n            \"limit\": 10\n        }\n    },\n    \"data\": [\n        {\n            \"id\": 144513,\n            \"user_id\": 7150328,\n            \"title\": \"Ademptio eos veritas auditor facilis decumbo.\",\n            \"body\": \"Tendo tondeo virtus. Vallum adstringo suasoria. Balbus tibi uterque. Depereo totidem reiciendis. Demum ademptio aliquid. Claro via animus. Aegrus cuppedia et. Ager cruentus antepono. Artificiose tricesimus tondeo. Bene ter clam. Eaque crapula vel. Cras stillicidium omnis. Caput despecto allatus. Aptus temporibus cupressus. Adhaero stella rerum. Adsidue cattus saepe. Testimonium ait sto. Rem atque magni.\"\n        },\n        {\n            \"id\": 144512,\n            \"user_id\": 7150327,\n            \"title\": \"Deludo amoveo contabesco universe currus.\",\n            \"body\": \"Quia optio delectatio. Avaritia vulnus calamitas. Colo modi sit. Summopere despirmatio utrimque. Somniculosus capto thorax. Utique titulus iusto. Vinitor urbs tremo. Arbor harum sponte. Alioqui aliqua ipsum. Studio nihil quos. Tredecim advoco derideo. Assentator beneficium audax. Vester comes admoveo. Ara praesentium tremo. Curso amplus ulterius. Bis rerum esse.\"\n        },\n        {\n            \"id\": 144511,\n            \"user_id\": 7150323,\n            \"title\": \"Qui infit averto valens denuo mollitia.\",\n            \"body\": \"Cubo vere adulatio. Adimpleo crepusculum voluntarius. Arguo quam arbitro. Triginta eaque colo. Commodi unde valetudo. Libero uberrime ea. Solium possimus animadverto. Tracto tenus apparatus. Acceptus officia sordeo. Sono iusto attonbitus. Solutio capto commodi. Assumenda altus varius. Autem pauci sit. Vergo solio demum. Sursum deripio sub. Vilicus et voluptatibus. Curtus uterque vesica.\"\n        },\n        {\n            \"id\": 144510,\n            \"user_id\": 7150323,\n            \"title\": \"Tot collum sequi cogo alveus subnecto.\",\n            \"body\": \"Angelus cohaero deleniti. Ambulo tutis theatrum. Capitulus valeo auditor. Aveho et defessus. Pecunia aperio caveo. Sustineo caste provident. Damnatio thesis arcesso. Ex totam allatus. Curso casus comparo. Caritas tergiversatio dedico. Atrox auris argumentum. Viduata balbus cupiditate. Tam universe ex.\"\n        },\n        {\n            \"id\": 144509,\n            \"user_id\": 7150321,\n            \"title\": \"Arbor vobis aegrus tabula est appositus ex.\",\n            \"body\": \"Illum coniuratio turpe. Somniculosus comis substantia. Vitae abeo utilis. Tempore possimus voro. Uxor asporto tunc. Auditor degusto sollicito. Auctor demonstro bis. Terebro virga compono. Venio caterva vulpes. Ventosus pecunia sodalitas. Conatus vivo autem.\"\n        },\n        {\n            \"id\": 144508,\n            \"user_id\": 7150317,\n            \"title\": \"Amplexus culpo creta terminatio cibo magnam iusto aegre vulariter.\",\n            \"body\": \"Accusator ambitus neque. Cultura delectus vulgo. Ipsam coruscus utrimque. Decretum ipsa ipsam. Consequatur sufficio aestas. Vitae molestiae vel. Amita calco appositus. Hic tyrannus vapulus. Comburo bellum combibo. Tersus animi eaque. Ubi adopto condico.\"\n        },\n        {\n            \"id\": 144507,\n            \"user_id\": 7150317,\n            \"title\": \"Stillicidium sollers amplexus accipio spoliatio minima.\",\n            \"body\": \"Vel unde curia. Cultellus delibero quo. Subiungo considero custodia. Cupressus deinde suppellex. Atqui adfero defluo. Cum tergum vespillo. Animi amaritudo temporibus. Crastinus magni celo. Voluptas despecto porro. Dedecor usus cogito. Error vetus decretum. Ut creptio blandior. Sed terror cuius. Creptio aro amissio. Vindico demergo uberrime. Clibanus tendo ter. Angustus defleo ea. Et volutabrum adstringo. Sint umquam impedit.\"\n        },\n        {\n            \"id\": 144506,\n            \"user_id\": 7150315,\n            \"title\": \"Adhuc totidem patior adicio laudantium viriliter infit vestigium.\",\n            \"body\": \"Velit dedico charisma. Calco audentia cui. Censura creta venustas. Verto est cubicularis. Et aequitas tantillus. Ipsam officiis conservo. Usitas decens id. Concedo caste a. Cum arbitro celebrer. Tolero dolorem trepide. Laborum debeo avoco. Non arcus cui. Canis veritatis temptatio. Armarium succurro sumptus. Venio vae tergeo. Comptus sortitus perspiciatis. Sumptus ullam vinculum. Solum ascit cunabula. Curvus vociferor triumphus.\"\n        },\n        {\n            \"id\": 144505,\n            \"user_id\": 7150315,\n            \"title\": \"Aestus facilis tabernus volo dolorum vespillo corporis repellendus.\",\n            \"body\": \"Dolorum correptius et. Eius necessitatibus capio. Clarus adhuc corrumpo. Omnis timor commodo. Caelum triduana omnis. Peccatus amaritudo basium. Clam voluptatibus corrumpo. Arbor ustilo ambitus. Culpo demum beatae. Defessus corrumpo totidem.\"\n        },\n        {\n            \"id\": 144504,\n            \"user_id\": 7150314,\n            \"title\": \"Strenuus corrigo arguo absconditus venia custodia antea tertius.\",\n            \"body\": \"Voluptatem theca cavus. Capto antea comparo. Ratione conicio omnis. Admoneo aggredior ventosus. Autem cultellus suadeo. Est tergo decerno. Dens suppono odit. Quaerat perspiciatis armo. Conatus consequatur ascisco. Callide conscendo amicitia. Exercitationem verus tempus.\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Posts - ID - Único",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Posts}}/{{id_Posts}}",
+              "host": [
+                "{{baseUrl_GoRest}}"
+              ],
+              "path": [
+                "{{endpoint_GoRest_Posts}}",
+                "{{id_Posts}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Posts",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Posts}}",
+                  "host": [
+                    "{{baseUrl_GoRest}}"
+                  ],
+                  "path": [
+                    "{{endpoint_GoRest_Posts}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Fri, 26 Jul 2024 02:00:54 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "max-age=0, private, must-revalidate"
+                },
+                {
+                  "key": "etag",
+                  "value": "W/\"a763130ed11110ebe9259690fbb93453\""
+                },
+                {
+                  "key": "referrer-policy",
+                  "value": "strict-origin-when-cross-origin"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "x-download-options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-permitted-cross-domain-policies",
+                  "value": "none"
+                },
+                {
+                  "key": "x-ratelimit-limit",
+                  "value": "90"
+                },
+                {
+                  "key": "x-ratelimit-remaining",
+                  "value": "89"
+                },
+                {
+                  "key": "x-ratelimit-reset",
+                  "value": "1"
+                },
+                {
+                  "key": "x-request-id",
+                  "value": "e1698061-44fa-44a7-a72b-696053fa5179"
+                },
+                {
+                  "key": "x-runtime",
+                  "value": "0.204282"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "0"
+                },
+                {
+                  "key": "CF-Cache-Status",
+                  "value": "DYNAMIC"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=FD5aQ1phvq03FW%2FAF5lPDiPmpu8uDBmQuWhRkKMkbcYIpXoxKb4mjlkceF7ILeD9cOtVc%2FlOyq5qdBEmovjVSNNBT2TFDoUlbssVdNSTIs%2FE10AUCeRVJ2m8vMFXNLo%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+                },
+                {
+                  "key": "NEL",
+                  "value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+                },
+                {
+                  "key": "Server",
+                  "value": "cloudflare"
+                },
+                {
+                  "key": "CF-RAY",
+                  "value": "8a90cc75eaa41aab-GRU"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "br"
+                },
+                {
+                  "key": "alt-svc",
+                  "value": "h3=\":443\"; ma=86400"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"code\": 200,\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 3108,\n            \"pages\": 311,\n            \"page\": 1,\n            \"limit\": 10\n        }\n    },\n    \"data\": [\n        {\n            \"id\": 144513,\n            \"user_id\": 7150328,\n            \"title\": \"Ademptio eos veritas auditor facilis decumbo.\",\n            \"body\": \"Tendo tondeo virtus. Vallum adstringo suasoria. Balbus tibi uterque. Depereo totidem reiciendis. Demum ademptio aliquid. Claro via animus. Aegrus cuppedia et. Ager cruentus antepono. Artificiose tricesimus tondeo. Bene ter clam. Eaque crapula vel. Cras stillicidium omnis. Caput despecto allatus. Aptus temporibus cupressus. Adhaero stella rerum. Adsidue cattus saepe. Testimonium ait sto. Rem atque magni.\"\n        },\n        {\n            \"id\": 144512,\n            \"user_id\": 7150327,\n            \"title\": \"Deludo amoveo contabesco universe currus.\",\n            \"body\": \"Quia optio delectatio. Avaritia vulnus calamitas. Colo modi sit. Summopere despirmatio utrimque. Somniculosus capto thorax. Utique titulus iusto. Vinitor urbs tremo. Arbor harum sponte. Alioqui aliqua ipsum. Studio nihil quos. Tredecim advoco derideo. Assentator beneficium audax. Vester comes admoveo. Ara praesentium tremo. Curso amplus ulterius. Bis rerum esse.\"\n        },\n        {\n            \"id\": 144511,\n            \"user_id\": 7150323,\n            \"title\": \"Qui infit averto valens denuo mollitia.\",\n            \"body\": \"Cubo vere adulatio. Adimpleo crepusculum voluntarius. Arguo quam arbitro. Triginta eaque colo. Commodi unde valetudo. Libero uberrime ea. Solium possimus animadverto. Tracto tenus apparatus. Acceptus officia sordeo. Sono iusto attonbitus. Solutio capto commodi. Assumenda altus varius. Autem pauci sit. Vergo solio demum. Sursum deripio sub. Vilicus et voluptatibus. Curtus uterque vesica.\"\n        },\n        {\n            \"id\": 144510,\n            \"user_id\": 7150323,\n            \"title\": \"Tot collum sequi cogo alveus subnecto.\",\n            \"body\": \"Angelus cohaero deleniti. Ambulo tutis theatrum. Capitulus valeo auditor. Aveho et defessus. Pecunia aperio caveo. Sustineo caste provident. Damnatio thesis arcesso. Ex totam allatus. Curso casus comparo. Caritas tergiversatio dedico. Atrox auris argumentum. Viduata balbus cupiditate. Tam universe ex.\"\n        },\n        {\n            \"id\": 144509,\n            \"user_id\": 7150321,\n            \"title\": \"Arbor vobis aegrus tabula est appositus ex.\",\n            \"body\": \"Illum coniuratio turpe. Somniculosus comis substantia. Vitae abeo utilis. Tempore possimus voro. Uxor asporto tunc. Auditor degusto sollicito. Auctor demonstro bis. Terebro virga compono. Venio caterva vulpes. Ventosus pecunia sodalitas. Conatus vivo autem.\"\n        },\n        {\n            \"id\": 144508,\n            \"user_id\": 7150317,\n            \"title\": \"Amplexus culpo creta terminatio cibo magnam iusto aegre vulariter.\",\n            \"body\": \"Accusator ambitus neque. Cultura delectus vulgo. Ipsam coruscus utrimque. Decretum ipsa ipsam. Consequatur sufficio aestas. Vitae molestiae vel. Amita calco appositus. Hic tyrannus vapulus. Comburo bellum combibo. Tersus animi eaque. Ubi adopto condico.\"\n        },\n        {\n            \"id\": 144507,\n            \"user_id\": 7150317,\n            \"title\": \"Stillicidium sollers amplexus accipio spoliatio minima.\",\n            \"body\": \"Vel unde curia. Cultellus delibero quo. Subiungo considero custodia. Cupressus deinde suppellex. Atqui adfero defluo. Cum tergum vespillo. Animi amaritudo temporibus. Crastinus magni celo. Voluptas despecto porro. Dedecor usus cogito. Error vetus decretum. Ut creptio blandior. Sed terror cuius. Creptio aro amissio. Vindico demergo uberrime. Clibanus tendo ter. Angustus defleo ea. Et volutabrum adstringo. Sint umquam impedit.\"\n        },\n        {\n            \"id\": 144506,\n            \"user_id\": 7150315,\n            \"title\": \"Adhuc totidem patior adicio laudantium viriliter infit vestigium.\",\n            \"body\": \"Velit dedico charisma. Calco audentia cui. Censura creta venustas. Verto est cubicularis. Et aequitas tantillus. Ipsam officiis conservo. Usitas decens id. Concedo caste a. Cum arbitro celebrer. Tolero dolorem trepide. Laborum debeo avoco. Non arcus cui. Canis veritatis temptatio. Armarium succurro sumptus. Venio vae tergeo. Comptus sortitus perspiciatis. Sumptus ullam vinculum. Solum ascit cunabula. Curvus vociferor triumphus.\"\n        },\n        {\n            \"id\": 144505,\n            \"user_id\": 7150315,\n            \"title\": \"Aestus facilis tabernus volo dolorum vespillo corporis repellendus.\",\n            \"body\": \"Dolorum correptius et. Eius necessitatibus capio. Clarus adhuc corrumpo. Omnis timor commodo. Caelum triduana omnis. Peccatus amaritudo basium. Clam voluptatibus corrumpo. Arbor ustilo ambitus. Culpo demum beatae. Defessus corrumpo totidem.\"\n        },\n        {\n            \"id\": 144504,\n            \"user_id\": 7150314,\n            \"title\": \"Strenuus corrigo arguo absconditus venia custodia antea tertius.\",\n            \"body\": \"Voluptatem theca cavus. Capto antea comparo. Ratione conicio omnis. Admoneo aggredior ventosus. Autem cultellus suadeo. Est tergo decerno. Dens suppono odit. Quaerat perspiciatis armo. Conatus consequatur ascisco. Callide conscendo amicitia. Exercitationem verus tempus.\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Comments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Comments}}",
+              "host": [
+                "{{baseUrl_GoRest}}"
+              ],
+              "path": [
+                "{{endpoint_GoRest_Comments}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Comments",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Comments}}",
+                  "host": [
+                    "{{baseUrl_GoRest}}"
+                  ],
+                  "path": [
+                    "{{endpoint_GoRest_Comments}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Fri, 26 Jul 2024 02:00:58 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "max-age=0, private, must-revalidate"
+                },
+                {
+                  "key": "etag",
+                  "value": "W/\"a763130ed11110ebe9259690fbb93453\""
+                },
+                {
+                  "key": "referrer-policy",
+                  "value": "strict-origin-when-cross-origin"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "x-download-options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-permitted-cross-domain-policies",
+                  "value": "none"
+                },
+                {
+                  "key": "x-ratelimit-limit",
+                  "value": "90"
+                },
+                {
+                  "key": "x-ratelimit-remaining",
+                  "value": "89"
+                },
+                {
+                  "key": "x-ratelimit-reset",
+                  "value": "1"
+                },
+                {
+                  "key": "x-request-id",
+                  "value": "1fc2b760-4553-4684-b8f5-c9942e398987"
+                },
+                {
+                  "key": "x-runtime",
+                  "value": "0.154332"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "0"
+                },
+                {
+                  "key": "CF-Cache-Status",
+                  "value": "DYNAMIC"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=o0L8di%2FEhIzX%2BG87GxCghzxKKjeU4b8NiPVTR66xil8aJpH5qwCvHuHPDqRrvkbZaxQzD%2FFcslWcs6uMcDf54ka6TBx0%2BldxlNTTobGDbmygdFQ3gEhcSyIEk7qm%2Fh4%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+                },
+                {
+                  "key": "NEL",
+                  "value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+                },
+                {
+                  "key": "Server",
+                  "value": "cloudflare"
+                },
+                {
+                  "key": "CF-RAY",
+                  "value": "8a90cc8f989b1aab-GRU"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "br"
+                },
+                {
+                  "key": "alt-svc",
+                  "value": "h3=\":443\"; ma=86400"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"code\": 200,\n    \"meta\": {\n        \"pagination\": {\n            \"total\": 3108,\n            \"pages\": 311,\n            \"page\": 1,\n            \"limit\": 10\n        }\n    },\n    \"data\": [\n        {\n            \"id\": 144513,\n            \"user_id\": 7150328,\n            \"title\": \"Ademptio eos veritas auditor facilis decumbo.\",\n            \"body\": \"Tendo tondeo virtus. Vallum adstringo suasoria. Balbus tibi uterque. Depereo totidem reiciendis. Demum ademptio aliquid. Claro via animus. Aegrus cuppedia et. Ager cruentus antepono. Artificiose tricesimus tondeo. Bene ter clam. Eaque crapula vel. Cras stillicidium omnis. Caput despecto allatus. Aptus temporibus cupressus. Adhaero stella rerum. Adsidue cattus saepe. Testimonium ait sto. Rem atque magni.\"\n        },\n        {\n            \"id\": 144512,\n            \"user_id\": 7150327,\n            \"title\": \"Deludo amoveo contabesco universe currus.\",\n            \"body\": \"Quia optio delectatio. Avaritia vulnus calamitas. Colo modi sit. Summopere despirmatio utrimque. Somniculosus capto thorax. Utique titulus iusto. Vinitor urbs tremo. Arbor harum sponte. Alioqui aliqua ipsum. Studio nihil quos. Tredecim advoco derideo. Assentator beneficium audax. Vester comes admoveo. Ara praesentium tremo. Curso amplus ulterius. Bis rerum esse.\"\n        },\n        {\n            \"id\": 144511,\n            \"user_id\": 7150323,\n            \"title\": \"Qui infit averto valens denuo mollitia.\",\n            \"body\": \"Cubo vere adulatio. Adimpleo crepusculum voluntarius. Arguo quam arbitro. Triginta eaque colo. Commodi unde valetudo. Libero uberrime ea. Solium possimus animadverto. Tracto tenus apparatus. Acceptus officia sordeo. Sono iusto attonbitus. Solutio capto commodi. Assumenda altus varius. Autem pauci sit. Vergo solio demum. Sursum deripio sub. Vilicus et voluptatibus. Curtus uterque vesica.\"\n        },\n        {\n            \"id\": 144510,\n            \"user_id\": 7150323,\n            \"title\": \"Tot collum sequi cogo alveus subnecto.\",\n            \"body\": \"Angelus cohaero deleniti. Ambulo tutis theatrum. Capitulus valeo auditor. Aveho et defessus. Pecunia aperio caveo. Sustineo caste provident. Damnatio thesis arcesso. Ex totam allatus. Curso casus comparo. Caritas tergiversatio dedico. Atrox auris argumentum. Viduata balbus cupiditate. Tam universe ex.\"\n        },\n        {\n            \"id\": 144509,\n            \"user_id\": 7150321,\n            \"title\": \"Arbor vobis aegrus tabula est appositus ex.\",\n            \"body\": \"Illum coniuratio turpe. Somniculosus comis substantia. Vitae abeo utilis. Tempore possimus voro. Uxor asporto tunc. Auditor degusto sollicito. Auctor demonstro bis. Terebro virga compono. Venio caterva vulpes. Ventosus pecunia sodalitas. Conatus vivo autem.\"\n        },\n        {\n            \"id\": 144508,\n            \"user_id\": 7150317,\n            \"title\": \"Amplexus culpo creta terminatio cibo magnam iusto aegre vulariter.\",\n            \"body\": \"Accusator ambitus neque. Cultura delectus vulgo. Ipsam coruscus utrimque. Decretum ipsa ipsam. Consequatur sufficio aestas. Vitae molestiae vel. Amita calco appositus. Hic tyrannus vapulus. Comburo bellum combibo. Tersus animi eaque. Ubi adopto condico.\"\n        },\n        {\n            \"id\": 144507,\n            \"user_id\": 7150317,\n            \"title\": \"Stillicidium sollers amplexus accipio spoliatio minima.\",\n            \"body\": \"Vel unde curia. Cultellus delibero quo. Subiungo considero custodia. Cupressus deinde suppellex. Atqui adfero defluo. Cum tergum vespillo. Animi amaritudo temporibus. Crastinus magni celo. Voluptas despecto porro. Dedecor usus cogito. Error vetus decretum. Ut creptio blandior. Sed terror cuius. Creptio aro amissio. Vindico demergo uberrime. Clibanus tendo ter. Angustus defleo ea. Et volutabrum adstringo. Sint umquam impedit.\"\n        },\n        {\n            \"id\": 144506,\n            \"user_id\": 7150315,\n            \"title\": \"Adhuc totidem patior adicio laudantium viriliter infit vestigium.\",\n            \"body\": \"Velit dedico charisma. Calco audentia cui. Censura creta venustas. Verto est cubicularis. Et aequitas tantillus. Ipsam officiis conservo. Usitas decens id. Concedo caste a. Cum arbitro celebrer. Tolero dolorem trepide. Laborum debeo avoco. Non arcus cui. Canis veritatis temptatio. Armarium succurro sumptus. Venio vae tergeo. Comptus sortitus perspiciatis. Sumptus ullam vinculum. Solum ascit cunabula. Curvus vociferor triumphus.\"\n        },\n        {\n            \"id\": 144505,\n            \"user_id\": 7150315,\n            \"title\": \"Aestus facilis tabernus volo dolorum vespillo corporis repellendus.\",\n            \"body\": \"Dolorum correptius et. Eius necessitatibus capio. Clarus adhuc corrumpo. Omnis timor commodo. Caelum triduana omnis. Peccatus amaritudo basium. Clam voluptatibus corrumpo. Arbor ustilo ambitus. Culpo demum beatae. Defessus corrumpo totidem.\"\n        },\n        {\n            \"id\": 144504,\n            \"user_id\": 7150314,\n            \"title\": \"Strenuus corrigo arguo absconditus venia custodia antea tertius.\",\n            \"body\": \"Voluptatem theca cavus. Capto antea comparo. Ratione conicio omnis. Admoneo aggredior ventosus. Autem cultellus suadeo. Est tergo decerno. Dens suppono odit. Quaerat perspiciatis armo. Conatus consequatur ascisco. Callide conscendo amicitia. Exercitationem verus tempus.\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Comments",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Comments}}/144513",
+              "host": [
+                "{{baseUrl_GoRest}}"
+              ],
+              "path": [
+                "{{endpoint_GoRest_Comments}}",
+                "144513"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Comments",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Comments}}/144513",
+                  "host": [
+                    "{{baseUrl_GoRest}}"
+                  ],
+                  "path": [
+                    "{{endpoint_GoRest_Comments}}",
+                    "144513"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Fri, 26 Jul 2024 02:03:35 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "36"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "max-age=0, private, must-revalidate"
+                },
+                {
+                  "key": "etag",
+                  "value": "W/\"9132bec7c413b5b015be1efe1c6efe72\""
+                },
+                {
+                  "key": "referrer-policy",
+                  "value": "strict-origin-when-cross-origin"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "x-download-options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-permitted-cross-domain-policies",
+                  "value": "none"
+                },
+                {
+                  "key": "x-ratelimit-limit",
+                  "value": "90"
+                },
+                {
+                  "key": "x-ratelimit-remaining",
+                  "value": "89"
+                },
+                {
+                  "key": "x-ratelimit-reset",
+                  "value": "1"
+                },
+                {
+                  "key": "x-request-id",
+                  "value": "00b9a19f-3ccd-4976-8532-0360b82c079c"
+                },
+                {
+                  "key": "x-runtime",
+                  "value": "0.224523"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "0"
+                },
+                {
+                  "key": "CF-Cache-Status",
+                  "value": "DYNAMIC"
+                },
+                {
+                  "key": "Report-To",
+                  "value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=OLSBeD4qf80faHGzKeS6Avyjy9v%2FGmUGRDBIVWcwT2mbtKm6lK58KHRkfo86DweJDqYdOPOL90GclzBsIwXvrT3R2wIYr7RTfOBfkR7ie%2Fy6flI6XhirgonASDov54w%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+                },
+                {
+                  "key": "NEL",
+                  "value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+                },
+                {
+                  "key": "Server",
+                  "value": "cloudflare"
+                },
+                {
+                  "key": "CF-RAY",
+                  "value": "8a90d067b9fc1aab-GRU"
+                },
+                {
+                  "key": "alt-svc",
+                  "value": "h3=\":443\"; ma=86400"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"code\": 204,\n    \"meta\": null,\n    \"data\": null\n}"
+            }
+          ]
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Projeto 3 - GoRest API",
+      "item": [
+        {
+          "name": "Usuários",
+          "item": [
+            {
+              "name": "1 - Criar",
+              "item": [
+                {
+                  "name": "1.1 - Validar criação de usuário com sucesso.",
+                  "event": [
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "exec": [
+                          "pm.variables.set(\"name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
+                          "pm.variables.set(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+                          "\r",
+                          "var randomFirstName = pm.variables.get(\"name\");\r",
+                          "var randomEmail = pm.variables.get(\"email\");\r",
+                          "\r",
+                          "console.log(\"Pre-ReqUest: \" + randomFirstName, \"male\", randomEmail, \"active\");\r",
+                          "\r",
+                          "pm.variables.set(\"name\", randomFirstName);\r",
+                          "pm.variables.set(\"email\", randomEmail);\r",
+                          "\r",
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    },
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "var teste = 0;\r",
+                          "var complemento = 0;\r",
+                          "\r",
+                          "pm.test(`${++teste}.${++complemento} - Validar criação de usuário.`, function () {\r",
+                          "    pm.response.to.have.status(200);\r",
+                          "\r",
+                          "    var responseJson = pm.response.json();\r",
+                          "\r",
+                          "    if (responseJson.data && responseJson.data.id) {\r",
+                          "        var id_CreateUser = responseJson.data.id;\r",
+                          "        pm.environment.set(\"id_CreateUser\", id_CreateUser);\r",
+                          "        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID: ${id_CreateUser} armazenado com sucesso.`);\r",
+                          "    } else {\r",
+                          "        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID: não encontrado.`);\r",
+                          "    }\r",
+                          "\r",
+                          "    // Atualizar complemento na variável de ambiente\r",
+                          "    pm.environment.set(\"teste\", teste);\r",
+                          "    pm.environment.set(\"complemento\", complemento);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"gender\": \"male\",\r\n    \"email\": \"{{email}}\",\r\n    \"status\": \"active\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}",
+                      "host": [
+                        "{{baseUrl_GoRest}}"
+                      ],
+                      "path": [
+                        "{{endpoint_GoRest_Users}}"
+                      ]
+                    },
+                    "description": "### POST GoRest Users\n\nThis endpoint allows you to create a new user in the GoRest system.\n\n#### Request Body\n\n- `name` (string, required): The name of the user.\n    \n- `gender` (string, required): The gender of the user.\n    \n- `email` (string, required): The email of the user.\n    \n- `status` (string, required): The status of the user.\n    \n\n#### Response\n\nThe response is a JSON object with the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"code\": {\n      \"type\": \"number\"\n    },\n    \"meta\": {\n      \"type\": \"null\"\n    },\n    \"data\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\n          \"type\": \"number\"\n        },\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"email\": {\n          \"type\": \"string\"\n        },\n        \"gender\": {\n          \"type\": \"string\"\n        },\n        \"status\": {\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}\n\n ```"
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "2 - Buscar",
+              "item": [
+                {
+                  "name": "1.2 - Validar busca por usuário com sucesso.",
+                  "event": [
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "exec": [
+                          "pm.variables.get(\"name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
+                          "pm.variables.get(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+                          "\r",
+                          "var randomFirstName = pm.variables.get(\"name\");\r",
+                          "var randomEmail = pm.variables.get(\"email\");"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    },
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                          "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                          "var id_CreateUser = parseInt(pm.environment.get(\"id_CreateUser\"))\r",
+                          "\r",
+                          "pm.test(`${teste}.${++complemento} - Validar busca por usuário.`, function () {\r",
+                          "    pm.response.to.have.status(200);\r",
+                          "\r",
+                          "    var responseJson = pm.response.json();\r",
+                          "\r",
+                          "    if (responseJson.data && responseJson.data.id) {\r",
+                          "        var id_CreateUser = responseJson.data.id;\r",
+                          "        pm.environment.set(\"id_CreateUser\", id_CreateUser);\r",
+                          "        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID: ${id_CreateUser} encontrado com sucesso.`);\r",
+                          "    } else {\r",
+                          "        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID: não encontrado.`);\r",
+                          "    }\r",
+                          "\r",
+                          "    // Atualizar complemento na variável de ambiente\r",
+                          "    pm.environment.set(\"complemento\", complemento);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"id\" : \"{{id_CreateUser}}\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}",
+                      "host": [
+                        "{{baseUrl_GoRest}}"
+                      ],
+                      "path": [
+                        "{{endpoint_GoRest_Users}}",
+                        "{{id_CreateUser}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "3 - Alterar",
+              "item": [
+                {
+                  "name": "1.3 - Validar atualização de usuário com sucesso.",
+                  "event": [
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "exec": [
+                          "pm.variables.set(\"name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
+                          "pm.variables.set(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+                          "\r",
+                          "var randomFirstName = pm.variables.get(\"name\");\r",
+                          "var randomEmail = pm.variables.get(\"email\");\r",
+                          "\r",
+                          "pm.variables.set(\"name\", randomFirstName);\r",
+                          "pm.variables.set(\"email\", randomEmail);"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    },
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                          "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                          "var id_CreateUser = parseInt(pm.environment.get(\"id_CreateUser\"));\r",
+                          "\r",
+                          "pm.test(`${teste}.${++complemento} - Validar atualização de usuário.`, function () {\r",
+                          "    pm.response.to.have.status(200);\r",
+                          "\r",
+                          "    var responseJson = pm.response.json();\r",
+                          "\r",
+                          "    if (responseJson.data && responseJson.data.id) {\r",
+                          "        var id_CreateUser = responseJson.data.id;\r",
+                          "        pm.environment.set(\"id_CreateUser\", id_CreateUser);\r",
+                          "        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID: ${id_CreateUser} atualizado com sucesso.`);\r",
+                          "    } else {\r",
+                          "        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID: não encontrado.`);\r",
+                          "    }\r",
+                          "\r",
+                          "    // Atualizar complemento na variável de ambiente\r",
+                          "    pm.environment.set(\"complemento\", complemento);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PUT",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"gender\": \"female\",\r\n    \"email\": \"{{email}}\",\r\n    \"status\": \"active\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}",
+                      "host": [
+                        "{{baseUrl_GoRest}}"
+                      ],
+                      "path": [
+                        "{{endpoint_GoRest_Users}}",
+                        "{{id_CreateUser}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "4 - Excluir",
+              "item": [
+                {
+                  "name": "1.4 - Validar deleção de usuário com sucesso.",
+                  "event": [
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "exec": [
+                          "var id_CreateUser = parseInt(pm.environment.get(\"id_CreateUser\"));"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    },
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                          "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                          "\r",
+                          "\r",
+                          "pm.test(`${teste}.${++complemento} - Validar deleção de usuário.`, function () {\r",
+                          "\r",
+                          "    var responseJson = pm.response.json();\r",
+                          "\r",
+                          "    // Verificar se o campo data é null, indicando que a deleção foi bem-sucedida\r",
+                          "    if (responseJson.data === null) {\r",
+                          "        pm.response.to.have.status(200);\r",
+                          "        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID deletado com sucesso.`);\r",
+                          "    } else {\r",
+                          "        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID não encontrado ou não deletado.`);\r",
+                          "    }\r",
+                          "\r",
+                          "    // Atualizar complemento na variável de ambiente\r",
+                          "    pm.environment.set(\"complemento\", complemento);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "DELETE",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}",
+                      "host": [
+                        "{{baseUrl_GoRest}}"
+                      ],
+                      "path": [
+                        "{{endpoint_GoRest_Users}}",
+                        "{{id_CreateUser}}"
+                      ]
+                    },
+                    "description": "This endpoint sends an HTTP DELETE request to delete a specific user by ID.\n\n### Request\n\n- Method: DELETE\n    \n- Endpoint: {{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}\n    \n\n### Response\n\n- Status: 200\n    \n- Content-Type: application/json\n    \n- Body:\n    \n    ``` json\n    {\n        \"code\": 0,\n        \"meta\": null,\n        \"data\": null\n    }\n    \n     ```"
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "5 - Buscar excluído.",
+              "item": [
+                {
+                  "name": "1.5 - Validar busca por usuário deletado.",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                          "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                          "var id_CreateUser = parseInt(pm.environment.get(\"id_CreateUser\"))\r",
+                          "\r",
+                          "pm.test(`${teste}.${++complemento} - Validar busca por usuário.`, function () {\r",
+                          "    var id_CreateUser = pm.environment.get(\"id_CreateUser\");\r",
+                          "\r",
+                          "    pm.sendRequest({\r",
+                          "        url: `https://gorest.co.in/public-api/users/${id_CreateUser}`, \r",
+                          "        method: 'GET'\r",
+                          "    }, function (err, response) {\r",
+                          "        if (err) {\r",
+                          "            console.log(`${teste}.${complemento} - Erro ao buscar o ID: ${err}`);\r",
+                          "            pm.expect.fail(`Erro ao buscar o ID: ${err}`);\r",
+                          "            return;\r",
+                          "        }\r",
+                          "\r",
+                          "        var responseJson = response.json();\r",
+                          "\r",
+                          "        // Verifica se o status da resposta é 404 e se contém a mensagem esperada\r",
+                          "        if (responseJson.data.message === \"Resource not found\") {\r",
+                          "            console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID não encontrado após deletar.`);\r",
+                          "        } else {\r",
+                          "            console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID ainda encontrado ou resposta inesperada.`);\r",
+                          "            pm.expect.fail(`ID encontrado ou resposta inesperada. Código: ${response.code}, Mensagem: ${JSON.stringify(responseJson)}`);\r",
+                          "        }\r",
+                          "    });\r",
+                          "\r",
+                          "    // Atualizar complemento na variável de ambiente\r",
+                          "    pm.environment.set(\"complemento\", complemento);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"id\" : \"{{id_CreateUser}}\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{id_CreateUser}}",
+                      "host": [
+                        "{{baseUrl_GoRest}}"
+                      ],
+                      "path": [
+                        "{{endpoint_GoRest_Users}}",
+                        "{{id_CreateUser}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            }
+          ],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Posts",
+          "item": [
+            {
+              "name": "1 - Criar",
+              "item": [
+                {
+                  "name": "2.1 - Validar criação de post com sucesso.",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "var teste;\r",
+                          "var complemento;\r",
+                          "\r",
+                          "pm.environment.set(\"complemento\", 0);\r",
+                          "\r",
+                          "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                          "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                          "\r",
+                          "pm.environment.set(\"complemento\", 0)\r",
+                          "\r",
+                          "pm.test(`${++teste}.${++complemento} - Validar ...`, function () {\r",
+                          "    pm.response.to.have.status(200);\r",
+                          "\r",
+                          "    var responseJson = pm.response.json();\r",
+                          "\r",
+                          "    if (responseJson.data && responseJson.data.id) {\r",
+                          "        var id_CreateUser = responseJson.data.id;\r",
+                          "        pm.environment.set(\"id_CreateUser\", id_CreateUser);\r",
+                          "        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID: ${id_CreateUser} armazenado com sucesso.`);\r",
+                          "    } else {\r",
+                          "        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID: não encontrado.`);\r",
+                          "    }\r",
+                          "\r",
+                          "    // Atualizar complemento na variável de ambiente\r",
+                          "    pm.environment.set(\"teste\", teste);\r",
+                          "\r",
+                          "    pm.environment.set(\"teste\", teste);\r",
+                          "    pm.environment.set(\"complemento\", complemento);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"data\": \r\n    [\r\n        {\r\n            \"id\": 144506,\r\n        },\r\n        {\r\n        \"user_id\": 715315,\r\n        },\r\n        {   \r\n            \"title\": \"SCCP 1910 - Sport Club Corinthians Paulista\",\r\n        },\r\n        {\r\n            \"body\": \"Eternamente dentro do meu coração, Vai Corinthians.\"\r\n        }\r\n    ]\r\n}\r\n",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Users}}/{{endpoint_GoRest_Posts}}",
+                      "host": [
+                        "{{baseUrl_GoRest}}"
+                      ],
+                      "path": [
+                        "{{endpoint_GoRest_Users}}",
+                        "{{endpoint_GoRest_Posts}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "2 - Buscar",
+              "item": [
+                {
+                  "name": "2.2 - Validar busca por post com sucesso.",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                          "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                          "\r",
+                          "pm.test(`${teste}.${++complemento} - Validar ...`, function () {\r",
+                          "    pm.environment.set(\"complemento\", complemento);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Posts}}",
+                      "host": [
+                        "{{baseUrl_GoRest}}"
+                      ],
+                      "path": [
+                        "{{endpoint_GoRest_Posts}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "2.3 - Validar busca por post específico com sucesso.",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                          "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                          "\r",
+                          "pm.test(`${teste}.${++complemento} - Validar ...`, function () {\r",
+                          "    pm.environment.set(\"complemento\", complemento);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Posts}}/{{id_PostEspecif}}",
+                      "host": [
+                        "{{baseUrl_GoRest}}"
+                      ],
+                      "path": [
+                        "{{endpoint_GoRest_Posts}}",
+                        "{{id_PostEspecif}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "3 - Excluir",
+              "item": [
+                {
+                  "name": "2.4 - Validar excluir post com sucesso.",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                          "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                          "\r",
+                          "pm.test(`${teste}.${++complemento} - Validar ...`, function () {\r",
+                          "    pm.environment.set(\"complemento\", complemento);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Posts}}/{{id_ExcluirPost}}",
+                      "host": [
+                        "{{baseUrl_GoRest}}"
+                      ],
+                      "path": [
+                        "{{endpoint_GoRest_Posts}}",
+                        "{{id_ExcluirPost}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            }
+          ],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+                "type": "string"
+              }
+            ]
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "console.log(\"Testes no fluxo de posts.\")"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Comentários",
+          "item": [
+            {
+              "name": "1 - Criar",
+              "item": [
+                {
+                  "name": "3.1 - Validar criar comentário com sucesso.",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "var teste;\r",
+                          "var complemento = 0;\r",
+                          "\r",
+                          "pm.environment.set(\"complemento\", 0);\r",
+                          "\r",
+                          "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                          "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                          "\r",
+                          "pm.test(`${++teste}.${++complemento} - Validar ...`, function () {\r",
+                          "    pm.environment.set(\"teste\", teste);\r",
+                          "    pm.environment.set(\"complemento\", complemento);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"id\": 144511,\r\n    \"post_id\": \"5583\",\r\n    \"name\": {{name}},\r\n    \"email\": {{email}},\r\n    \"user_id\": 7150323,\r\n    \"body\": \"#VaiCorinthians_comments.\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Comments}}",
+                      "host": [
+                        "{{baseUrl_GoRest}}"
+                      ],
+                      "path": [
+                        "{{endpoint_GoRest_Comments}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "2 - Buscar",
+              "item": [
+                {
+                  "name": "3.2 - Validar buscar comentário com sucesso.",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                          "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                          "\r",
+                          "pm.test(`${teste}.${++complemento} - Validar ...`, function () {\r",
+                          "    pm.environment.set(\"complemento\", complemento);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Comments}}",
+                      "host": [
+                        "{{baseUrl_GoRest}}"
+                      ],
+                      "path": [
+                        "{{endpoint_GoRest_Comments}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "3.3 - Validar buscar comentário específico com sucesso.",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                          "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                          "\r",
+                          "pm.test(`${teste}.${++complemento} - Validar ...`, function () {\r",
+                          "    pm.environment.set(\"complemento\", complemento);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Comments}}/{{id_ComentarioEspecif}}",
+                      "host": [
+                        "{{baseUrl_GoRest}}"
+                      ],
+                      "path": [
+                        "{{endpoint_GoRest_Comments}}",
+                        "{{id_ComentarioEspecif}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "3 - Excluir",
+              "item": [
+                {
+                  "name": "3.4 - Validar excluir comentário com sucesso.",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+                          "var complemento = parseInt(pm.environment.get(\"complemento\"));\r",
+                          "\r",
+                          "pm.test(`${teste}.${++complemento} - Validar ...`, function () {\r",
+                          "    pm.environment.set(\"complemento\", complemento);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl_GoRest}}/{{endpoint_GoRest_Comments}}/{{id_ComentarioExcluir}}",
+                      "host": [
+                        "{{baseUrl_GoRest}}"
+                      ],
+                      "path": [
+                        "{{endpoint_GoRest_Comments}}",
+                        "{{id_ComentarioExcluir}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            }
+          ],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "console.log(\"Testes no fluxo de comentários.\")"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "786c6a2992dc34ee41b69c1b9a86b9a1aac510d3a444f4fc789117c5f84e4921",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+              "\r",
+              "console.log(\"Iniciando...\")"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              "var teste = parseInt(pm.environment.get(\"teste\"));\r",
+              "\r",
+              "console.log(\"Finalizando, Resultado abaixo:\")"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Projeto 4 - Hunter API",
+      "item": [
+        {
+          "name": "Leads",
+          "item": [
+            {
+              "name": "01 - Criar novo",
+              "item": [
+                {
+                  "name": "Criar novo",
+                  "event": [
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "exec": [
+                          "pm.variables.set(\"emailLead\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+                          "pm.variables.set(\"nameLead\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
+                          "pm.variables.set(\"LastNameLead\", pm.variables.replaceIn(\"{{$randomLastName}}\"));\r",
+                          "pm.variables.set(\"positionLead\", pm.variables.replaceIn(\"{{$randomJobArea}}\"));\r",
+                          "pm.variables.set(\"companyLead\", pm.variables.replaceIn(\"{{$randomCompanyName}}\"));\r",
+                          "pm.variables.set(\"industryLead\", pm.variables.replaceIn(\"{{$randomDepartment}}\"));\r",
+                          "\r",
+                          "// Obtenção das variáveis para o log\r",
+                          "var emailLead = pm.variables.get(\"emailLead\");\r",
+                          "var nameLead = pm.variables.get(\"nameLead\");\r",
+                          "var LastNameLead = pm.variables.get(\"LastNameLead\");\r",
+                          "var positionLead = pm.variables.get(\"positionLead\");\r",
+                          "var companyLead = pm.variables.get(\"companyLead\");\r",
+                          "var industryLead = pm.variables.get(\"industryLead\");\r",
+                          "\r",
+                          "// Log das variáveis\r",
+                          "console.log(`Pre-Request: email: ${emailLead}, first_name: ${nameLead}, last_name: ${LastNameLead}, position: ${positionLead}, company: ${companyLead}, industry: ${industryLead}`);"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    },
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "var teste = 0;\r",
+                          "var complemento = 0;\r",
+                          "\r",
+                          "pm.test(`${++teste}.${++complemento} - Validar criação de usuário.`, function () {\r",
+                          "    pm.response.to.have.status(200);\r",
+                          "\r",
+                          "    var responseJson = pm.response.json();\r",
+                          "\r",
+                          "    if (responseJson.data && responseJson.data.id) {\r",
+                          "        var id_CreateUser = responseJson.data.id;\r",
+                          "        pm.environment.set(\"id_CreateUser\", id_CreateUser);\r",
+                          "        console.log(`${teste}.${complemento} - Resultado:\\n    PASS - ID: ${id_CreateUser} armazenado com sucesso.`);\r",
+                          "    } else {\r",
+                          "        console.log(`${teste}.${complemento} - Resultado:\\n    FAIL - ID: não encontrado.`);\r",
+                          "    }\r",
+                          "\r",
+                          "    // Atualizar complemento na variável de ambiente\r",
+                          "    pm.environment.set(\"teste\", teste);\r",
+                          "    pm.environment.set(\"complemento\", complemento);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "in",
+                          "value": "query",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "api_Key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "83ead0113ae81d15ef2632b311f04a89713f522a",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"email\": \"{{emailLead}}\",\r\n    \"first_name\": \"{{nameLead}}\",\r\n    \"last_name\": \"{{LastNameLead}}\",\r\n    \"position\": \"{{positionLead}}\",\r\n    \"company\": \"{{companyLead}}\",\r\n    \"company_industry\": \"{{industryLead}}\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl_APIHunter}}/leads",
+                      "host": [
+                        "{{baseUrl_APIHunter}}"
+                      ],
+                      "path": [
+                        "leads"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ],
+              "auth": {
+                "type": "apikey",
+                "apikey": [
+                  {
+                    "key": "key",
+                    "value": "api_Key",
+                    "type": "string"
+                  },
+                  {
+                    "key": "in",
+                    "value": "query",
+                    "type": "string"
+                  },
+                  {
+                    "key": "value",
+                    "value": "83ead0113ae81d15ef2632b311f04a89713f522a",
+                    "type": "string"
+                  }
+                ]
+              },
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "02 - Recuperar todos",
+              "item": [
+                {
+                  "name": "Recuperar todos",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl_APIHunter}}/leads",
+                      "host": [
+                        "{{baseUrl_APIHunter}}"
+                      ],
+                      "path": [
+                        "leads"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Recuperar específico",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl_APIHunter}}/leads/{{id_LeadEspecifico}}",
+                      "host": [
+                        "{{baseUrl_APIHunter}}"
+                      ],
+                      "path": [
+                        "leads",
+                        "{{id_LeadEspecifico}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "03 - Editar",
+              "item": [
+                {
+                  "name": "Editar específico",
+                  "request": {
+                    "method": "PUT",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"email\": \"{{emailLead_Edit}}\",\r\n    \"first_name\": \"{{nameLead_Edit}}\",\r\n    \"last_name\": \"{{LastNameLead_Edit}}\",\r\n    \"position\": \"{{positionLead_Edit}}\",\r\n    \"company\": \"{{companyLead_Edit}}\",\r\n    \"company_industry\": \"{{industryLead_Edit}}\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl_APIHunter}}/leads/{{id_LeadEspecifico}}",
+                      "host": [
+                        "{{baseUrl_APIHunter}}"
+                      ],
+                      "path": [
+                        "leads",
+                        "{{id_LeadEspecifico}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "04 - Excluir",
+              "item": [
+                {
+                  "name": "Excluir específico",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl_APIHunter}}/leads/{{id_LeadEspecifico}}",
+                      "host": [
+                        "{{baseUrl_APIHunter}}"
+                      ],
+                      "path": [
+                        "leads",
+                        "{{id_LeadEspecifico}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            }
+          ],
+          "auth": {
+            "type": "apikey",
+            "apikey": [
+              {
+                "key": "in",
+                "value": "query",
+                "type": "string"
+              },
+              {
+                "key": "value",
+                "value": "83ead0113ae81d15ef2632b311f04a89713f522a",
+                "type": "string"
+              },
+              {
+                "key": "key",
+                "value": "api_Key",
+                "type": "string"
+              }
+            ]
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Leads Lists",
+          "item": [
+            {
+              "name": "Recuperar todos",
+              "item": [
+                {
+                  "name": "Recuperar todos",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl_APIHunter}}/leads",
+                      "host": [
+                        "{{baseUrl_APIHunter}}"
+                      ],
+                      "path": [
+                        "leads"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Recuperar específico",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl_APIHunter}}/leads/{{id_LeadEspecifico}}",
+                      "host": [
+                        "{{baseUrl_APIHunter}}"
+                      ],
+                      "path": [
+                        "leads",
+                        "{{id_LeadEspecifico}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Criar novo",
+              "item": [
+                {
+                  "name": "Criar novo",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"email\": \"{{emailLead}}\",\r\n    \"first_name\": \"{{nameLead}}\",\r\n    \"last_name\": \"{{LastNameLead}}\",\r\n    \"position\": \"{{positionLead}}\",\r\n    \"company\": \"{{companyLead}}\",\r\n    \"company_industry\": \"{{industryLead}}\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl_APIHunter}}/leads",
+                      "host": [
+                        "{{baseUrl_APIHunter}}"
+                      ],
+                      "path": [
+                        "leads"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Editar",
+              "item": [
+                {
+                  "name": "Editar específico",
+                  "request": {
+                    "method": "PUT",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"email\": \"{{emailLead_Edit}}\",\r\n    \"first_name\": \"{{nameLead_Edit}}\",\r\n    \"last_name\": \"{{LastNameLead_Edit}}\",\r\n    \"position\": \"{{positionLead_Edit}}\",\r\n    \"company\": \"{{companyLead_Edit}}\",\r\n    \"company_industry\": \"{{industryLead_Edit}}\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl_APIHunter}}/leads/{{id_LeadEspecifico}}",
+                      "host": [
+                        "{{baseUrl_APIHunter}}"
+                      ],
+                      "path": [
+                        "leads",
+                        "{{id_LeadEspecifico}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Excluir",
+              "item": [
+                {
+                  "name": "Excluir específico",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl_APIHunter}}/leads/{{id_LeadEspecifico}}",
+                      "host": [
+                        "{{baseUrl_APIHunter}}"
+                      ],
+                      "path": [
+                        "leads",
+                        "{{id_LeadEspecifico}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "auth": {
+        "type": "apikey",
+        "apikey": [
+          {
+            "key": "in",
+            "value": "query",
+            "type": "string"
+          },
+          {
+            "key": "value",
+            "value": "83ead0113ae81d15ef2632b311f04a89713f522a",
+            "type": "string"
+          },
+          {
+            "key": "key",
+            "value": "api_Key",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
